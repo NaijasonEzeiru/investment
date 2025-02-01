@@ -1,9 +1,9 @@
 import Footer from "@/components/footer";
-import Header from "@/components/Header";
+import Header from "@/components/header";
 import Hero from "@/components/hero";
 import HomeProducts from "@/components/homeProducts";
 import TestimonialCard from "@/components/testimonialCard";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Home() {
   return (

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 function TestimonialCard() {
@@ -80,7 +81,7 @@ function TestimonialCard() {
         blockchain verification adds a layer of trust that sets us apart.
       </p>
       <div className="flex items-center">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
           alt="Sarah Johnson"
           className="w-12 h-12 rounded-full mr-4"

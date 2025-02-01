@@ -40,6 +40,7 @@ export function LoginForm({
   const isLoading = false;
 
   async function onSubmit(body: z.infer<typeof RegisterSchema>) {
+    console.log({ body });
     try {
       //   const response = await fetch(".....");
       //   if (response.error) {
@@ -120,7 +121,7 @@ export function LoginForm({
                 Login
               </Button>
               <div className="text-center text-sm">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link href="/signup" className="underline underline-offset-4">
                   sign up
                 </Link>

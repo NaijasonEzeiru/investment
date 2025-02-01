@@ -40,6 +40,7 @@ export function SignUpForm({
   const isLoading = false;
 
   async function onSubmit(body: z.infer<typeof RegisterSchema>) {
+    console.log({ body });
     try {
       //   const response = await fetch(".....");
       //   if (response.error) {

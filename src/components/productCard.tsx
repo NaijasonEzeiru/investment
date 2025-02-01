@@ -1,10 +1,11 @@
+import Image from "next/image";
 import React from "react";
 
 function ProductCard() {
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow group cursor-pointer">
       <div className="relative pb-[75%] overflow-hidden">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&q=80"
           alt="Grand Plaza Hotel &amp; Spa"
           className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
