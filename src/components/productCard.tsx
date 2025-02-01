@@ -7,6 +7,8 @@ function ProductCard() {
       <div className="relative pb-[75%] overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&q=80"
+          width={286}
+          height={214.5}
           alt="Grand Plaza Hotel &amp; Spa"
           className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
         />

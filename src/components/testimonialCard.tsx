@@ -84,6 +84,8 @@ function TestimonialCard() {
         <Image
           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
           alt="Sarah Johnson"
+          width={48}
+          height={48}
           className="w-12 h-12 rounded-full mr-4"
         />
         <div>
