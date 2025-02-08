@@ -1,7 +1,13 @@
+"use client";
 import Link from "next/link";
-// import { Button } from "./ui/button";
+import { useContext } from "react";
+import AuthContext from "./auth-context";
+
+// TODO: change to server component and use Suspense
 
 function Hero() {
+  const { user } = useContext(AuthContext);
+
   return (
     <section className="relative bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900 text-white">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80')] mix-blend-overlay opacity-20 bg-cover bg-center"></div>
@@ -16,7 +22,7 @@ function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Link
-              href="/login"
+              href={`${user ? "/get-started" : "/login"}`}
               className="flex items-center justify-center px-8 py-4 bg-white text-blue-900 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
             >
               <svg

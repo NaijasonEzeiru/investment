@@ -1,4 +1,5 @@
 import { z } from "zod";
+import isMobilePhone from "validator/es/lib/isMobilePhone";
 
 export const RegisterSchema = z
   .object({
@@ -10,10 +11,16 @@ export const RegisterSchema = z
       .string()
       .min(4, { message: "Can not be less than 4 characters" })
       .max(40, { message: "Can not be more than 40 characters" }),
+    referralCode: z
+      .string()
+      .length(10, { message: "Must be 10 characters long" })
+      .optional(),
+    transferPin: z.string().length(5, { message: "Must be 5 characters long" }),
     username: z
       .string()
       .min(4, { message: "Can not be less than 4 characters" })
       .max(20, { message: "Can not be more than 20 characters" }),
+    phone: z.string().refine(isMobilePhone),
     password: z
       .string()
       .min(8, { message: "Can not be less than 8 characters" })
@@ -42,3 +49,14 @@ export const RegisterSchema = z
       });
     }
   });
+
+export const LoginSchema = z.object({
+  email: z
+    .string()
+    .email({ message: "Please input a valid email address" })
+    .max(50, { message: "Must contain at most 50 characters" }),
+  password: z
+    .string()
+    .min(4, { message: "Must contain at least 4 characters" })
+    .max(20, { message: "Must contain at most 20 characters" }),
+});

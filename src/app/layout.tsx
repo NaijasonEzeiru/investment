@@ -1,3 +1,5 @@
+import { AuthProvider } from "@/components/auth-context";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -19,7 +21,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth,
 }: Readonly<{
+  auth: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -27,7 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen overflow-x-hidden min-h-screen font-[family-name:var(--font-geist-sans)]`}
       >
-        {children}
+        <AuthProvider>
+          {auth}
+          {children}
+          <Toaster richColors toastOptions={{}} />
+        </AuthProvider>
       </body>
     </html>
   );

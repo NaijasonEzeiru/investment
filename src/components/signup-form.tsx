@@ -3,6 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { Eye, EyeOff, Loader } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import PhoneInput from "react-phone-number-input";
+import { toast } from "sonner";
+import "react-phone-number-input/style.css";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,11 +28,8 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { toast } from "sonner";
 import { RegisterSchema } from "@/lib/zodSchema";
-import { Eye, EyeOff, Loader } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function SignUpForm({
   className,
@@ -35,21 +38,42 @@ export function SignUpForm({
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
   });
-  const [showPassword, setShowPassword] = useState(false);
 
-  const isLoading = false;
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   async function onSubmit(body: z.infer<typeof RegisterSchema>) {
     console.log({ body });
     try {
-      //   const response = await fetch(".....");
-      //   if (response.error) {
-      //     toast.error("Registration failed", {
-      //       description: response?.error?.data?.message,
-      //     });
-      //   } else {
-      //     toast(response.data.message);
-      //   }
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log(data);
+        router.push("/login");
+      } else {
+        if (data.errors) {
+          console.log(data.errors);
+          data.errors.forEach(
+            (err: { path: "username" | "phone"; message: string }) => {
+              form.setError(err.path, {
+                type: "server",
+                message: err.message,
+              });
+            }
+          );
+          return;
+        }
+        toast.error("Registration failed", {
+          description: "Something went wrong",
+        });
+      }
     } catch (error) {
       toast.error("Registration failed", {
         description: "Something went wrong",
@@ -126,32 +150,78 @@ export function SignUpForm({
               />
               <FormField
                 control={form.control}
+                name="phone"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <FormItem className="space-y-0.5 relative">
+                    <FormLabel>Phone number</FormLabel>
+                    <FormControl>
+                      <PhoneInput
+                        onBlur={onBlur}
+                        onChange={onChange}
+                        value={value}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="transferPin"
+                render={({ field }) => (
+                  <FormItem className="space-y-0.5">
+                    <FormLabel>Transfer pin</FormLabel>
+                    <FormControl>
+                      <Input placeholder="12345" {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="referralCode"
+                render={({ field }) => (
+                  <FormItem className="space-y-0.5">
+                    <FormLabel>Referral code (optional)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="12345abcde" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5 relative">
                     <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="password"
-                        {...field}
-                        type={showPassword ? "text" : "password"}
-                      />
-                    </FormControl>
-                    <Button
-                      className={`absolute right-0 bottom-0 ${
-                        isLoading && "text-border"
-                      }`}
-                      variant="ghost"
-                      size="icon"
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff size={16} className="h-4 w-4" />
-                      ) : (
-                        <Eye size={16} className="h-4 w-4" />
-                      )}
-                    </Button>
+                    <div className="relative">
+                      <FormControl>
+                        <Input
+                          placeholder="password"
+                          {...field}
+                          type={showPassword ? "text" : "password"}
+                        />
+                      </FormControl>
+                      <Button
+                        className={`absolute right-0 bottom-0 ${
+                          form.formState.isSubmitting && "text-border"
+                        }`}
+                        disabled={form.formState.isSubmitting}
+                        variant="ghost"
+                        size="icon"
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff size={16} className="h-4 w-4" />
+                        ) : (
+                          <Eye size={16} className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -161,35 +231,40 @@ export function SignUpForm({
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Confirm password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="password"
-                        {...field}
-                        type={showPassword ? "text" : "password"}
-                      />
-                    </FormControl>
-                    <Button
-                      className={`absolute right-0 bottom-0 ${
-                        isLoading && "text-border"
-                      }`}
-                      variant="ghost"
-                      size="icon"
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff size={16} className="h-4 w-4" />
-                      ) : (
-                        <Eye size={16} className="h-4 w-4" />
-                      )}
-                    </Button>
+                    <div className="relative">
+                      <FormLabel>Confirm password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="password"
+                          {...field}
+                          type={showPassword ? "text" : "password"}
+                        />
+                      </FormControl>
+                      <Button
+                        className={`absolute right-0 bottom-0 ${
+                          form.formState.isSubmitting && "text-border"
+                        }`}
+                        disabled={form.formState.isSubmitting}
+                        variant="ghost"
+                        size="icon"
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff size={16} className="h-4 w-4" />
+                        ) : (
+                          <Eye size={16} className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button disabled={isLoading} className="w-full">
-                {isLoading && <Loader className="animate-spin" />}
+              <Button disabled={form.formState.isSubmitting} className="w-full">
+                {form.formState.isSubmitting && (
+                  <Loader className="animate-spin" />
+                )}
                 Register
               </Button>
               <div className="text-center text-sm">

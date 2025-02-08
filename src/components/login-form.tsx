@@ -1,10 +1,9 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import { Label } from "./ui/label";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,49 +13,28 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
+import { useActionState, useEffect } from "react";
+import { login } from "@/actions/actions";
+import { Loader } from "lucide-react";
 import { toast } from "sonner";
-import { RegisterSchema } from "@/lib/zodSchema";
-import { Eye, EyeOff, Loader } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
-  });
-  const [showPassword, setShowPassword] = useState(false);
+  const [res, action, isPending] = useActionState(login, null);
 
-  const isLoading = false;
-
-  async function onSubmit(body: z.infer<typeof RegisterSchema>) {
-    console.log({ body });
-    try {
-      //   const response = await fetch(".....");
-      //   if (response.error) {
-      //     toast.error("Registration failed", {
-      //       description: response?.error?.data?.message,
-      //     });
-      //   } else {
-      //     toast(response.data.message);
-      //   }
-    } catch (error) {
-      toast.error("Registration failed", {
-        description: "Something went wrong",
-      });
-      console.log("error", error);
+  useEffect(() => {
+    if (res?.code) {
+      if (res?.code < 300) {
+        console.log({ res });
+      } else if (res?.message) {
+        toast.error("Login failed", {
+          description: res?.message,
+        });
+      }
     }
-  }
+  }, [res]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -68,66 +46,36 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5">
-                    <FormLabel>Username/Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="johndoe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="password"
-                        {...field}
-                        type={showPassword ? "text" : "password"}
-                      />
-                    </FormControl>
-                    <Button
-                      className={`absolute right-0 bottom-0 ${
-                        isLoading && "text-border"
-                      }`}
-                      variant="ghost"
-                      size="icon"
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff size={16} className="h-4 w-4" />
-                      ) : (
-                        <Eye size={16} className="h-4 w-4" />
-                      )}
-                    </Button>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button disabled={isLoading} className="w-full">
-                {isLoading && <Loader className="animate-spin" />}
-                Login
-              </Button>
-              <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link href="/signup" className="underline underline-offset-4">
-                  sign up
-                </Link>
+          <form className="grid gap-6" action={action}>
+            <div className="grid gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email/username</Label>
+                <Input placeholder="email/username" required name="email" />
               </div>
-            </form>
-          </Form>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <a
+                    href="#"
+                    className="ml-auto text-sm underline-offset-4 hover:underline"
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
+                <Input type="password" required name="password" />
+              </div>
+              <Button disabled={isPending} className="w-full">
+                {isPending && <Loader className="animate-spin" />}
+                Register
+              </Button>
+            </div>
+            <div className="text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="underline underline-offset-4">
+                Sign up
+              </Link>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </div>
