@@ -9,19 +9,14 @@ import {
   SetStateAction,
 } from "react";
 import { useRouter } from "next/navigation";
+import { User } from "@/db/schema/schema";
 
-interface IUser {
-  id: string;
-  firstName: string;
-  lastName: string;
-  referralCode: string;
-  role: string;
-}
+type TUser = Omit<User, "passwordHash"> | null;
 
 interface IContext {
-  user: IUser | null;
-  loading: boolean;
-  setUser?: Dispatch<SetStateAction<IUser | null>>;
+  user: TUser;
+  signingOut: boolean;
+  setUser: Dispatch<SetStateAction<TUser>>;
   authChecking: boolean;
   signout?: () => Promise<void>;
   checkUserLoggedIn?: () => Promise<void>;
@@ -29,27 +24,27 @@ interface IContext {
 
 const AuthContext = createContext<IContext>({
   user: null,
-  loading: false,
+  signingOut: false,
   authChecking: true,
+  setUser: () => null,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<TUser>(null);
+  const [signingOut, setSigningOut] = useState(false);
   const [authChecking, setAuthChecking] = useState(true);
 
   const router = useRouter();
 
   const signout = async () => {
-    setLoading(true);
+    setSigningOut(true);
     await fetch("/api/auth/logout", {
       method: "POST",
       credentials: "include",
     });
-    setLoading(false);
+    setSigningOut(false);
     setUser(null);
     router.push("/");
-    router.refresh();
   };
 
   useEffect(() => {
@@ -57,24 +52,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const checkUserLoggedIn = async () => {
-    setLoading(true);
     try {
       const res = await fetch("/api/auth/login", {
         method: "GET",
         credentials: "include",
       });
       const data = await res.json();
-      setLoading(false);
       console.log("🚀 ~ file: AuthContext.tsx:56 ~ data:", data);
+      setAuthChecking(false);
       if (res.ok) {
         setUser(data);
-        setAuthChecking(false);
       } else {
         console.log("failed");
         setUser(null);
-        setAuthChecking(false);
       }
     } catch (error) {
+      setAuthChecking(false);
       setUser(null);
       console.log("Auth check failed", error);
     }
@@ -84,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         user,
-        loading,
+        signingOut,
         authChecking,
         setUser,
         signout,

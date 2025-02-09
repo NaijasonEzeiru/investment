@@ -1,15 +1,16 @@
 "use client";
 
+import { Loader } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+
 import AuthContext from "./auth-context";
 import { Button } from "./ui/button";
 
-function Header() {
+export default function Header() {
   const [openNav, setOpenNav] = useState(false);
   const pathName = usePathname();
-  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     setOpenNav(false);
@@ -67,12 +68,7 @@ function Header() {
             <Link href="#" className="px-3">
               About
             </Link>
-            <Link
-              href={`${user ? "/get-started" : "/login"}`}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors lg:w-fit w-full text-center"
-            >
-              Get Started
-            </Link>
+            <AuthButton />
           </div>
         </div>
       </nav>
@@ -80,4 +76,39 @@ function Header() {
   );
 }
 
-export default Header;
+function AuthButton() {
+  const { user, signingOut, authChecking, signout } = useContext(AuthContext);
+  // TODO: design disabled button
+
+  if (authChecking) {
+    return (
+      <Button
+        disabled
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors lg:w-fit w-full text-center"
+      >
+        <Loader className="animate-spin" />
+      </Button>
+    );
+  } else if (user) {
+    return (
+      <Button
+        onClick={signout}
+        disabled={signingOut}
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors lg:w-fit w-full text-center"
+      >
+        {signingOut ? <Loader className="animate-spin" /> : "Log out"}
+      </Button>
+    );
+  } else if (!user) {
+    return (
+      <Link
+        href="/login"
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors lg:w-fit w-full text-center"
+      >
+        Login
+      </Link>
+    );
+  } else {
+    return <p>How</p>;
+  }
+}

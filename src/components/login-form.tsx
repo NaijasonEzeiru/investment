@@ -13,19 +13,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useActionState, useEffect } from "react";
+import { useActionState, useContext, useEffect } from "react";
 import { login } from "@/actions/actions";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
+import AuthContext from "./auth-context";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const [res, action, isPending] = useActionState(login, null);
+  const { user, setUser } = useContext(AuthContext);
+  const router = useRouter();
 
   useEffect(() => {
     if (res?.code) {
+      if (res.code == 200) {
+        toast(res.message.split("-")[0], {
+          description: res.message.split("-")[1],
+        });
+        if (res.data) {
+          setUser(res.data);
+          router.replace("/");
+        }
+      }
       if (res?.code < 300) {
         console.log({ res });
       } else if (res?.message) {
@@ -35,6 +48,13 @@ export function LoginForm({
       }
     }
   }, [res]);
+
+  useEffect(() => {
+    if (user && !res?.data) {
+      toast("You are already logged in");
+      router.replace("/");
+    }
+  }, [user]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -66,7 +86,7 @@ export function LoginForm({
               </div>
               <Button disabled={isPending} className="w-full">
                 {isPending && <Loader className="animate-spin" />}
-                Register
+                Login
               </Button>
             </div>
             <div className="text-center text-sm">
