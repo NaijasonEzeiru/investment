@@ -1,7 +1,14 @@
-import { InferSelectModel, sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
+import { InferSelectModel, relations, sql } from "drizzle-orm";
+import {
+  pgTable,
+  text,
+  varchar,
+  timestamp,
+  integer,
+  smallint,
+} from "drizzle-orm/pg-core";
 
-export const users = pgTable("user", {
+export const users = pgTable("person", {
   id: text("id")
     .primaryKey()
     .notNull()
@@ -11,9 +18,6 @@ export const users = pgTable("user", {
   username: varchar("username", { length: 120 }).notNull().unique(),
   passwordHash: varchar("password_hash", { length: 120 }).notNull(),
   email: varchar("email", { length: 120 }).notNull().unique(),
-  referralCode: varchar("referral_code", { length: 50 })
-    .unique()
-    .default(sql`gen_random_uuid()`),
   transferPin: varchar("transfer_pin", { length: 10 }).notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   role: text("role", { enum: ["admin", "user", "moderator"] })
@@ -22,101 +26,60 @@ export const users = pgTable("user", {
   phone: varchar("phone", { length: 20 }).unique().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  upline: text(),
+  level: smallint().default(1).notNull(),
+  balance: integer().default(800).notNull(),
+  completedTasks: smallint("completed_tasks").default(0).notNull(),
+  interest: integer().default(0).notNull(),
+});
+
+export const usersRelations = relations(users, ({ one, many }) => ({
+  downlines: many(users),
+  userId: one(users, {
+    fields: [users.upline],
+    references: [users.id],
+  }),
+}));
+
+export const hotels = pgTable("hotel", {
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .default(sql`gen_random_uuid()`),
+  title: varchar("title", { length: 120 }).notNull(),
+  description: text("description").notNull(),
+  // TODO: chnage to decimal
+  rating: varchar("rating", { length: 120 }).notNull(),
+  totalRatings: integer("total_ratings").default(0).notNull(),
+  imgUrl: varchar("img_url").notNull(),
+  state: varchar("state", { length: 120 }).notNull(),
+  country: varchar("country", { length: 50 }).notNull(),
+  dailyProfits: smallint("daily_profits").notNull(),
+  totalReturns: integer("total_returns").notNull(),
+  price: integer("price").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const NFTs = pgTable("NFT", {
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .default(sql`gen_random_uuid()`),
+  title: varchar("title", { length: 120 }).notNull(),
+  description: text("description").notNull(),
+  number: integer().notNull(),
+  // TODO: chnage to decimal
+  rating: varchar("rating", { length: 120 }).notNull(),
+  totalRatings: integer("total_ratings").default(0).notNull(),
+  imgUrl: varchar("img_url").notNull(),
+  collection: varchar("collection", { length: 40 }).notNull(),
+  category: varchar("category", { length: 50 }).notNull(),
+  price: integer("price").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export type User = InferSelectModel<typeof users>;
-// export const userRelations = relations(users, ({ many }) => ({
-//   pets: many(pets),
-// }));
-
-// export const accounts = pgTable(
-//   "account",
-//   {
-//     userId: text("userId")
-//       .notNull()
-//       .references(() => users.id, { onDelete: "cascade" }),
-//     type: text("type").$type<AdapterAccount["type"]>().notNull(),
-//     provider: text("provider").notNull(),
-//     providerAccountId: text("providerAccountId").notNull(),
-//     refresh_token: text("refresh_token"),
-//     access_token: text("access_token"),
-//     expires_at: integer("expires_at"),
-//     token_type: text("token_type"),
-//     scope: text("scope"),
-//     id_token: text("id_token"),
-//     session_state: text("session_state"),
-//   },
-//   (account) => ({
-//     compoundKey: primaryKey(account.provider, account.providerAccountId),
-//   })
-// );
-
-// export const sessions = pgTable("session", {
-//   sessionToken: text("sessionToken").notNull().primaryKey(),
-//   userId: text("userId")
-//     .notNull()
-//     .references(() => users.id, { onDelete: "cascade" }),
-//   expires: timestamp("expires", { mode: "date" }).notNull(),
-// });
-
-// export const verificationTokens = pgTable(
-//   "verificationToken",
-//   {
-//     identifier: text("indentifier").notNull(),
-//     token: text("token").notNull(),
-//     expires: timestamp("expires", { mode: "date" }).notNull(),
-//   },
-//   (vt) => ({ compoundKey: primaryKey(vt.identifier, vt.token) })
-// );
-
-// export type NewUser = InferInsertModel<typeof users>;
-
-// export const pets = pgTable("pet", {
-//   id: uuid("id").primaryKey().defaultRandom(),
-//   petName: varchar("pet_name", { length: 20 }).notNull(),
-//   country: varchar("country", { length: 20 }).notNull(),
-//   state: varchar("state", { length: 20 }).notNull(),
-//   breed: varchar("breed", { length: 30 }).notNull(),
-//   purebred: varchar("pure_bred", { length: 30 }).notNull(),
-//   age: varchar("age", { length: 20 }).notNull(),
-//   gender: varchar("gender", { length: 7 }).notNull(),
-//   description: text("description").notNull(),
-//   createdAt: timestamp("created_at").defaultNow().notNull(),
-//   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-//   imgs: varchar("cloudinary_ids", { length: 120 })
-//     .array()
-//     .notNull()
-//     .$type<Array<string>>(),
-//   userId: text("user_id")
-//     .notNull()
-//     .references(() => users.id, { onDelete: "cascade" }),
-//   category: text("category")
-//     .notNull()
-//     .references(() => categories.name),
-//   city: varchar("city", { length: 20 }).notNull(),
-// });
-
-// export const petsRelations = relations(pets, ({ one }) => ({
-//   user: one(users, {
-//     fields: [pets.userId],
-//     references: [users.id],
-//   }),
-//   pets: one(categories, {
-//     fields: [pets.category],
-//     references: [categories.name],
-//   }),
-// }));
-
-// export type Pet = InferSelectModel<typeof pets>;
-// export type NewPet = InferInsertModel<typeof pets>;
-
-// export const categories = pgTable("category", {
-//   name: text("name").primaryKey(),
-// });
-
-// export const categoriesRelations = relations(categories, ({ many }) => ({
-//   products: many(pets),
-// }));
-
-// export type Categories = InferSelectModel<typeof categories>;
-// export type NewCategories = InferInsertModel<typeof categories>;
+export type NFT = InferSelectModel<typeof NFTs>;
+export type Hotel = InferSelectModel<typeof hotels>;

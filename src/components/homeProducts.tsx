@@ -1,7 +1,11 @@
-import React from "react";
+import { getListings } from "@/actions/actions";
+import { Suspense } from "react";
 import ProductCard from "./productCard";
 
-function HomeProducts() {
+export default async function HomeProducts() {
+  const listings = await getListings();
+  console.log({ listings });
+
   return (
     <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,14 +36,12 @@ function HomeProducts() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <Suspense fallback={<p>Loading...</p>}>
+            {Array.isArray(listings) &&
+              listings.map((list, index) => (
+                <ProductCard list={list} key={index} />
+              ))}
+          </Suspense>
         </div>
         <div className="mt-8 flex items-center justify-center sm:justify-between">
           <p className="text-sm text-gray-700 hidden sm:block">
@@ -102,5 +104,3 @@ function HomeProducts() {
     </div>
   );
 }
-
-export default HomeProducts;

@@ -23,7 +23,6 @@ export const POST = async (request: NextRequest) => {
       lastName,
       email,
       phone,
-      referralCode,
       transferPin,
       username,
     } = validate.data;
@@ -38,7 +37,6 @@ export const POST = async (request: NextRequest) => {
         firstName: firstName.replace(/^./, (char) => char.toUpperCase()),
         lastName: lastName.replace(/^./, (char) => char.toUpperCase()),
         phone,
-        referralCode,
         transferPin,
         username,
       })

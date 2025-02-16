@@ -35,6 +35,7 @@ export function LoginForm({
           description: res.message.split("-")[1],
         });
         if (res.data) {
+          console.log({ use: res.data });
           setUser(res.data);
           router.replace("/");
         }
@@ -47,6 +48,7 @@ export function LoginForm({
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [res]);
 
   useEffect(() => {
@@ -54,6 +56,7 @@ export function LoginForm({
       toast("You are already logged in");
       router.replace("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (

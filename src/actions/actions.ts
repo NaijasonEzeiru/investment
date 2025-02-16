@@ -58,3 +58,17 @@ export async function login(
     return { message: "Something went wrong", code: 500 };
   }
 }
+
+export async function getListings() {
+  try {
+    const listings = await db.query.hotels.findMany();
+    if (!listings) {
+      return { message: "No listing found", status: 404 };
+    }
+    console.log({ listings });
+    return listings;
+  } catch (err) {
+    console.log({ err });
+    return { message: "Something went wrong", status: 500 };
+  }
+}

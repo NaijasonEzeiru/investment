@@ -5,17 +5,17 @@ export const RegisterSchema = z
   .object({
     firstName: z
       .string()
-      .min(4, { message: "Can not be less than 4 characters" })
+      .min(2, { message: "Can not be less than 2 characters" })
       .max(40, { message: "Can not be more than 40 characters" }),
     lastName: z
       .string()
-      .min(4, { message: "Can not be less than 4 characters" })
+      .min(2, { message: "Can not be less than 2 characters" })
       .max(40, { message: "Can not be more than 40 characters" }),
     referralCode: z
       .string()
       .length(10, { message: "Must be 10 characters long" })
       .optional(),
-    transferPin: z.string().length(5, { message: "Must be 5 characters long" }),
+    transferPin: z.string().length(4, { message: "Must be 4 digits long" }),
     username: z
       .string()
       .min(4, { message: "Can not be less than 4 characters" })
@@ -25,16 +25,10 @@ export const RegisterSchema = z
       .string()
       .min(8, { message: "Can not be less than 8 characters" })
       .max(20, { message: "Can not be more than 20 characters" }),
-    //   .regex(new RegExp(/^(?=.*[a-zA-Z0-9])(?=.*[^a-zA-Z0-9]).{8,}$/), {
-    //     message: "Must include alphanumeric and non-alphanumeric characters",
-    //   }),
     confirmPassword: z
       .string()
       .min(8, { message: "Can not be less than 8 characters" })
       .max(20, { message: "Can not be more than 20 characters" }),
-    // .regex(new RegExp(/^(?=.*[a-zA-Z0-9])(?=.*[^a-zA-Z0-9]).{8,}$/), {
-    //   message: "Must include alphanumeric and non-alphanumeric characters",
-    // }),
     email: z
       .string()
       .email({ message: "Please input a valid email address" })
@@ -59,4 +53,35 @@ export const LoginSchema = z.object({
     .string()
     .min(4, { message: "Must contain at least 4 characters" })
     .max(20, { message: "Must contain at most 20 characters" }),
+});
+
+export const HotelSchema = z.object({
+  title: z
+    .string()
+    .min(4, { message: "Must contain at least 4 characters" })
+    .max(120, { message: "Must contain at most 120 characters" }),
+  description: z.string(),
+  rating: z.string(),
+  totalRatings: z.coerce.number().positive(),
+  imgUrl: z.string().url(),
+  state: z.string(),
+  country: z.string(),
+  dailyProfits: z.coerce.number().positive(),
+  price: z.coerce.number().positive(),
+  totalReturns: z.coerce.number().positive(),
+});
+
+export const NFTSchema = z.object({
+  title: z
+    .string()
+    .min(4, { message: "Must contain at least 4 characters" })
+    .max(120, { message: "Must contain at most 120 characters" }),
+  description: z.string(),
+  rating: z.string(),
+  number: z.coerce.number().positive(),
+  totalRatings: z.coerce.number().positive(),
+  imgUrl: z.string().url(),
+  collection: z.string(),
+  category: z.string(),
+  price: z.coerce.number().positive(),
 });

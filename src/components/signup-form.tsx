@@ -30,6 +30,7 @@ import {
 } from "./ui/form";
 import { RegisterSchema } from "@/lib/zodSchema";
 import { useRouter } from "next/navigation";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 
 export function SignUpForm({
   className,
@@ -37,6 +38,10 @@ export function SignUpForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      confirmPassword: "",
+      password: "",
+    },
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -56,6 +61,7 @@ export function SignUpForm({
 
       if (res.ok) {
         console.log(data);
+        toast("Registration successful", { description: "Please log in" });
         router.push("/login");
       } else {
         if (data.errors) {
@@ -172,7 +178,19 @@ export function SignUpForm({
                   <FormItem className="space-y-0.5">
                     <FormLabel>Transfer pin</FormLabel>
                     <FormControl>
-                      <Input placeholder="12345" {...field} type="number" />
+                      <InputOTP
+                        maxLength={4}
+                        {...field}
+                        inputMode="numeric"
+                        pattern={`^[0-9]*$`}
+                      >
+                        <InputOTPGroup>
+                          <InputOTPSlot index={0} />
+                          <InputOTPSlot index={1} />
+                          <InputOTPSlot index={2} />
+                          <InputOTPSlot index={3} />
+                        </InputOTPGroup>
+                      </InputOTP>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -60,8 +60,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const data = await res.json();
       console.log("🚀 ~ file: AuthContext.tsx:56 ~ data:", data);
       setAuthChecking(false);
-      if (res.ok) {
-        setUser(data);
+      if (res.ok && data.user) {
+        setUser(data.user);
       } else {
         console.log("failed");
         setUser(null);

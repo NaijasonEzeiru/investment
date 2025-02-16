@@ -1,15 +1,16 @@
+import { Hotel } from "@/db/schema/schema";
 import Image from "next/image";
 import React from "react";
 
-function ProductCard() {
+function ProductCard({ list }: { list: Hotel }) {
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow group cursor-pointer">
       <div className="relative pb-[75%] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&q=80"
+          src={"https://images.unsplash.com/photo-1564501049412-61c2a3083791"}
           width={286}
           height={214.5}
-          alt="Grand Plaza Hotel &amp; Spa"
+          alt={list.title}
           className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-4 left-4">
@@ -34,9 +35,11 @@ function ProductCard() {
               >
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
               </svg>
-              <span className="ml-1 text-sm">4.3 (843)</span>
+              <span className="ml-1 text-sm">
+                {list.rating} (${list.totalRatings})
+              </span>
             </div>
-            <div className="text-lg font-bold">$505</div>
+            <div className="text-lg font-bold">${list.price}</div>
           </div>
         </div>
       </div>
@@ -57,14 +60,15 @@ function ProductCard() {
             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
-          <span className="text-sm text-gray-600">New York, USA</span>
+          <span className="text-sm text-gray-600">
+            {list.state}, {list.country}
+          </span>
         </div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1">
-          Grand Plaza Hotel &amp; Spa
+          {list.title}
         </h3>
         <p className="text-sm text-gray-500 mb-3 line-clamp-2">
-          Experience luxury and comfort in our premium accommodations with
-          world-class amenities and exceptional service.
+          {list.description}
         </p>
         <div className="mt-4 bg-green-50 rounded-lg p-3">
           <div className="flex items-center justify-between mb-2">
@@ -86,7 +90,9 @@ function ProductCard() {
               </svg>
               <span className="text-sm font-medium">Daily Profit</span>
             </div>
-            <span className="text-green-700 font-bold">$58.00</span>
+            <span className="text-green-700 font-bold">
+              ${list.dailyProfits}.00
+            </span>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center text-green-700">
@@ -107,7 +113,9 @@ function ProductCard() {
               </svg>
               <span className="text-sm font-medium">Total Returns</span>
             </div>
-            <span className="text-green-700 font-bold">$22,704</span>
+            <span className="text-green-700 font-bold">
+              ${list.totalReturns.toLocaleString()}
+            </span>
           </div>
         </div>
       </div>
