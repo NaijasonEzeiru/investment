@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { Clock, Loader } from "lucide-react";
 import Image from "next/image";
 
 import {
@@ -8,13 +8,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Hotel } from "@/db/schema/schema";
 import { Button } from "../ui/button";
+import AuthContext, { TUser } from "../auth-context";
 
-export default function RemoteWorkerCarousel() {
+export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
+  const { checkUserLoggedIn, authChecking } = useContext(AuthContext);
   const [listings, setListings] = useState<Hotel[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getListings();
@@ -34,6 +37,46 @@ export default function RemoteWorkerCarousel() {
       }
     } catch (error) {
       console.log("get listings failed", error);
+    }
+  }
+
+  async function submitTask() {
+    setLoading(true);
+    if (user && user?.balance < 30) {
+      toast.error("Unable to submit order", {
+        description: "Balance insufficient",
+      });
+      setLoading(false);
+      return;
+    }
+    // const newListings = listings.unshift()
+    try {
+      const res = await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+      const data = await res.json();
+      setLoading(false);
+      if (res.ok) {
+        console.log(data);
+        // revalidateTag("me");
+        // @ts-expect-error: Should not be undefined
+        checkUserLoggedIn();
+        toast(data?.message);
+      } else {
+        toast.error("Could not submit order", {
+          description: "Something went wrong",
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Could not submit order", {
+        description: "Something went wrong",
+      });
+      console.log("error", error);
     }
   }
 
@@ -88,7 +131,10 @@ export default function RemoteWorkerCarousel() {
         <CarouselPrevious className="left-2" />
         <CarouselNext className="right-2" />
       </Carousel>
-      <Button>Continue Task</Button>
+      <Button onClick={submitTask} disabled={loading || authChecking}>
+        {(loading || authChecking) && <Loader className="animate-spin" />}
+        Continue Task
+      </Button>
     </>
   );
 }

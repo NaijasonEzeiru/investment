@@ -58,7 +58,7 @@ export default function RemoteWorker({
                 <Star className="text-yellow-400" size={18} fill="yellow" />{" "}
                 VIP1 Progress
               </span>
-              <p className="text-xs px-3 py-1 opacity-70 rounded-full bg-violet-300/35 font-extralight">
+              <p className="text-xs px-3 py-1 rounded-full bg-violet-300/35 font-extralight">
                 Level: VIP {user?.level}
               </p>
             </CardTitle>
@@ -67,21 +67,21 @@ export default function RemoteWorker({
             <div className="flex gap-3 flex-col md:flex-row">
               <span className="p-4 flex justify-between items-center rounded-lg w-full bg-violet-300/35">
                 <span>
-                  <p className="text-xs font-light opacity-70">Completed</p>
+                  <p className="text-xs font-light">Completed</p>
                   <p>{user?.completedTasks} Tasks</p>
                 </span>
                 <Check className="p-1 border rounded-full border-white" />
               </span>
               <span className="p-4 flex justify-between items-center rounded-lg w-full bg-violet-300/35">
                 <span>
-                  <p className="text-xs font-light opacity-70">Remaining</p>
-                  {user ? <p>{30 - user?.completedTasks} Tasks</p> : <p>30</p>}
+                  <p className="text-xs font-light">Remaining</p>
+                  {user ? <p>{30 - user?.completedTasks} Tasks</p> : <p></p>}
                 </span>
                 <Loader className="p-1 border rounded-full border-white" />
               </span>
             </div>
             <div className="">
-              <p className="text-xs font-light opacity-70">Progress</p>
+              <p className="text-xs font-light">Progress</p>
               <Progress
                 value={user ? (user?.completedTasks / 30) * 100 : 0}
                 className="bg-violet-400 rounded w-full"
@@ -102,31 +102,27 @@ export default function RemoteWorker({
               <span className="p-4 grid gap-1.5 rounded-lg w-full bg-purple-300/35">
                 <span className="flex items-center gap-1">
                   <DollarSign size={12} />
-                  <p className="text-xs font-light opacity-70">
-                    Amount Available
-                  </p>
+                  <p className="text-xs font-light">Amount Available</p>
                 </span>
                 <p>${user?.balance}</p>
-                <i className="text-xs font-light opacity-70 whitespace-nowrap">
+                <i className="text-xs font-light whitespace-nowrap">
                   Based on completed tasks
                 </i>
               </span>
               <span className="p-4 grid gap-1.5 rounded-lg w-full bg-purple-300/35">
                 <span className="flex items-center gap-1">
                   <TrendingUp size={12} />
-                  <p className="text-xs font-light opacity-70">
-                    Profit Potential
-                  </p>
+                  <p className="text-xs font-light">Profit Potential</p>
                 </span>
-                <p>25-40%</p>
-                <i className="text-xs font-light opacity-70 whitespace-nowrap">
+                <p>$1,350</p>
+                <i className="text-xs font-light whitespace-nowrap">
                   Today&apos;s Commision
                 </i>
               </span>
             </div>
           </CardContent>
         </Card>
-        <RemoteWorkerCarousel />
+        <RemoteWorkerCarousel user={user} />
       </div>
     </>
   );

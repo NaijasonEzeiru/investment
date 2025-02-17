@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { User } from "@/db/schema/schema";
 
-type TUser = Omit<User, "passwordHash"> | null;
+export type TUser = Omit<User, "passwordHash"> | null;
 
 interface IContext {
   user: TUser;
@@ -27,6 +27,7 @@ const AuthContext = createContext<IContext>({
   signingOut: false,
   authChecking: true,
   setUser: () => null,
+  // checkUserLoggedIn: () => await new Promise,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -52,6 +53,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const checkUserLoggedIn = async () => {
+    // "use cache";
+    // cacheTag("me");
     try {
       const res = await fetch("/api/auth/login", {
         method: "GET",
