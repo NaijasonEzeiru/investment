@@ -38,12 +38,12 @@ export default function AddNFT() {
   async function onSubmit(body: z.infer<typeof NFTSchema>) {
     console.log({ body });
     try {
-      const res = await fetch("/api/NFT-listing", {
+      const res = await fetch("/api/listings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, type: "NFT" }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -176,10 +176,10 @@ export default function AddNFT() {
               />
               <FormField
                 control={form.control}
-                name="collection"
+                name="category"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Total returns</FormLabel>
+                    <FormLabel>Category</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -189,10 +189,10 @@ export default function AddNFT() {
               />
               <FormField
                 control={form.control}
-                name="category"
+                name="collection"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>Collection</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>

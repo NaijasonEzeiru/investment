@@ -26,24 +26,30 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { useEffect } from "react";
 
 export default function AddHotel() {
   const form = useForm<z.infer<typeof HotelSchema>>({
     resolver: zodResolver(HotelSchema),
   });
 
-  const rating = form.watch("rating");
-  console.log({ rating });
+  const { formState, reset } = form;
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({});
+    }
+  }, [formState, reset]);
 
   async function onSubmit(body: z.infer<typeof HotelSchema>) {
     console.log({ body });
     try {
-      const res = await fetch("/api/hotel-listing", {
+      const res = await fetch("/api/listings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, type: "hotel" }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -213,10 +219,8 @@ export default function AddHotel() {
                   </FormItem>
                 )}
               />
-              <Button disabled={form.formState.isSubmitting} className="w-full">
-                {form.formState.isSubmitting && (
-                  <Loader className="animate-spin" />
-                )}
+              <Button disabled={formState.isSubmitting} className="w-full">
+                {formState.isSubmitting && <Loader className="animate-spin" />}
                 Add hotel listing
               </Button>
             </form>

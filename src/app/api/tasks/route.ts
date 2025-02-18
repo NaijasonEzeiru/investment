@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { db } from "@/db/db";
 import { users } from "@/db/schema/schema";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -14,7 +14,9 @@ export const POST = async (request: NextRequest) => {
         balance: sql`${users.balance} - 30`,
         completedTasks: sql`${users.completedTasks} + 1`,
         interest: sql`${users.interest} + 45`,
+        reviewed: sql`array_append(${users.reviewed}, ${body.id})`,
       })
+      .where(eq(users.id, body.userId))
       .returning();
     return new NextResponse(
       JSON.stringify({

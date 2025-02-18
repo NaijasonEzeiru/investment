@@ -5,9 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 function page() {
   return (
     <>
-      <h1 className="text-xl font-semibold text-center">Add listings</h1>
+      <h1 className="text-xl font-semibold text-center mb-8">Add listings</h1>
       {/* <Separator className="w-40 bg-primary mx-auto" /> */}
-      <Tabs defaultValue="hotel" className="w-full mt-8">
+      <Tabs defaultValue="hotel" className="w-full">
         <TabsList>
           <TabsTrigger value="hotel">Hotel</TabsTrigger>
           <TabsTrigger value="NFT">NFT</TabsTrigger>

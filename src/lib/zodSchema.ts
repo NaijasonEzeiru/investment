@@ -44,6 +44,38 @@ export const RegisterSchema = z
     }
   });
 
+export const EditUserSchema = z.object({
+  firstName: z
+    .string()
+    .min(2, { message: "Can not be less than 2 characters" })
+    .max(40, { message: "Can not be more than 40 characters" }),
+  lastName: z
+    .string()
+    .min(2, { message: "Can not be less than 2 characters" })
+    .max(40, { message: "Can not be more than 40 characters" }),
+  transferPin: z.string().length(4, { message: "Must be 4 digits long" }),
+  username: z
+    .string()
+    .min(4, { message: "Can not be less than 4 characters" })
+    .max(20, { message: "Can not be more than 20 characters" }),
+  phone: z.string().refine(isMobilePhone),
+  password: z
+    .string()
+    .min(8, { message: "Can not be less than 8 characters" })
+    .max(20, { message: "Can not be more than 20 characters" }),
+  email: z
+    .string()
+    .email({ message: "Please input a valid email address" })
+    .max(30, { message: "Must contain at most 30 characters" }),
+  // TODO: change to enum
+  role: z
+    .string()
+    .email({ message: "Please input a valid email address" })
+    .max(30, { message: "Must contain at most 30 characters" }),
+  level: z.coerce.number().gt(0).lt(6),
+  balance: z.coerce.number().positive(),
+});
+
 export const LoginSchema = z.object({
   email: z
     .string()

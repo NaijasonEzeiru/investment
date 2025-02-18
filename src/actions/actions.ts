@@ -61,12 +61,42 @@ export async function login(
 
 export async function getListings() {
   try {
-    const listings = await db.query.hotels.findMany();
+    const listings = await db.query.listings.findMany();
     if (!listings) {
       return { message: "No listing found", status: 404 };
     }
     console.log({ listings });
     return listings;
+  } catch (err) {
+    console.log({ err });
+    return { message: "Something went wrong", status: 500 };
+  }
+}
+
+export async function getUsers() {
+  try {
+    const users = await db.query.users.findMany();
+    if (!users) {
+      return { message: "No user found", status: 404 };
+    }
+    console.log({ users });
+    return users;
+  } catch (err) {
+    console.log({ err });
+    return { message: "Something went wrong", status: 500 };
+  }
+}
+
+export async function getUser(id: string) {
+  try {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    if (!user) {
+      return { message: "No user found", status: 404 };
+    }
+    // @typescript-eslint/no-unused-vars
+    const { passwordHash, ...rest } = user;
+    console.log({ user, passwordHash });
+    return rest;
   } catch (err) {
     console.log({ err });
     return { message: "Something went wrong", status: 500 };

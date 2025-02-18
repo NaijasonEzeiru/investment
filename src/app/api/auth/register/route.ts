@@ -25,7 +25,12 @@ export const POST = async (request: NextRequest) => {
       phone,
       transferPin,
       username,
+      referralCode,
     } = validate.data;
+    let balance = 0;
+    if (referralCode) {
+      balance = 800;
+    }
     const [register] = await db
       .insert(users)
       .values({
@@ -39,6 +44,8 @@ export const POST = async (request: NextRequest) => {
         phone,
         transferPin,
         username,
+        balance,
+        upline: referralCode,
       })
       .returning();
     return new NextResponse(
