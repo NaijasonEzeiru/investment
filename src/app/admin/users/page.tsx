@@ -11,29 +11,27 @@ export default async function page() {
   return (
     <>
       <h1 className="text-xl font-semibold text-center mb-8">All users</h1>
-      <div className="">
+      <div className="flex gap-6 flex-wrap">
         {Array.isArray(users) &&
           users?.map((user) => (
-            <Card
-              className="px-4 py-4 w-fit flex justify-between gap-14"
-              key={user.id}
-            >
-              <div className="">
-                <User className="size-28 rounded-full bg-slate-200 border-border border-8 border-gray-200" />
-                <p className="mt-3 mb-1">Progress</p>
-                <Progress value={50} />
-              </div>
-              <div className="space-y-4">
-                <div className="flex gap-7 items-center justify-between">
-                  <div className="">
-                    <p className="text-2xl font-medium">
-                      {user.firstName} {user.lastName}
-                    </p>
-                    <p className="text-base">{user.role}</p>
+            <Card className="px-4 py-4 grow" key={user.id}>
+              <div className="space-y-4 w-full">
+                <div className="flex sm:gap-7 items-center justify-between flex-col sm:flex-row">
+                  <div className="flex gap-2 items-center self-start">
+                    <User
+                      size={30}
+                      className="border-4 bg-border border-border rounded-full size-11"
+                    />
+                    <div className="">
+                      <p className="text-xl font-medium">
+                        {user.firstName} {user.lastName}
+                      </p>
+                      <p className="text-base">{user.role}</p>
+                    </div>
                   </div>
                   <Link
                     href={`/admin/users/${user.id}`}
-                    className="inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 gap-4 text-lg"
+                    className="inline-flex items-center self-end justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 gap-4 text-lg"
                   >
                     <UserPen />
                     Edit

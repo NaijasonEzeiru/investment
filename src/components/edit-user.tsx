@@ -90,7 +90,7 @@ export default function EditUser({ user }: { user: TUser }) {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-xl">
-          Edit {user?.firstName} {user?.lastName}
+          Edit {user?.firstName} {user?.lastName}'s details
         </CardTitle>
         <CardDescription>
           Modify details and submit to edit user

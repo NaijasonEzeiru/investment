@@ -1,7 +1,8 @@
 import { Listing } from "@/db/schema/schema";
-import { DollarSign, MapPin, Palette, TrendingUp } from "lucide-react";
+import { DollarSign, MapPin, Palette, Star, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import { Skeleton } from "./ui/skeleton";
 
 function ProductCard({ list }: { list: Listing }) {
   return (
@@ -22,20 +23,7 @@ function ProductCard({ list }: { list: Listing }) {
         <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-4">
           <div className="flex items-center justify-between text-white">
             <div className="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-star w-4 h-4 text-yellow-400 fill-current"
-              >
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
+              <Star className="w-4 h-4 text-yellow-400" fill="gold" />
               <span className="ml-1 text-sm">
                 {list.rating} ({list.totalRatings})
               </span>
@@ -104,3 +92,36 @@ function ProductCard({ list }: { list: Listing }) {
 }
 
 export default ProductCard;
+
+export function ProductCardSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 8 }).map((_, index) => (
+        <div className="bg-white rounded-xl shadow-sm">
+          <div className="relative pb-[75%]">
+            <Skeleton className="w-[286px] h-[214.5px] absolute inset-0" />
+            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+              <div className="flex items-center justify-between text-white">
+                <div className="flex items-center">
+                  <Skeleton className="w-14 h-5" />
+                </div>
+                <Skeleton className="w-11 h-5" />
+              </div>
+            </div>
+          </div>
+          <div className="p-4">
+            <div className="flex items-center mb-2">
+              <MapPin className="w-4 h-4 text-gray-400 mr-1" />
+              <span className="text-sm text-gray-600">
+                <Skeleton className="h-5 w-20" />
+              </span>
+            </div>
+            <Skeleton className="h-7 w-28 mb-2" />
+            <Skeleton className="h-10 w-full mb-3" />
+            <Skeleton className="w-full h-20" />
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}

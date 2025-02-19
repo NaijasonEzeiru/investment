@@ -15,6 +15,7 @@ import AuthContext, { TUser } from "../auth-context";
 import { Listing } from "@/db/schema/schema";
 import { lists, rev } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
 
 export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
   const { checkUserLoggedIn, authChecking } = useContext(AuthContext);
@@ -27,10 +28,6 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
       getListings();
     }
   }, [user]);
-
-  const mm = lists.listings.filter((val) => !rev.includes(val.id));
-
-  console.log({ mm });
 
   async function getListings() {
     setLoadingListings(true);
@@ -97,7 +94,22 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
   }
 
   if (loadingListings) {
-    return <p> Loading...</p>;
+    return (
+      <div className="relative h-[430px]">
+        <Skeleton className="w-full h-48" />
+        <div className="space-y-3 p-3 bg-muted">
+          <Skeleton className="h-7 w-44" />
+          <Skeleton className="h-6 w-10/12" />
+          <Skeleton className="h-4 w-40" />
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-11 w-24" />
+            <Skeleton className="h-11 w-24" />
+            <Skeleton className="h-11 w-24" />
+          </div>
+          <Skeleton className="w-full h-9" />
+        </div>
+      </div>
+    );
   }
 
   return (

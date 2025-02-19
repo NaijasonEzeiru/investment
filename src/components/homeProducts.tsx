@@ -1,6 +1,6 @@
 import { getListings } from "@/actions/actions";
 import { Suspense } from "react";
-import ProductCard from "./productCard";
+import ProductCard, { ProductCardSkeleton } from "./productCard";
 
 export default async function HomeProducts() {
   const listings = await getListings();
@@ -36,7 +36,7 @@ export default async function HomeProducts() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<ProductCardSkeleton />}>
             {Array.isArray(listings) &&
               listings.map((list, index) => (
                 <ProductCard list={list} key={index} />
