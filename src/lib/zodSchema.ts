@@ -1,6 +1,8 @@
 import { z } from "zod";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
 
+const ROLES = ["user", "moderator", "admin"] as const;
+
 export const RegisterSchema = z
   .object({
     firstName: z
@@ -68,11 +70,8 @@ export const EditUserSchema = z.object({
     .email({ message: "Please input a valid email address" })
     .max(30, { message: "Must contain at most 30 characters" }),
   // TODO: change to enum
-  role: z
-    .string()
-    .email({ message: "Please input a valid email address" })
-    .max(30, { message: "Must contain at most 30 characters" }),
-  level: z.coerce.number().gt(0).lt(6),
+  role: z.enum(ROLES),
+  level: z.coerce.number(),
   balance: z.coerce.number().positive(),
 });
 

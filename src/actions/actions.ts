@@ -90,13 +90,16 @@ export async function getUsers() {
 export async function getUser(id: string) {
   try {
     const [user] = await db.select().from(users).where(eq(users.id, id));
+    console.log({ action: user });
     if (!user) {
       return { message: "No user found", status: 404 };
     }
-    // @typescript-eslint/no-unused-vars
-    const { passwordHash, ...rest } = user;
-    console.log({ user, passwordHash });
-    return rest;
+    const unhashedPassword = CryptoJS.AES.decrypt(
+      user.passwordHash,
+      process.env.PASSWORD_SECRET!
+    ).toString(CryptoJS.enc.Utf8);
+    const newUser = { ...user, password: unhashedPassword };
+    return { user: newUser, status: 200 };
   } catch (err) {
     console.log({ err });
     return { message: "Something went wrong", status: 500 };

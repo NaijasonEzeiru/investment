@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Loader } from "lucide-react";
-import Link from "next/link";
 import PhoneInput from "react-phone-number-input";
 import { toast } from "sonner";
 import "react-phone-number-input/style.css";
@@ -33,6 +32,13 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { TUser } from "./auth-context";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export default function EditUser({ user }: { user: TUser }) {
   const form = useForm<z.infer<typeof EditUserSchema>>({
@@ -43,7 +49,7 @@ export default function EditUser({ user }: { user: TUser }) {
   async function onSubmit(body: z.infer<typeof EditUserSchema>) {
     console.log({ body });
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch("/api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,162 +87,209 @@ export default function EditUser({ user }: { user: TUser }) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome</CardTitle>
-          <CardDescription>Enter your details to sign up</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5">
-                    <FormLabel>First Name</FormLabel>
+    <Card>
+      <CardHeader className="text-center">
+        <CardTitle className="text-xl">
+          Edit {user?.firstName} {user?.lastName}
+        </CardTitle>
+        <CardDescription>
+          Modify details and submit to edit user
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5">
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5">
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Doe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5">
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="johndoe" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="name@example.com"
+                      {...field}
+                      type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <FormItem className="space-y-0.5 relative">
+                  <FormLabel>Phone number</FormLabel>
+                  <FormControl>
+                    <PhoneInput
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      value={value}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="transferPin"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5">
+                  <FormLabel>Transfer pin</FormLabel>
+                  <FormControl>
+                    <InputOTP
+                      maxLength={4}
+                      {...field}
+                      inputMode="numeric"
+                      pattern={`^[0-9]*$`}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5 relative">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="balance"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5 relative">
+                  <FormLabel>Balance</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
-                      <Input placeholder="John" {...field} />
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={`Select a role for ${user?.firstName} ${user?.lastName}`}
+                        />
+                      </SelectTrigger>
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5">
-                    <FormLabel>Last Name</FormLabel>
+                    <SelectContent>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="moderator">Moderator</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="level"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Level</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value.toString()}
+                  >
                     <FormControl>
-                      <Input placeholder="Doe" {...field} />
+                      <SelectTrigger>
+                        <SelectValue
+                          placeholder={`Select a level for ${user?.firstName} ${user?.lastName}`}
+                        />
+                      </SelectTrigger>
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5">
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input placeholder="johndoe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5">
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="name@example.com"
-                        {...field}
-                        type="email"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Phone number</FormLabel>
-                    <FormControl>
-                      <PhoneInput
-                        onBlur={onBlur}
-                        onChange={onChange}
-                        value={value}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="transferPin"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5">
-                    <FormLabel>Transfer pin</FormLabel>
-                    <FormControl>
-                      <InputOTP
-                        maxLength={4}
-                        {...field}
-                        inputMode="numeric"
-                        pattern={`^[0-9]*$`}
-                      >
-                        <InputOTPGroup>
-                          <InputOTPSlot index={0} />
-                          <InputOTPSlot index={1} />
-                          <InputOTPSlot index={2} />
-                          <InputOTPSlot index={3} />
-                        </InputOTPGroup>
-                      </InputOTP>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input placeholder="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="balance"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Balance</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                    <SelectContent>
+                      <SelectItem value="1">VIP1</SelectItem>
+                      <SelectItem value="2">VIP2</SelectItem>
+                      <SelectItem value="3">VIP3</SelectItem>
+                      <SelectItem value="4">VIP4</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* TODO: add role and level */}
+            {/* TODO: add role and level */}
 
-              <Button disabled={form.formState.isSubmitting} className="w-full">
-                {form.formState.isSubmitting && (
-                  <Loader className="animate-spin" />
-                )}
-                Register
-              </Button>
-              <div className="text-center text-sm">
-                Already have an account?{" "}
-                <Link href="/login" className="underline underline-offset-4">
-                  log in
-                </Link>
-              </div>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-        By registering, you agree to our <a href="#">Terms of Service</a> and{" "}
-        <a href="#">Privacy Policy</a>.
-      </div>
-    </div>
+            <Button disabled={form.formState.isSubmitting} className="w-full">
+              {form.formState.isSubmitting && (
+                <Loader className="animate-spin" />
+              )}
+              Edit user
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
