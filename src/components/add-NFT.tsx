@@ -30,6 +30,10 @@ import { Textarea } from "./ui/textarea";
 export default function AddNFT() {
   const form = useForm<z.infer<typeof NFTSchema>>({
     resolver: zodResolver(NFTSchema),
+    defaultValues: {
+      description:
+        "Unique digital artwork from a renowned artist, part of an exclusive NFT collection.",
+    },
   });
 
   const rating = form.watch("rating");
@@ -204,7 +208,7 @@ export default function AddNFT() {
                 {form.formState.isSubmitting && (
                   <Loader className="animate-spin" />
                 )}
-                Add hotel listing
+                Add NFT listing
               </Button>
             </form>
           </Form>

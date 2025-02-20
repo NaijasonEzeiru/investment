@@ -1,6 +1,5 @@
 import { getUsers } from "@/actions/actions";
 import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { User, UserPen } from "lucide-react";
 import Link from "next/link";
 

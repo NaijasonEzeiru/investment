@@ -13,9 +13,9 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import AuthContext, { TUser } from "../auth-context";
 import { Listing } from "@/db/schema/schema";
-import { lists, rev } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
+import { VIPTASKS } from "@/lib/variables";
 
 export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
   const { checkUserLoggedIn, authChecking } = useContext(AuthContext);
@@ -32,7 +32,7 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
   async function getListings() {
     setLoadingListings(true);
     try {
-      const res = await fetch("/api/listings");
+      const res = await fetch(`/api/listings?len=VIPTASKS[user.level - 1]`);
       const data = (await res.json()) as { listings: Listing[] };
       setLoadingListings(false);
       if (res.ok) {
@@ -42,7 +42,7 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
         console.log({ l: user?.reviewed });
         setListings(l);
       } else {
-        toast("Unable to fetch listings", {
+        toast("Unable to get listings", {
           description: "Something went wrong",
         });
       }
@@ -54,10 +54,38 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
 
   async function submitTask(id: string) {
     setLoading(true);
-    if (user && user?.balance < 30) {
+    if (user && user?.balance < VIPTASKS[user.level - 1]) {
       toast.error("Unable to submit order", {
         description: "Balance insufficient",
       });
+      setLoading(false);
+      return;
+    }
+    if (user && user?.completedTasks == VIPTASKS[user.level - 1]) {
+      try {
+        const res = await fetch("/api/tasks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id, userId: user?.id, upgrade: true }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          // @ts-expect-error: Should not be undefined
+          checkUserLoggedIn();
+          toast.success(data?.message);
+        } else {
+          toast.error("Could not submit order", {
+            description: "Something went wrong",
+          });
+        }
+      } catch (error) {
+        toast.error("Could not submit order", {
+          description: "Something went wrong",
+        });
+        console.log("error", error);
+      }
       setLoading(false);
       return;
     }
@@ -71,11 +99,7 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
         body: JSON.stringify({ id, userId: user?.id }),
       });
       const data = await res.json();
-      setLoading(false);
       if (res.ok) {
-        // const l = listings.filter((val) => val.id !== id);
-        // setListings(l);
-        // revalidateTag("me");
         // @ts-expect-error: Should not be undefined
         checkUserLoggedIn();
         toast(data?.message);
@@ -85,12 +109,12 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
         });
       }
     } catch (error) {
-      setLoading(false);
       toast.error("Could not submit order", {
         description: "Something went wrong",
       });
       console.log("error", error);
     }
+    setLoading(false);
   }
 
   if (loadingListings) {

@@ -31,6 +31,10 @@ import { useEffect } from "react";
 export default function AddHotel() {
   const form = useForm<z.infer<typeof HotelSchema>>({
     resolver: zodResolver(HotelSchema),
+    defaultValues: {
+      description:
+        "Experience luxury and comfort in our premium accommodations with world-class amenities and exceptional service.",
+    },
   });
 
   const { formState, reset } = form;

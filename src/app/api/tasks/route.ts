@@ -8,6 +8,25 @@ export const POST = async (request: NextRequest) => {
   try {
     const body = await request.json();
     console.log({ body });
+    if (body?.upgrade) {
+      const [user] = await db
+        .update(users)
+        .set({
+          balance: 0,
+          completedTasks: 0,
+          interest: sql`${users.interest} + 45`,
+          reviewed: [],
+          level: sql`${users.level} + 1`,
+        })
+        .where(eq(users.id, body.userId))
+        .returning();
+      return new NextResponse(
+        JSON.stringify({
+          message: `Congrats, you have now been upgraded to VIP${user.level}`,
+        }),
+        { status: 201 }
+      );
+    }
     await db
       .update(users)
       .set({

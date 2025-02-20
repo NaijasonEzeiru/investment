@@ -1,5 +1,6 @@
 "use client";
 
+import { VIPTASKS } from "@/lib/variables";
 import {
   ArrowLeft,
   Check,
@@ -75,7 +76,13 @@ export default function RemoteWorker({
               <span className="p-4 flex justify-between items-center rounded-lg w-full bg-violet-300/35">
                 <span>
                   <p className="text-xs font-light">Remaining</p>
-                  {user ? <p>{30 - user?.completedTasks} Tasks</p> : <p></p>}
+                  {user ? (
+                    <p>
+                      {VIPTASKS[user.level - 1] - user?.completedTasks} Tasks
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </span>
                 <Loader className="p-1 border rounded-full border-white" />
               </span>
@@ -83,7 +90,11 @@ export default function RemoteWorker({
             <div className="">
               <p className="text-xs font-light">Progress</p>
               <Progress
-                value={user ? (user?.completedTasks / 30) * 100 : 0}
+                value={
+                  user
+                    ? (user?.completedTasks / VIPTASKS[user.level - 1]) * 100
+                    : 0
+                }
                 className="bg-violet-400 rounded w-full"
                 indicatorColor="#9ce2b6"
               />
@@ -104,7 +115,7 @@ export default function RemoteWorker({
                   <DollarSign size={12} />
                   <p className="text-xs font-light">Amount Available</p>
                 </span>
-                <p>${user?.balance}</p>
+                <p>${user?.balance.toLocaleString()}</p>
                 <i className="text-xs font-light whitespace-nowrap">
                   Based on completed tasks
                 </i>

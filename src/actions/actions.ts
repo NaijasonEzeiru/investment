@@ -1,12 +1,12 @@
 "use server";
-import { eq, or } from "drizzle-orm";
+import { count, eq, or } from "drizzle-orm";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CryptoJS from "crypto-js";
 
 import { db } from "@/db/db";
-import { users } from "@/db/schema/schema";
+import { listings, users } from "@/db/schema/schema";
 import { signJwt } from "@/lib/checkToken";
 
 export async function login(
@@ -59,14 +59,20 @@ export async function login(
   }
 }
 
-export async function getListings() {
+export async function getListings(limit = 8, offset = 1) {
   try {
-    const listings = await db.query.listings.findMany();
-    if (!listings) {
+    const l = await db
+      .select()
+      .from(listings)
+      .offset(offset - 1)
+      .limit(limit);
+    const [totalCount] = await db.select({ count: count() }).from(listings);
+    const totalPages = Math.ceil(totalCount.count / limit);
+    if (!l) {
       return { message: "No listing found", status: 404 };
     }
-    console.log({ listings });
-    return listings;
+    console.log({ totalCount });
+    return { listings: l, totalPages };
   } catch (err) {
     console.log({ err });
     return { message: "Something went wrong", status: 500 };

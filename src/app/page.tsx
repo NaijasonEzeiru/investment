@@ -65,14 +65,13 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <TestimonialCard
-                content="CuratedHub has transformed how we receive and manage guest feedback. The
-        blockchain verification adds a layer of trust that sets us apart."
-                name="Sarah Johnson"
-                position="Hotel Owner"
+                content="I love how easy it is to find rating opportunities and earn rewards. The platform is intuitive and payments are always on time."
+                name="Emma Williams"
+                position="Remote Worker"
               >
                 {
                   <Image
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
+                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80"
                     alt="Sarah Johnson"
                     width={48}
                     height={48}
@@ -97,15 +96,14 @@ export default function Home() {
                 }
               </TestimonialCard>
               <TestimonialCard
-                content="CuratedHub has transformed how we receive and manage guest feedback. The
-        blockchain verification adds a layer of trust that sets us apart."
-                name="Sarah Johnson"
-                position="Hotel Owner"
+                content="The NFT rating system has helped me reach new collectors and build credibility in the digital art space."
+                name="Michael Chen"
+                position="Digital Artist"
               >
                 {
                   <Image
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
-                    alt="Sarah Johnson"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80"
+                    alt="Michael Chen"
                     width={48}
                     height={48}
                     className="w-12 h-12 rounded-full mr-4"

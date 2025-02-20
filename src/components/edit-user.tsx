@@ -90,7 +90,7 @@ export default function EditUser({ user }: { user: TUser }) {
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="text-xl">
-          Edit {user?.firstName} {user?.lastName}'s details
+          Edit {user?.firstName} {user?.lastName}&apos;s details
         </CardTitle>
         <CardDescription>
           Modify details and submit to edit user
@@ -216,6 +216,19 @@ export default function EditUser({ user }: { user: TUser }) {
               render={({ field }) => (
                 <FormItem className="space-y-0.5 relative">
                   <FormLabel>Balance</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="completedTasks"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5 relative">
+                  <FormLabel>Completed tasks</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

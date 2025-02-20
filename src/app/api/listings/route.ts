@@ -40,10 +40,11 @@ export const POST = async (request: NextRequest) => {
   }
 };
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const listings = await db.query.listings.findMany();
-    if (!listings) {
+    const len = request.nextUrl.searchParams.get("len") || 30;
+    const l = await db.select().from(listings).limit(+len);
+    if (!l) {
       return new NextResponse(
         JSON.stringify({
           message: "No listing found",
@@ -51,10 +52,10 @@ export async function GET() {
         { status: 404 }
       );
     }
-    console.log({ listings });
+    console.log({ l });
     return new NextResponse(
       JSON.stringify({
-        listings,
+        l,
       }),
       { status: 200 }
     );

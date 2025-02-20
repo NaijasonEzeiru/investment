@@ -73,6 +73,7 @@ export const EditUserSchema = z.object({
   role: z.enum(ROLES),
   level: z.coerce.number(),
   balance: z.coerce.number().positive(),
+  completedTasks: z.coerce.number().positive(),
 });
 
 export const LoginSchema = z.object({

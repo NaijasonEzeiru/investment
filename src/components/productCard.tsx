@@ -28,7 +28,11 @@ function ProductCard({ list }: { list: Listing }) {
                 {list.rating} ({list.totalRatings})
               </span>
             </div>
-            <div className="text-lg font-bold">${list.price}</div>
+            {list.type == "hotel" ? (
+              <div className="text-lg font-bold">${list.price}</div>
+            ) : (
+              <div className="text-lg font-bold">{list.price}ETH</div>
+            )}
           </div>
         </div>
       </div>
@@ -96,8 +100,8 @@ export default ProductCard;
 export function ProductCardSkeleton() {
   return (
     <>
-      {Array.from({ length: 8 }).map((_, index) => (
-        <div className="bg-white rounded-xl shadow-sm">
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+        <div className="bg-white rounded-xl shadow-sm" key={i}>
           <div className="relative pb-[75%]">
             <Skeleton className="w-[286px] h-[214.5px] absolute inset-0" />
             <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-4">
