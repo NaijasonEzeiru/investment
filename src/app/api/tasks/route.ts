@@ -12,7 +12,7 @@ export const POST = async (request: NextRequest) => {
       const [user] = await db
         .update(users)
         .set({
-          balance: 0,
+          balance: body.b,
           completedTasks: 0,
           interest: sql`${users.interest} + 45`,
           reviewed: [],

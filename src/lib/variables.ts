@@ -4,3 +4,4 @@ export const apiAddress =
     : "https://petsmatchup.vercel.app";
 
 export const VIPTASKS = [30, 28, 25, 15];
+export const LEVELSTART = [800, 1500, 5000, 10000];

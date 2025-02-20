@@ -15,7 +15,7 @@ import AuthContext, { TUser } from "../auth-context";
 import { Listing } from "@/db/schema/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
-import { VIPTASKS } from "@/lib/variables";
+import { LEVELSTART, VIPTASKS } from "@/lib/variables";
 
 export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
   const { checkUserLoggedIn, authChecking } = useContext(AuthContext);
@@ -68,7 +68,12 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ id, userId: user?.id, upgrade: true }),
+          body: JSON.stringify({
+            id,
+            userId: user?.id,
+            upgrade: true,
+            b: LEVELSTART[user.level],
+          }),
         });
         const data = await res.json();
         if (res.ok) {
