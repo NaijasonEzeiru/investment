@@ -225,19 +225,6 @@ export default function EditUser({ user }: { user: TUser }) {
             />
             <FormField
               control={form.control}
-              name="completedTasks"
-              render={({ field }) => (
-                <FormItem className="space-y-0.5 relative">
-                  <FormLabel>Completed tasks</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="role"
               render={({ field }) => (
                 <FormItem>

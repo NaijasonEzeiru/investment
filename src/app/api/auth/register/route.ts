@@ -44,7 +44,7 @@ export const POST = async (request: NextRequest) => {
         phone,
         transferPin,
         username,
-        balance,
+        balance: balance.toString(),
         upline: referralCode,
       })
       .returning();

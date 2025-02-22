@@ -23,7 +23,7 @@ export default function RootLayout({
         <AuthProvider>
           {auth}
           {children}
-          <Toaster richColors toastOptions={{}} />
+          <Toaster richColors toastOptions={{}} theme="light" />
         </AuthProvider>
       </body>
     </html>

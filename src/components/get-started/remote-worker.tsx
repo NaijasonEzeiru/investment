@@ -56,8 +56,8 @@ export default function RemoteWorker({
           <CardHeader className="text-centerr">
             <CardTitle className="flex justify-between items-center">
               <span className="flex items-center gap-1">
-                <Star className="text-yellow-400" size={18} fill="yellow" />{" "}
-                VIP1 Progress
+                <Star className="text-yellow-400" size={18} fill="yellow" /> VIP
+                {user?.level} Progress
               </span>
               <p className="text-xs px-3 py-1 rounded-full bg-violet-300/35 font-extralight">
                 Level: VIP {user?.level}
@@ -78,7 +78,8 @@ export default function RemoteWorker({
                   <p className="text-xs font-light">Remaining</p>
                   {user ? (
                     <p>
-                      {VIPTASKS[user.level - 1] - user?.completedTasks} Tasks
+                      {VIPTASKS[user.level - 1].tasks - user?.completedTasks}{" "}
+                      Tasks
                     </p>
                   ) : (
                     <p></p>
@@ -92,7 +93,8 @@ export default function RemoteWorker({
               <Progress
                 value={
                   user
-                    ? (user?.completedTasks / VIPTASKS[user.level - 1]) * 100
+                    ? (user?.completedTasks / VIPTASKS[user.level - 1].tasks) *
+                      100
                     : 0
                 }
                 className="bg-violet-400 rounded w-full"
@@ -115,7 +117,7 @@ export default function RemoteWorker({
                   <DollarSign size={12} />
                   <p className="text-xs font-light">Amount Available</p>
                 </span>
-                <p>${user?.balance.toLocaleString()}</p>
+                <p>${user && (+user?.balance).toLocaleString()}</p>
                 <i className="text-xs font-light whitespace-nowrap">
                   Based on completed tasks
                 </i>
@@ -125,7 +127,14 @@ export default function RemoteWorker({
                   <TrendingUp size={12} />
                   <p className="text-xs font-light">Profit Potential</p>
                 </span>
-                <p>$1,350</p>
+                <p>
+                  $
+                  {user &&
+                    (
+                      VIPTASKS[user.level - 1].tasks *
+                      VIPTASKS[user.level - 1].reward
+                    ).toLocaleString()}
+                </p>
                 <i className="text-xs font-light whitespace-nowrap">
                   Today&apos;s Commision
                 </i>

@@ -156,3 +156,14 @@ body {
     var(--tw-shadow, 0 0 #0000);
   --tw-ring-color: hsl(var(--ring));
 }
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

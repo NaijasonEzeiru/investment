@@ -1,4 +1,4 @@
-import { Clock, HeartCrack, Loader } from "lucide-react";
+import { Clock, Loader } from "lucide-react";
 import Image from "next/image";
 
 import {
@@ -15,7 +15,7 @@ import AuthContext, { TUser } from "../auth-context";
 import { Listing } from "@/db/schema/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
-import { LEVELSTART, VIPTASKS } from "@/lib/variables";
+import { VIPTASKS } from "@/lib/variables";
 
 export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
   const { checkUserLoggedIn, authChecking } = useContext(AuthContext);
@@ -33,12 +33,11 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
     setLoadingListings(true);
     try {
       const res = await fetch(`/api/listings?len=VIPTASKS[user.level - 1]`);
-      const data = (await res.json()) as { listings: Listing[] };
+      const data = (await res.json()) as { l: Listing[] };
       setLoadingListings(false);
       if (res.ok) {
-        const l = data.listings.filter(
-          (val) => !user?.reviewed.includes(val.id)
-        );
+        console.log({ data });
+        const l = data.l.filter((val) => !user?.reviewed.includes(val.id));
         console.log({ l: user?.reviewed });
         setListings(l);
       } else {
@@ -54,14 +53,14 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
 
   async function submitTask(id: string) {
     setLoading(true);
-    if (user && user?.balance < VIPTASKS[user.level - 1]) {
+    if (user && +user?.balance < VIPTASKS[user.level - 1].cost) {
       toast.error("Unable to submit order", {
         description: "Balance insufficient",
       });
       setLoading(false);
       return;
     }
-    if (user && user?.completedTasks == VIPTASKS[user.level - 1]) {
+    if (user && user?.completedTasks + 1 == VIPTASKS[user.level - 1].tasks) {
       try {
         const res = await fetch("/api/tasks", {
           method: "POST",
@@ -72,7 +71,11 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
             id,
             userId: user?.id,
             upgrade: true,
-            b: LEVELSTART[user.level],
+            v:
+              VIPTASKS[user.level - 1].reward -
+              VIPTASKS[user.level - 1].cost +
+              +user.balance +
+              +user.interest,
           }),
         });
         const data = await res.json();
@@ -101,7 +104,12 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, userId: user?.id }),
+        body: JSON.stringify({
+          id,
+          userId: user?.id,
+          cost: user && VIPTASKS[user?.level - 1].cost,
+          reward: user && VIPTASKS[user?.level - 1].reward,
+        }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -184,7 +192,9 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
                         <p className="text-xl text-green-700">$</p>
                         <span>
                           <p className="text-xs">Earnings</p>
-                          <p className="text-lg font-bold">$45</p>
+                          <p className="text-lg font-bold">
+                            ${user && VIPTASKS[user.level - 1].reward}
+                          </p>
                         </span>
                       </span>
                       <span className="flex gap-1 items-center">
@@ -198,7 +208,9 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
                         <p className="text-xl text-green-700">$</p>
                         <span>
                           <p className="text-xs">Price</p>
-                          <p className="text-lg font-bold">$30</p>
+                          <p className="text-lg font-bold">
+                            ${user && VIPTASKS[user.level - 1].cost}
+                          </p>
                         </span>
                       </span>
                     </div>
@@ -225,16 +237,11 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
           <CardHeader className="text-centerr">
             <CardTitle>You have reviewed all available listings</CardTitle>
           </CardHeader>
-          <CardContent className="flex gap-2">
+          <CardContent>
             <p>Check back later for new listings</p>
-            <HeartCrack />
           </CardContent>
         </Card>
       )}
-      {/* <Button onClick={submitTask} disabled={loading || authChecking}>
-        {(loading || authChecking) && <Loader className="animate-spin" />}
-        Continue Task
-      </Button> */}
     </>
   );
 }

@@ -12,9 +12,9 @@ export const POST = async (request: NextRequest) => {
       const [user] = await db
         .update(users)
         .set({
-          balance: body.b,
+          balance: body.v,
           completedTasks: 0,
-          interest: sql`${users.interest} + 45`,
+          interest: "0",
           reviewed: [],
           level: sql`${users.level} + 1`,
         })
@@ -30,9 +30,9 @@ export const POST = async (request: NextRequest) => {
     await db
       .update(users)
       .set({
-        balance: sql`${users.balance} - 30`,
+        balance: sql`${users.balance} - ${body.cost}`,
         completedTasks: sql`${users.completedTasks} + 1`,
-        interest: sql`${users.interest} + 45`,
+        interest: sql`${users.interest} + ${body.reward}`,
         reviewed: sql`array_append(${users.reviewed}, ${body.id})`,
       })
       .where(eq(users.id, body.userId))

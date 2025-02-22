@@ -7,6 +7,7 @@ import {
   integer,
   smallint,
   check,
+  numeric,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable(
@@ -31,13 +32,13 @@ export const users = pgTable(
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
     upline: text(),
     level: smallint().default(1).notNull(),
-    balance: integer().default(0).notNull(),
+    balance: numeric({ precision: 10, scale: 2 }).default("0").notNull(),
     completedTasks: smallint("completed_tasks").default(0).notNull(),
     reviewed: text()
       .array()
       .notNull()
       .default(sql`ARRAY[]::text[]`),
-    interest: integer().default(0).notNull(),
+    interest: numeric({ precision: 10, scale: 2 }).default("0").notNull(),
   },
   (table) => [
     check("balance_check1", sql`${table.balance} >= 0`),

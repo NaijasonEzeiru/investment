@@ -72,8 +72,9 @@ export const EditUserSchema = z.object({
   // TODO: change to enum
   role: z.enum(ROLES),
   level: z.coerce.number(),
-  balance: z.coerce.number().positive(),
-  completedTasks: z.coerce.number().positive(),
+  // TODO: constrain balance to non-negative. preferrably in HTML
+  balance: z.string(),
+  // completedTasks: z.coerce.number().gte(0),
 });
 
 export const LoginSchema = z.object({
@@ -102,6 +103,17 @@ export const HotelSchema = z.object({
   price: z.coerce.number().positive(),
   totalReturns: z.coerce.number().positive(),
 });
+export const HotelBusinessSchema = z.object({
+  title: z
+    .string()
+    .min(4, { message: "Must contain at least 4 characters" })
+    .max(120, { message: "Must contain at most 120 characters" }),
+  description: z.string(),
+  imgUrl: z.string().url(),
+  state: z.string(),
+  country: z.string(),
+  price: z.coerce.number().positive(),
+});
 
 export const NFTSchema = z.object({
   title: z
@@ -112,6 +124,18 @@ export const NFTSchema = z.object({
   rating: z.string(),
   number: z.coerce.number().positive(),
   totalRatings: z.coerce.number().positive(),
+  imgUrl: z.string().url(),
+  collection: z.string(),
+  category: z.string(),
+  price: z.coerce.number().positive(),
+});
+
+export const NFTCreatorSchema = z.object({
+  title: z
+    .string()
+    .min(4, { message: "Must contain at least 4 characters" })
+    .max(120, { message: "Must contain at most 120 characters" }),
+  description: z.string(),
   imgUrl: z.string().url(),
   collection: z.string(),
   category: z.string(),
