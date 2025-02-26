@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useActionState, useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Label } from "./ui/label";
@@ -13,12 +16,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useActionState, useContext, useEffect } from "react";
 import { login } from "@/actions/actions";
-import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import AuthContext from "./auth-context";
-import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,

@@ -4,7 +4,7 @@ import LinkClient from "./link-client";
 
 function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900 text-white">
+    <section className="relative bg-gradient-to-br from-purple-900 via-purple-700 to-purple-900 text-white">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80')] mix-blend-overlay opacity-20 bg-cover bg-center"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
         <div className="text-center max-w-3xl mx-auto">

@@ -29,25 +29,25 @@ export default function Home() {
                 content="Real-time, transparent rating system powered by verified users"
                 heading="Dynamic Star Rating"
               >
-                <Star className="size-12 text-blue-600 mb-6" />
+                <Star className="size-12 text-primary mb-6" />
               </HomeCard>
               <HomeCard
                 content="Immutable records and secure transactions for all ratings"
                 heading="Blockchain Security"
               >
-                <Shield className="size-12 text-blue-600 mb-6" />
+                <Shield className="size-12 text-primary mb-6" />
               </HomeCard>
               <HomeCard
                 content="Earn rewards by contributing quality ratings and reviews"
                 heading="Task-Based Earnings"
               >
-                <Briefcase className="size-12 text-blue-600 mb-6" />
+                <Briefcase className="size-12 text-primary mb-6" />
               </HomeCard>
               <HomeCard
                 content="Seamlessly connect hotels and digital art marketplaces"
                 heading="Industry Integration"
               >
-                <Link className="size-12 text-blue-600 mb-6" />
+                <Link className="size-12 text-primary mb-6" />
               </HomeCard>
             </div>
           </div>

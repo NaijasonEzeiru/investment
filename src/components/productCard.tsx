@@ -16,7 +16,7 @@ function ProductCard({ list }: { list: Listing }) {
           className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+          <span className="px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-primary">
             {list.type}
           </span>
         </div>

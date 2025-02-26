@@ -46,8 +46,9 @@ export default function EditUser({ user }: { user: TUser }) {
     defaultValues: { ...user },
   });
 
-  async function onSubmit(body: z.infer<typeof EditUserSchema>) {
-    console.log({ body });
+  async function onSubmit(b: z.infer<typeof EditUserSchema>) {
+    const body = Object.assign(b, { id: user?.id });
+
     try {
       const res = await fetch("/api/user", {
         method: "POST",

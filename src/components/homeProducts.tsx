@@ -12,7 +12,7 @@ export default async function HomeProducts() {
           <h2 className="text-2xl font-bold text-gray-900">
             Featured Listings
           </h2>
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -32,13 +32,13 @@ export default async function HomeProducts() {
               <option value="hotel">Hotels Only</option>
               <option value="nft">NFTs Only</option>
             </select>
-          </div>
+          </div> */}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Suspense fallback={<ProductCardSkeleton />}>
             {Array.isArray(listings.listings) &&
-              listings.listings.map((list, index) => (
-                <ProductCard list={list} key={index} />
+              listings.listings.map((list) => (
+                <ProductCard list={list} key={list.id} />
               ))}
           </Suspense>
         </div>

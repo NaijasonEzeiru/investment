@@ -31,24 +31,29 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
 
   async function getListings() {
     setLoadingListings(true);
-    try {
-      const res = await fetch(`/api/listings?len=VIPTASKS[user.level - 1]`);
-      const data = (await res.json()) as { l: Listing[] };
-      setLoadingListings(false);
-      if (res.ok) {
-        console.log({ data });
-        const l = data.l.filter((val) => !user?.reviewed.includes(val.id));
-        console.log({ l: user?.reviewed });
-        setListings(l);
-      } else {
-        toast("Unable to get listings", {
-          description: "Something went wrong",
-        });
+    if (user) {
+      try {
+        const res = await fetch(
+          `/api/listings?len=${VIPTASKS[user?.level - 1]}`
+        );
+        const data = (await res.json()) as { l: Listing[] };
+        setLoadingListings(false);
+        if (res.ok) {
+          console.log({ data });
+          const l = data.l.filter((val) => !user?.reviewed.includes(val.id));
+          console.log({ l: user?.reviewed });
+          setListings(l);
+        } else {
+          toast("Unable to get listings", {
+            description: "Something went wrong",
+          });
+        }
+      } catch (error) {
+        setLoadingListings(false);
+        console.log("get listings failed", error);
       }
-    } catch (error) {
-      setLoadingListings(false);
-      console.log("get listings failed", error);
     }
+    setLoadingListings(false);
   }
 
   async function submitTask(id: string) {
@@ -222,7 +227,7 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
                       {(loading || authChecking) && (
                         <Loader className="animate-spin" />
                       )}
-                      Continue Task
+                      Submit order
                     </Button>
                   </div>
                 </div>

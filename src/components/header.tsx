@@ -65,9 +65,6 @@ export default function Header() {
             <Link href="#" className="px-3">
               Work
             </Link>
-            <Link href="#" className="px-3">
-              About
-            </Link>
             <AuthButton />
           </div>
         </div>
@@ -84,26 +81,34 @@ function AuthButton() {
     return (
       <Button
         disabled
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors lg:w-fit w-full text-center"
+        className="text-white px-4 py-2 rounded-lg transition-colors lg:w-fit w-full text-center"
       >
         <Loader className="animate-spin" />
       </Button>
     );
   } else if (user) {
     return (
-      <Button
-        onClick={signout}
-        disabled={signingOut}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors lg:w-fit w-full text-center"
-      >
-        {signingOut ? <Loader className="animate-spin" /> : "Log out"}
-      </Button>
+      <>
+        <Link
+          href={user.role == "admin" ? "/admin/users" : "/dashboard"}
+          className="px-3"
+        >
+          Dashboard
+        </Link>
+        <Button
+          onClick={signout}
+          disabled={signingOut}
+          className="text-white px-4 py-2 rounded-lg transition-colors lg:w-fit w-full text-center"
+        >
+          {signingOut ? <Loader className="animate-spin" /> : "Log out"}
+        </Button>
+      </>
     );
   } else if (!user) {
     return (
       <Link
         href="/login"
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors lg:w-fit w-full text-center"
+        className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors lg:w-fit w-full text-center"
       >
         Login
       </Link>
