@@ -2,6 +2,7 @@ import { z } from "zod";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
 
 const ROLES = ["user", "moderator", "admin"] as const;
+const METHODS = ["crypto", "cash-app"] as const;
 
 export const RegisterSchema = z
   .object({
@@ -95,6 +96,13 @@ export const EditProfileSchema = z.object({
     .string()
     .email({ message: "Please input a valid email address" })
     .max(30, { message: "Must contain at most 30 characters" }),
+});
+
+export const PaymentSchema = z.object({
+  amount: z.coerce.number().positive(),
+  method: z.enum(METHODS, {
+    message: "Please select a payment method",
+  }),
 });
 
 export const LoginSchema = z.object({

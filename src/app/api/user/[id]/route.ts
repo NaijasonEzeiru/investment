@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { EditProfileSchema } from "@/lib/zodSchema";
 import { eq } from "drizzle-orm";
 
-export const UPDATE = async (
+export const POST = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) => {

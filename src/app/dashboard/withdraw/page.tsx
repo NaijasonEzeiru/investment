@@ -31,11 +31,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-export const PaymentSchema = z.object({
-  amount: z.coerce.number().positive(),
-  method: z.enum(["crypto", "cash-app"]),
-});
+import { PaymentSchema } from "@/lib/zodSchema";
 
 export default function Page() {
   const { user } = useContext(AuthContext);

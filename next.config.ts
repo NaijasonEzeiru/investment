@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
   images: {
     remotePatterns: [
       {
@@ -19,3 +22,5 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+module.exports = nextConfig;

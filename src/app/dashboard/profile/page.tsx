@@ -34,7 +34,7 @@ export default function Page() {
     console.log({ body });
     try {
       const res = await fetch(`/api/user/${user?.id}`, {
-        method: "UPDATE",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },

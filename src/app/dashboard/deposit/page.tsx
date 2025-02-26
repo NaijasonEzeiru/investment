@@ -33,16 +33,12 @@ import {
 } from "@/components/ui/form";
 import { PayBTC } from "@/components/pay-btc";
 import { PayCashApp } from "@/components/pay-cashApp";
-
-export const PaymentSchema = z.object({
-  amount: z.coerce.number().positive(),
-  method: z.enum(["crypto", "cash-app"]),
-});
+import { PaymentSchema } from "@/lib/zodSchema";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
   const [amount, setAmount] = useState(0);
-  const [method, setMethod] = useState<"crypto" | "" | "cash-app">("");
+  const [method, setMethod] = useState<"crypto" | "cash-app">("cash-app");
 
   const form = useForm<z.infer<typeof PaymentSchema>>({
     resolver: zodResolver(PaymentSchema),
@@ -52,10 +48,10 @@ export default function Page() {
   });
 
   async function onSubmit(body: z.infer<typeof PaymentSchema>) {
-    // if ( user && +user?.balance < body.amount) {
-    //     form.setError("amount", {
-    //         message: ""
-    //     })
+    // if (body.method == "") {
+    //   form.setError("method", {
+    //     message: "Please select a payment method",
+    //   });
     // }
     setAmount(body.amount);
     setMethod(body.method);
