@@ -14,10 +14,7 @@ export const RegisterSchema = z
       .string()
       .min(2, { message: "Can not be less than 2 characters" })
       .max(40, { message: "Can not be more than 40 characters" }),
-    referralCode: z
-      .string()
-      .length(10, { message: "Must be 10 characters long" })
-      .optional(),
+    referralCode: z.string().optional(),
     transferPin: z.string().length(4, { message: "Must be 4 digits long" }),
     username: z
       .string()

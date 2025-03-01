@@ -30,6 +30,7 @@ export function LoginForm({
 
   useEffect(() => {
     if (res?.code) {
+      console.log({ res });
       if (res.code == 200) {
         toast(res.message.split("-")[0], {
           description: res.message.split("-")[1],

@@ -3,14 +3,34 @@
 import { useContext, useEffect, useState } from "react";
 
 import AuthContext from "@/components/auth-context";
-import { CircleDollarSign, LockOpen, TrendingUp } from "lucide-react";
+import {
+  CircleDollarSign,
+  Clipboard,
+  ClipboardCheck,
+  LockOpen,
+  TrendingUp,
+  UserPlus,
+} from "lucide-react";
 import { Listing } from "@/db/schema/schema";
 import ProductCard, { ProductCardSkeleton } from "@/components/productCard";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
   const [loadingListings, setLoadingListings] = useState(false);
   const [listings, setListings] = useState<Listing[]>([]);
+  const [copied, setCopied] = useState(false);
+
+  function copyAddress() {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 5000);
+    navigator.clipboard.writeText(user?.id || "");
+  }
 
   useEffect(() => {
     if (user) {
@@ -46,7 +66,7 @@ export default function Page() {
         <span className="text-primary font-medium">Welcome,</span>{" "}
         {user?.firstName} {user?.lastName}
       </p>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+      <div className="grid auto-rows-min gap-4 md:grid-cols-4">
         <div className="aspect-video rounded-xl bg-muted/50 p-6 flex flex-col justify-between">
           <div className="flex justify-between items-center text-lg">
             <p>Available balance:</p> <CircleDollarSign strokeWidth={1} />
@@ -69,6 +89,35 @@ export default function Page() {
             <LockOpen strokeWidth={1} />
           </div>
           <p className="text-2xl font-medium">VIP{user?.level}</p>
+        </div>
+        <div className="aspect-video rounded-xl bg-muted/50 p-6 flex flex-col justify-between">
+          <div className="flex justify-between items-center text-lg">
+            <p>Referal code:</p> <UserPlus strokeWidth={1} />
+          </div>
+          <span className="flex justify-between items-center gap-3">
+            <p className="truncate">{user?.id}</p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    className="p-1 rounded bg-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                    onClick={() => {
+                      copyAddress();
+                    }}
+                  >
+                    {copied ? (
+                      <ClipboardCheck className="size-4" />
+                    ) : (
+                      <Clipboard className="size-4" />
+                    )}
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-100 text-black">
+                  <p>Copy referal code</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </span>
         </div>
       </div>
       <div className="flex-1 rounded-xl bg-muted/50 md:min-h-min p-3">

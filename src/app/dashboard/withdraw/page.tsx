@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -137,10 +138,18 @@ export default function Page() {
                   </FormItem>
                 )}
               />
-              <Button className="mx-auto block">Proceed to withdraw</Button>
+              <Button
+                className="mx-auto block"
+                disabled={!!(user && user?.level < 3)}
+              >
+                Proceed to withdraw
+              </Button>
             </form>
           </Form>
         </CardContent>
+        {user && user?.level < 3 && (
+          <CardFooter>You can only withdraw when you get to level 3</CardFooter>
+        )}
       </Card>
     </div>
   );

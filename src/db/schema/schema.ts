@@ -8,6 +8,7 @@ import {
   smallint,
   check,
   numeric,
+  AnyPgColumn,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable(
@@ -17,6 +18,7 @@ export const users = pgTable(
       .primaryKey()
       .notNull()
       .default(sql`gen_random_uuid()`),
+    upline: text().references((): AnyPgColumn => users.id),
     firstName: varchar("first_name", { length: 120 }).notNull(),
     lastName: varchar("last_name", { length: 120 }).notNull(),
     username: varchar("username", { length: 120 }).notNull().unique(),
@@ -30,7 +32,6 @@ export const users = pgTable(
     phone: varchar("phone", { length: 20 }).unique().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
-    upline: text(),
     level: smallint().default(1).notNull(),
     balance: numeric({ precision: 10, scale: 2 }).default("0").notNull(),
     completedTasks: smallint("completed_tasks").default(0).notNull(),
@@ -51,7 +52,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   userId: one(users, {
     fields: [users.upline],
     references: [users.id],
-    relationName: "upline",
+    relationName: "downlines",
   }),
 }));
 

@@ -71,6 +71,19 @@ export const POST = async (request: NextRequest) => {
         { status: 409 }
       );
     }
+    if (err?.code == "23503") {
+      return new NextResponse(
+        JSON.stringify({
+          errors: [
+            {
+              path: "referralCode",
+              message: "Invalid referral code",
+            },
+          ],
+        }),
+        { status: 409 }
+      );
+    }
     console.log({ err });
     return new NextResponse(
       JSON.stringify({

@@ -41,6 +41,8 @@ const Header = () => {
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar> */}
+            {user?.firstName[0]}
+            {user?.lastName[0]}
             {/* {getInitialsFromFullName(user?.firstName + " " + user?.lastName)} */}
             <span className="sr-only">Toggle user menu</span>
           </Button>

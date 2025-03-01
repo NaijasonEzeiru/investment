@@ -16,7 +16,7 @@ function ProductCard({ list }: { list: Listing }) {
           className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-primary">
+          <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-primary">
             {list.type}
           </span>
         </div>
@@ -78,13 +78,13 @@ function ProductCard({ list }: { list: Listing }) {
             </div>
           </div>
         ) : (
-          <div className="mt-4 bg-purple-50 rounded-lg p-3 relative top-4">
+          <div className="mt-4 bg-blue-50 rounded-lg p-3 relative top-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center text-purple-700">
+              <div className="flex items-center text-blue-700">
                 <Palette className="w-4 h-4 mr-1" />
                 <span className="text-sm font-medium">Collection</span>
               </div>
-              <span className="text-purple-700 font-medium text-sm">
+              <span className="text-blue-700 font-medium text-sm">
                 {list.collection}
               </span>
             </div>

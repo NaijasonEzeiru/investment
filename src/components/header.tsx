@@ -21,7 +21,9 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center cursor-pointer">
-            <span className="text-2xl font-bold text-blue-900">CuratedHub</span>
+            <Link href="/" className="text-2xl font-bold text-blue-700">
+              CuratedHub
+            </Link>
           </div>
           <Button
             size="icon"
@@ -46,7 +48,7 @@ export default function Header() {
           <div
             className={`${
               !openNav && "-translate-y-full"
-            } flex bg-background text-foreground items-center justify-center lg:h-auto bg-customRed py-6 px-14 lg:gap-6 w-full left-0 fixed h-screen text-xl gap-20 transition-transform top-0 lg:w-auto lg:static lg:translate-y-0 lg:py-0 lg:text-lg flex-col lg:flex-row z-50 duration-500`}
+            } flex bg-background text-foreground items-center justify-center lg:h-auto bg-customRed py-6 px-14 lg:px-0 lg:gap-6 w-full left-0 fixed h-screen text-xl gap-20 transition-transform top-0 lg:w-auto lg:static lg:translate-y-0 lg:py-0 lg:text-lg flex-col lg:flex-row z-50 duration-500`}
           >
             <button
               aria-expanded={openNav}
@@ -56,14 +58,17 @@ export default function Header() {
             >
               X
             </button>
-            <Link href="#" className="px-3">
+            {/* <Link href="#" className="px-3">
               Hotels
             </Link>
             <Link href="#" className="px-3">
               NFTs
-            </Link>
-            <Link href="#" className="px-3">
+            </Link> */}
+            <Link href="/work" className="px-3">
               Work
+            </Link>
+            <Link href="/about-us" className="px-3">
+              About us
             </Link>
             <AuthButton />
           </div>
@@ -106,12 +111,20 @@ function AuthButton() {
     );
   } else if (!user) {
     return (
-      <Link
-        href="/login"
-        className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors lg:w-fit w-full text-center"
-      >
-        Login
-      </Link>
+      <>
+        <Link
+          href="/login"
+          className="whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+        >
+          Login
+        </Link>
+        <Link
+          href="/signup"
+          className="whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          Sign up
+        </Link>
+      </>
     );
   } else {
     return <p>How</p>;

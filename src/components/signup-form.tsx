@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff, Loader } from "lucide-react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import PhoneInput from "react-phone-number-input";
 import { toast } from "sonner";
@@ -31,11 +31,16 @@ import {
 import { RegisterSchema } from "@/lib/zodSchema";
 import { useRouter } from "next/navigation";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
+import AuthContext from "./auth-context";
 
 export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -44,8 +49,13 @@ export function SignUpForm({
     },
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+  useEffect(() => {
+    if (user) {
+      toast("You are already logged in");
+      router.replace("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   async function onSubmit(body: z.infer<typeof RegisterSchema>) {
     console.log({ body });

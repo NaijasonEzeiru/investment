@@ -17,21 +17,70 @@ import { Clipboard, ClipboardCheck } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+
+const wallets = [
+  {
+    address: "bc1qp3a80dx9gtmw9ds7fgh506psxuwczh30upljrm",
+    coin: "BTC",
+    value: 84120,
+  },
+  {
+    address: "0x70482f2c898Ad2e5b41C1B527F309929dD1c5Eed",
+    coin: "ETH",
+    value: 2230,
+  },
+  {
+    address: "TSFoXg5B9PNTHD8cZUbGRyCLM3xSa8nTE8",
+    coin: "USDT TRC20",
+    value: 0.999,
+  },
+];
 
 export function PayBTC({ amount }: { amount: number }) {
+  return (
+    <Tabs defaultValue="BTC" className="w-[400px] mx-auto">
+      <Card className="max-w-lg w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          {wallets.map((val) => (
+            <TabsTrigger value={val.coin} key={val.coin}>
+              {val.coin}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {wallets.map((val) => (
+          <TabsContent value={val.coin} key={val.coin}>
+            <Pay amount={amount} address={val} />
+          </TabsContent>
+        ))}
+        <CardFooter>
+          This feature requires network confirmations before crediting your
+          payment. Your merchant will update you on transaction progress.
+        </CardFooter>
+      </Card>
+    </Tabs>
+  );
+}
+
+const Pay = ({
+  amount,
+  address,
+}: {
+  amount: number;
+  address: (typeof wallets)[0];
+}) => {
   const [copied, setCopied] = useState(false);
 
   function copyAddress() {
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
-    // TODO: change to correct address
-    navigator.clipboard.writeText("1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa");
+    navigator.clipboard.writeText(address.address);
   }
 
   return (
-    <Card className="max-w-lg w-full mx-auto">
+    <>
       <CardHeader>
-        <CardTitle>Pay with Bitcoin</CardTitle>
+        <CardTitle>Pay with {address.coin}</CardTitle>
         <CardDescription>
           To complete this payment, send exactly this amount to the address
           provided
@@ -39,26 +88,31 @@ export function PayBTC({ amount }: { amount: number }) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="p-4 rounded-lg bg-slate-200 flex justify-between">
-          <p>BTC</p>
-          <p>{(amount / 87000).toFixed(8)}</p>
+          <p>{address.coin}</p>
+          <p>{(amount / address.value).toFixed(8)}</p>
         </div>
         <Separator />
         <div className="flex justify-between">
           <p>Amount</p>
           <p className="">
-            {(amount / 87000).toFixed(8)}BTC (${amount})
+            {(amount / address.value).toFixed(8)}BTC (${amount})
           </p>
         </div>
         <Separator />
         <Image
           alt="wallet address"
-          src="/wallet-address.png"
+          // src="/wallet-address.png"
+          src={`${
+            address.coin == "USDT TRC20"
+              ? "/usdt.png"
+              : `/${address.coin}-address.webp`
+          }`}
           width={400}
           height={400}
           className="w-10/12 h-10/12 mx-auto"
         />
         <div className="rounded-full px-3 h-10 flex relative items-center bg-slate-200">
-          <p>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</p>
+          <p className="truncate">{address.address}</p>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -83,10 +137,6 @@ export function PayBTC({ amount }: { amount: number }) {
           </TooltipProvider>
         </div>
       </CardContent>
-      <CardFooter>
-        This feature requires network confirmations before crediting your
-        payment. Your merchant will update you on transaction progress.
-      </CardFooter>
-    </Card>
+    </>
   );
-}
+};

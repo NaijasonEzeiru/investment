@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import Link from "next/link";
 import Header from "./header";
+import { usePathname } from "next/navigation";
 
 const menu = [
   {
@@ -52,15 +53,17 @@ const menu = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [openNav, setOpenNav] = useState(false);
+  const pathName = usePathname();
+  console.log({ pathName });
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-primary md:block">
         <div className="flex h-full max-h-screen flex-col gap-2 fixed text-primary-foreground w-[220px] lg:w-[280px]">
           <div className="flex h-14 items-center border-b lg:h-[60px] border-muted-foreground bg-background">
-            <span className="flex px-4  lg:px-6 w-full h-full items-center gap-2 font-semibold bg-muted/40 text-foreground">
+            <span className="flex px-4 lg:px-6 w-full h-full items-center gap-2 font-semibold bg-muted/40 text-foreground">
               {/* <Circle className="h-6 w-6" /> */}
-              <span>CuratedHub</span>
+              <Link href="/">CuratedHub</Link>
             </span>
           </div>
           <div className="flex-1 mt-4">
@@ -69,7 +72,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Link
                   key={menu.id}
                   href={menu.href}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all"
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:bg-blue-700 ${
+                    pathName == menu.href && "bg-blue-500"
+                  }`}
                 >
                   {menu.icon}
                   {menu.name}
@@ -97,23 +102,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetHeader className="sr-only">Navigation bar</SheetHeader>
             <SheetContent
               side="left"
               className="flex flex-col bg-primary text-primary-foreground"
             >
+              <SheetHeader className="sr-only">Navigation bar</SheetHeader>
               <nav className="grid gap-2 text-lg font-medium">
-                <span className="flex items-center gap-2 text-lg font-semibold">
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 text-lg font-semibold"
+                >
                   <Circle className="h-6 w-6" />
                   <span className="sr-only">Institution&apos;s logo</span>
                   <span>CuratedHub</span>
-                </span>
+                </Link>
                 {menu.map((menu) => (
                   <Link
                     key={menu.id}
                     href={menu.href}
                     onClick={() => setOpenNav(false)}
-                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 mt-4"
+                    className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 mt-4 hover:bg-blue-700 ${
+                      pathName == menu.href && "bg-blue-500"
+                    }`}
                   >
                     {menu.iconMobile}
                     {menu.name}

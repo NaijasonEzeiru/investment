@@ -26,6 +26,7 @@ export async function login(
         or(eq(users.email, email.toLowerCase()), eq(users.username, email))
       )
       .limit(1);
+    console.log({ user });
     if (!user) {
       return { message: "Invalid credentials", code: 401 };
     }

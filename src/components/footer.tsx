@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function Footer() {
@@ -15,13 +16,19 @@ function Footer() {
             <h4 className="font-semibold mb-4">Platform</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <button className="hover:text-white">Hotels</button>
+                <Link href="#" className="hover:text-white">
+                  Hotels
+                </Link>
               </li>
               <li>
-                <button className="hover:text-white">NFTs</button>
+                <Link href="#" className="hover:text-white">
+                  NFTs
+                </Link>
               </li>
               <li>
-                <button className="hover:text-white">Remote Work</button>
+                <Link href="/work" className="hover:text-white">
+                  Remote Work
+                </Link>
               </li>
             </ul>
           </div>
@@ -29,7 +36,9 @@ function Footer() {
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <button className="hover:text-white">About</button>
+                <Link href="/about-us" className="hover:text-white">
+                  About
+                </Link>
               </li>
               <li>
                 <a href="#" className="hover:text-white">
