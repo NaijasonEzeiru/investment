@@ -58,16 +58,19 @@ export default function Header() {
             >
               X
             </button>
-            {/* <Link href="#" className="px-3">
+            {/* <Link href="#" className="px-3 opacity-70 hover:opacity-100">
               Hotels
             </Link>
-            <Link href="#" className="px-3">
+            <Link href="#" className="px-3 opacity-70 hover:opacity-100">
               NFTs
             </Link> */}
-            <Link href="/work" className="px-3">
+            <Link href="/work" className="px-3 opacity-70 hover:opacity-100">
               Work
             </Link>
-            <Link href="/about-us" className="px-3">
+            <Link
+              href="/about-us"
+              className="px-3 opacity-70 hover:opacity-100"
+            >
               About us
             </Link>
             <AuthButton />
@@ -94,12 +97,17 @@ function AuthButton() {
   } else if (user) {
     return (
       <>
-        <Link
-          href={user.role == "admin" ? "/admin/users" : "/dashboard"}
-          className="px-3"
-        >
+        <Link href="/dashboard" className="px-3 opacity-70 hover:opacity-100">
           Dashboard
         </Link>
+        {user?.role == "admin" && (
+          <Link
+            href="/admin/users"
+            className="px-3 opacity-70 hover:opacity-100"
+          >
+            Admin dashboard
+          </Link>
+        )}
         <Button
           onClick={signout}
           disabled={signingOut}
