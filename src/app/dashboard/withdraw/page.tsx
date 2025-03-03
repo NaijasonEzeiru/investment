@@ -47,7 +47,7 @@ export default function Page() {
   });
 
   async function onSubmit(body: z.infer<typeof PaymentSchema>) {
-    if (user && +user?.balance < body.amount) {
+    if (user && +user?.interest < body.amount) {
       form.setError("amount", {
         message: "Insufficient balance",
       });
@@ -92,9 +92,9 @@ export default function Page() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="p-4 rounded-lg bg-slate-200">
-            <p className="text-sm">Available balance</p>
+            <p className="text-sm">Available amount</p>
             <p className="text-lg">
-              ${user && (+user?.balance).toLocaleString()}
+              ${user && (+user?.interest).toLocaleString()}
             </p>
           </div>
           <Form {...form}>

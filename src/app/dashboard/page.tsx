@@ -66,7 +66,7 @@ export default function Page() {
         <span className="text-primary font-medium">Welcome,</span>{" "}
         {user?.firstName} {user?.lastName}
       </p>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+      <div className="grid auto-rows-min gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="aspect-video rounded-xl bg-muted/50 p-6 flex flex-col justify-between">
           <div className="flex justify-between items-center text-lg">
             <p>Available balance:</p> <CircleDollarSign strokeWidth={1} />

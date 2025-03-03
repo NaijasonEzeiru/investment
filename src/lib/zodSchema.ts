@@ -166,3 +166,10 @@ export const NFTCreatorSchema = z.object({
   category: z.string(),
   price: z.coerce.number().positive(),
 });
+
+export const AddressesSchema = z.object({
+  coin: z.string(),
+  address: z.string(),
+  imgURL: z.any().optional(),
+  value: z.string(),
+});

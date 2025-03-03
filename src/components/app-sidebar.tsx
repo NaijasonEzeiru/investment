@@ -1,4 +1,5 @@
 import {
+  DollarSign,
   GalleryVerticalEnd,
   Home,
   PlusCircle,
@@ -34,6 +35,11 @@ const items = [
     title: "Users",
     url: "/admin/users",
     icon: Users,
+  },
+  {
+    title: "Payment addresses",
+    url: "/admin/payment-addresses",
+    icon: DollarSign,
   },
   {
     title: "Settings",

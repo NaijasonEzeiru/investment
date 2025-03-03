@@ -80,5 +80,17 @@ export const listings = pgTable("listing", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const cryptoPayments = pgTable("crypto-pay", {
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .default(sql`gen_random_uuid()`),
+  coin: varchar({ length: 120 }).notNull().unique(),
+  value: text().notNull(),
+  address: text().notNull(),
+  imgURL: text("img_url"),
+});
+
 export type User = InferSelectModel<typeof users>;
 export type Listing = InferSelectModel<typeof listings>;
+export type CryptoPayment = InferSelectModel<typeof cryptoPayments>;
