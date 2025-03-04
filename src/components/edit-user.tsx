@@ -226,6 +226,19 @@ export default function EditUser({ user }: { user: TUser }) {
             />
             <FormField
               control={form.control}
+              name="interest"
+              render={({ field }) => (
+                <FormItem className="space-y-0.5 relative">
+                  <FormLabel>Interest</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="role"
               render={({ field }) => (
                 <FormItem>

@@ -61,9 +61,9 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <Link href="/terms-and-conditions" className="hover:text-white">
                   Terms
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

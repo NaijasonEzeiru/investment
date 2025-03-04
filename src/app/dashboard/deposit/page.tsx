@@ -38,7 +38,9 @@ import { PaymentSchema } from "@/lib/zodSchema";
 export default function Page() {
   const { user } = useContext(AuthContext);
   const [amount, setAmount] = useState(0);
-  const [method, setMethod] = useState<"crypto" | "cash-app">("cash-app");
+  const [method, setMethod] = useState<"crypto" | "cashapp/wave">(
+    "cashapp/wave"
+  );
 
   const form = useForm<z.infer<typeof PaymentSchema>>({
     resolver: zodResolver(PaymentSchema),

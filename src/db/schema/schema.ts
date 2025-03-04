@@ -40,6 +40,9 @@ export const users = pgTable(
       .notNull()
       .default(sql`ARRAY[]::text[]`),
     interest: numeric({ precision: 10, scale: 2 }).default("0").notNull(),
+    coin: text(),
+    address: text(),
+    // referralCode: text("referral-code"),
   },
   (table) => [
     check("balance_check1", sql`${table.balance} >= 0`),

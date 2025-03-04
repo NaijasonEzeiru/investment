@@ -33,11 +33,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { PaymentSchema } from "@/lib/zodSchema";
+import WithdrawCrypto from "./withdraw-crypto";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
   const [amount, setAmount] = useState(0);
-  const [method, setMethod] = useState<"crypto" | "" | "cash-app">("");
+  const [method, setMethod] = useState<"crypto" | "" | "cashapp/wave">("");
 
   const form = useForm<z.infer<typeof PaymentSchema>>({
     resolver: zodResolver(PaymentSchema),
@@ -64,14 +65,16 @@ export default function Page() {
         <h1 className="text-xl font-semibold text-center mb-10">
           Withdraw Funds
         </h1>
-        {method == "crypto" ? (
+        {!(method == "crypto") ? (
           <Card className="w-[350px] mx-auto justify-self-center items-center">
-            <CardTitle>Crypto</CardTitle>
+            <CardTitle>Cashapp/Wave</CardTitle>
           </Card>
         ) : (
-          <Card className="w-[350px] mx-auto justify-self-center items-center">
-            <CardTitle>CashApp</CardTitle>
-          </Card>
+          <WithdrawCrypto
+            amount={amount}
+            pin={user?.transferPin}
+            address={user?.address}
+          />
         )}
       </div>
     );
@@ -130,7 +133,9 @@ export default function Page() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="cash-app">Cash App</SelectItem>
+                        <SelectItem value="cashapp/Wave">
+                          Cashapp/Wave
+                        </SelectItem>
                         <SelectItem value="crypto">Crypto</SelectItem>
                       </SelectContent>
                     </Select>

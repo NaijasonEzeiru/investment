@@ -2,7 +2,7 @@ import { z } from "zod";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
 
 const ROLES = ["user", "moderator", "admin"] as const;
-const METHODS = ["crypto", "cash-app"] as const;
+const METHODS = ["crypto", "cashapp/wave"] as const;
 
 export const RegisterSchema = z
   .object({
@@ -72,6 +72,7 @@ export const EditUserSchema = z.object({
   level: z.coerce.number(),
   // TODO: constrain balance to non-negative. preferrably in HTML
   balance: z.string(),
+  interest: z.string(),
   // completedTasks: z.coerce.number().gte(0),
 });
 

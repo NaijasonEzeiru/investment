@@ -1,6 +1,14 @@
 "use client";
 
-import { Home, User, Menu, Circle, ArrowDown, ArrowUp } from "lucide-react";
+import {
+  Home,
+  User,
+  Menu,
+  Circle,
+  ArrowDown,
+  ArrowUp,
+  Settings,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -42,13 +50,13 @@ const menu = [
     icon: <ArrowDown className="h-4 w-4" />,
     iconMobile: <ArrowDown className="h-5 w-5" />,
   },
-  // {
-  //   id: 5,
-  //   name: "Settings",
-  //   href: `/dashboard/Settings`,
-  //   icon: <Settings className="h-4 w-4" />,
-  //   iconMobile: <Settings className="h-5 w-5" />,
-  // },
+  {
+    id: 5,
+    name: "Settings",
+    href: `/dashboard/settings`,
+    icon: <Settings className="h-4 w-4" />,
+    iconMobile: <Settings className="h-5 w-5" />,
+  },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

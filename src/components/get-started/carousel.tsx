@@ -1,13 +1,7 @@
 import { Clock, Loader } from "lucide-react";
 import Image from "next/image";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -234,8 +228,8 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-2" />
-          <CarouselNext className="right-2" />
+          {/* <CarouselPrevious className="left-2" />
+          <CarouselNext className="right-2" /> */}
         </Carousel>
       ) : (
         <Card className="bg-gradient-to-br from-fuchsia-700 via-fuchsia-600 to-fuchsia-700 text-white">

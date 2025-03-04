@@ -23,8 +23,7 @@ export const POST = async (
     await db
       .update(users)
       .set({ ...validate.data })
-      .where(eq(users.id, id))
-      .returning();
+      .where(eq(users.id, id));
     return new NextResponse(
       JSON.stringify({
         message: "user modified successfully",
@@ -49,6 +48,35 @@ export const POST = async (
       );
     }
     console.log({ err });
+    return new NextResponse(
+      JSON.stringify({
+        message: "Something went wrong",
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const PUT = async (
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) => {
+  const id = (await params).id;
+  try {
+    const body = await request.json();
+    console.log({ body });
+    await db
+      .update(users)
+      .set({ ...body })
+      .where(eq(users.id, id));
+    return new NextResponse(
+      JSON.stringify({
+        message: "Address added successfully",
+      }),
+      { status: 201 }
+    );
+  } catch (error) {
+    console.log({ error });
     return new NextResponse(
       JSON.stringify({
         message: "Something went wrong",
