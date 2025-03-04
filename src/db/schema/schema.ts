@@ -96,6 +96,16 @@ export const cryptoPayments = pgTable("crypto-pay", {
   imgURL: text("img_url"),
 });
 
+export const appPayments = pgTable("app-pay", {
+  id: text("id")
+    .primaryKey()
+    .notNull()
+    .default(sql`gen_random_uuid()`),
+  app: varchar({ length: 120 }).notNull().unique(),
+  tag: text().notNull(),
+});
+
 export type User = InferSelectModel<typeof users>;
 export type Listing = InferSelectModel<typeof listings>;
 export type CryptoPayment = InferSelectModel<typeof cryptoPayments>;
+export type AppPayment = InferSelectModel<typeof appPayments>;

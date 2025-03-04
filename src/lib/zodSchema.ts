@@ -174,3 +174,8 @@ export const AddressesSchema = z.object({
   imgURL: z.any().optional(),
   value: z.string(),
 });
+
+export const AppSchema = z.object({
+  app: z.enum(["cashApp", "wave"]),
+  tag: z.string(),
+});

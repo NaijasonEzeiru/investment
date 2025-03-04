@@ -92,10 +92,10 @@ const Pay = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  function copyAddress() {
+  function copyAddress(val: string) {
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
-    navigator.clipboard.writeText(address.address);
+    navigator.clipboard.writeText(val);
   }
 
   return (
@@ -138,7 +138,7 @@ const Pay = ({
                   size="icon"
                   className="absolute right-0 h-full rounded-l-none rounded-r-full"
                   onClick={() => {
-                    copyAddress();
+                    copyAddress(address.address);
                   }}
                 >
                   {copied ? (

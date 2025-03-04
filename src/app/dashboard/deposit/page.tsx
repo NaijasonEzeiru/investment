@@ -127,7 +127,9 @@ export default function Page() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="cashapp/wave">Cash App</SelectItem>
+                        <SelectItem value="cashapp/wave">
+                          Cash App/Wave
+                        </SelectItem>
                         <SelectItem value="crypto">Crypto</SelectItem>
                       </SelectContent>
                     </Select>
