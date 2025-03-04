@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/form";
 import { PaymentSchema } from "@/lib/zodSchema";
 import WithdrawCrypto from "./withdraw-crypto";
+import WithdrawCashApp from "./withdraw-cash-app";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
@@ -54,7 +55,6 @@ export default function Page() {
       });
       return;
     }
-
     setAmount(body.amount);
     setMethod(body.method);
   }
@@ -66,9 +66,11 @@ export default function Page() {
           Withdraw Funds
         </h1>
         {!(method == "crypto") ? (
-          <Card className="w-[350px] mx-auto justify-self-center items-center">
-            <CardTitle>Cashapp/Wave</CardTitle>
-          </Card>
+          <WithdrawCashApp
+            amount={amount}
+            pin={user?.transferPin}
+            address={user?.tag}
+          />
         ) : (
           <WithdrawCrypto
             amount={amount}
@@ -133,7 +135,7 @@ export default function Page() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="cashapp/Wave">
+                        <SelectItem value="cashapp/wave">
                           Cashapp/Wave
                         </SelectItem>
                         <SelectItem value="crypto">Crypto</SelectItem>

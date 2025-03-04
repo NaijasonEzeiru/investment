@@ -42,6 +42,8 @@ export const users = pgTable(
     interest: numeric({ precision: 10, scale: 2 }).default("0").notNull(),
     coin: text(),
     address: text(),
+    app: text(),
+    tag: text(),
     // referralCode: text("referral-code"),
   },
   (table) => [

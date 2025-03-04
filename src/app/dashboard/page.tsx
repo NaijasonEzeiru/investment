@@ -29,7 +29,7 @@ export default function Page() {
   function copyAddress() {
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
-    navigator.clipboard.writeText(user?.id || "");
+    navigator.clipboard.writeText(user?.upline || "");
   }
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Page() {
             <p>Referal code:</p> <UserPlus strokeWidth={1} />
           </div>
           <span className="flex justify-between items-center gap-3">
-            <p className="truncate">{user?.id}</p>
+            <p className="truncate">{user?.upline}</p>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
