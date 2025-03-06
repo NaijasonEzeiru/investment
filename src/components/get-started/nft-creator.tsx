@@ -106,9 +106,9 @@ export default function NFTCreator({
             </DialogFooter>
           </>
         )}
-        {payment && paymentMethod == "crypto" && <PayBTC amount={1000.99} />}
+        {payment && paymentMethod == "crypto" && <PayBTC amount={1864.99} />}
         {payment && paymentMethod == "cashapp/wave" && (
-          <PayCashApp amount={1000.99} />
+          <PayCashApp amount={1864.99} />
         )}
       </>
     );

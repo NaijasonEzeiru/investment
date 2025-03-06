@@ -172,7 +172,6 @@ export default function Page() {
                 )}
               />
             </div>
-            {/* TODO: add role and level */}
 
             <Button
               disabled={form.formState.isSubmitting}

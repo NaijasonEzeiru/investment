@@ -1,7 +1,5 @@
 import LinkClient from "./link-client";
 
-// TODO: change to server component and use Suspense
-
 function Hero() {
   return (
     <section className="relative bg-gradient-to-br from-blue-900 via-blue-700 to-blue-900 text-white">

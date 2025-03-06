@@ -19,6 +19,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export function PayBTC({ amount }: { amount: number }) {
@@ -56,7 +57,29 @@ export function PayBTC({ amount }: { amount: number }) {
     <Tabs defaultValue="BTC" className="w-[400px] mx-auto">
       <Card className="max-w-lg w-full">
         {loadingAddresses ? (
-          <p>Loading...</p>
+          <div className="rounded-xl border bg-card text-card-foreground shadow max-w-lg w-full">
+            <Skeleton className="h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground grid w-full grid-cols-3" />
+            <div className="flex flex-col space-y-1.5 p-6">
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="p-6 pt-0 space-y-4">
+              <div className="p-4 rounded-lg bg-slate-200 flex justify-between">
+                <Skeleton className="w-7 h-6" />
+                <Skeleton className="w-20 h-6" />
+              </div>
+              <Separator />
+              <div className="flex justify-between">
+                <Skeleton className="h-6 w-14" />
+                <Skeleton className="h-6 w-40" />
+              </div>
+              <Separator />
+              <Skeleton className="w-10/12 h-64 mx-auto" />
+              <div className="rounded-full px-3 h-10 flex relative items-center bg-slate-200">
+                <Skeleton className="h-6 w-full" />
+              </div>
+            </div>
+          </div>
         ) : (
           <>
             <TabsList className={`grid w-full grid-cols-${wallets.length}`}>
@@ -126,7 +149,7 @@ const Pay = ({
             src={address?.imgURL}
             width={400}
             height={400}
-            className="w-10/12 h-10/12 mx-auto"
+            className="w-10/12 mx-auto"
           />
         )}
         <div className="rounded-full px-3 h-10 flex relative items-center bg-slate-200">

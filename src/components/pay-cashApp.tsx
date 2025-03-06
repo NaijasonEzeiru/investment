@@ -16,6 +16,7 @@ import { Clipboard, ClipboardCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export function PayCashApp({ amount }: { amount: number }) {
@@ -54,7 +55,6 @@ export function PayCashApp({ amount }: { amount: number }) {
   function copyAddress(val: string) {
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
-    // TODO: change to correct address
     navigator.clipboard.writeText(val);
   }
 
@@ -62,7 +62,32 @@ export function PayCashApp({ amount }: { amount: number }) {
     <Tabs defaultValue="cashApp" className="w-[400px] mx-auto">
       <Card className="max-w-lg w-full">
         {loadingAddresses ? (
-          <p>Loading...</p>
+          <>
+            <Separator className="h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground grid w-full" />
+            <div className="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+              <div className="flex flex-col space-y-1.5 p-6">
+                <Separator className="w-36 h-4" />
+                <Separator className="w-full h-10" />
+              </div>
+              <div className="p-6 pt-0 space-y-4">
+                <div className="space-y-1">
+                  <Separator className="w-32 h-4" />
+                  <Separator className="w-48 h-4" />
+                </div>
+                <div>
+                  <Separator className="w-32 h-4" />
+                  <span className="flex justify-between items-center">
+                    <Separator className="w-56 h-4" />
+                    <Separator className="size-6 bg-secondary rounded" />
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <Separator className="w-40 h-4" />
+                  <Separator className="w-32 h-4" />
+                </div>
+              </div>
+            </div>
+          </>
         ) : (
           <>
             <TabsList className={`grid w-full grid-cols-${wallets.length}`}>

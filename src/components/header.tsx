@@ -83,7 +83,6 @@ export default function Header() {
 
 function AuthButton() {
   const { user, signingOut, authChecking, signout } = useContext(AuthContext);
-  // TODO: design disabled button
 
   if (authChecking) {
     return (
