@@ -67,7 +67,6 @@ export const EditUserSchema = z.object({
     .string()
     .email({ message: "Please input a valid email address" })
     .max(30, { message: "Must contain at most 30 characters" }),
-  // TODO: change to enum
   role: z.enum(ROLES),
   level: z.coerce.number(),
   // TODO: constrain balance to non-negative. preferrably in HTML

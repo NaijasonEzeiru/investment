@@ -293,8 +293,6 @@ export default function EditUser({ user }: { user: TUser }) {
               )}
             />
 
-            {/* TODO: add role and level */}
-
             <Button disabled={form.formState.isSubmitting} className="w-full">
               {form.formState.isSubmitting && (
                 <Loader className="animate-spin" />
