@@ -286,27 +286,6 @@ export default function CryptoAddresses() {
                   {form.formState.errors?.imgURL?.message as string}
                 </p>
               </div>
-              {/* <FormField
-                control={form.control}
-                name="imgURL"
-                render={({ field }) => (
-                  <FormItem className="space-y-0.5">
-                    <FormLabel>QR code image (optional)</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="eg: 2800"
-                        {...field}
-                        type="file"
-                        accept="image/png image/webp"
-                      />
-                    </FormControl>
-                    <p className="text-xs">
-                      Note: Only png and webp files are accepted
-                    </p>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
               <Button disabled={form.formState.isSubmitting} className="w-full">
                 {form.formState.isSubmitting && (
                   <Loader className="animate-spin" />
