@@ -229,19 +229,6 @@ export default function HotelBusiness({
             </div>
             <FormField
               control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem className="space-y-0.5">
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="country"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">

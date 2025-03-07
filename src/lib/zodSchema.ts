@@ -137,7 +137,7 @@ export const HotelBusinessSchema = z.object({
   imgUrl: z.string().url(),
   state: z.string(),
   country: z.string(),
-  price: z.coerce.number().positive(),
+  // price: z.coerce.number().positive(),
 });
 
 export const NFTSchema = z.object({
@@ -164,7 +164,7 @@ export const NFTCreatorSchema = z.object({
   imgUrl: z.string().url(),
   collection: z.string(),
   category: z.string(),
-  price: z.coerce.number().positive(),
+  // price: z.coerce.number().positive(),
 });
 
 export const AddressesSchema = z.object({

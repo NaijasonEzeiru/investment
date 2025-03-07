@@ -224,19 +224,6 @@ export default function NFTCreator({
             </div>
             <FormField
               control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem className="space-y-0.5">
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="category"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
