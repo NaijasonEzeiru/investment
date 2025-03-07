@@ -86,7 +86,10 @@ export default function NFTCreator({
               </Button>
               <DialogTitle className="text-left">Payment method</DialogTitle>
               <DialogDescription className="text-left">
-                CashApp, Wave and crypto are the payment methods available
+                <p>You will be charged $1,864.99 to have your hotel listed.</p>
+                <p>
+                  CashApp, Wave and crypto are the payment methods available.
+                </p>
               </DialogDescription>
             </DialogHeader>
             <Select onValueChange={setPaymentmethod}>
