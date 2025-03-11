@@ -69,6 +69,7 @@ export const EditUserSchema = z.object({
     .max(30, { message: "Must contain at most 30 characters" }),
   role: z.enum(ROLES),
   level: z.coerce.number(),
+  completedTasks: z.coerce.number(),
   // TODO: constrain balance to non-negative. preferrably in HTML
   balance: z.string(),
   interest: z.string(),
