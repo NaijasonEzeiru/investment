@@ -59,43 +59,43 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
       setLoading(false);
       return;
     }
-    if (user && user?.completedTasks + 1 == VIPTASKS[user.level - 1].tasks) {
-      try {
-        const res = await fetch("/api/tasks", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id,
-            userId: user?.id,
-            upgrade: true,
-            v:
-              VIPTASKS[user.level - 1].reward -
-              VIPTASKS[user.level - 1].cost +
-              +user.balance +
-              +user.interest,
-          }),
-        });
-        const data = await res.json();
-        if (res.ok) {
-          // @ts-expect-error: Should not be undefined
-          checkUserLoggedIn();
-          toast.success(data?.message);
-        } else {
-          toast.error("Could not submit order", {
-            description: "Something went wrong",
-          });
-        }
-      } catch (error) {
-        toast.error("Could not submit order", {
-          description: "Something went wrong",
-        });
-        console.log("error", error);
-      }
-      setLoading(false);
-      return;
-    }
+    // if (user && user?.completedTasks + 1 == VIPTASKS[user.level - 1].tasks) {
+    //   try {
+    //     const res = await fetch("/api/tasks", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         id,
+    //         userId: user?.id,
+    //         upgrade: true,
+    //         v:
+    //           VIPTASKS[user.level - 1].reward -
+    //           VIPTASKS[user.level - 1].cost +
+    //           +user.balance +
+    //           +user.interest,
+    //       }),
+    //     });
+    //     const data = await res.json();
+    //     if (res.ok) {
+    //       // @ts-expect-error: Should not be undefined
+    //       checkUserLoggedIn();
+    //       toast.success(data?.message);
+    //     } else {
+    //       toast.error("Could not submit order", {
+    //         description: "Something went wrong",
+    //       });
+    //     }
+    //   } catch (error) {
+    //     toast.error("Could not submit order", {
+    //       description: "Something went wrong",
+    //     });
+    //     console.log("error", error);
+    //   }
+    //   setLoading(false);
+    //   return;
+    // }
     // const newListings = listings.unshift()
     try {
       const res = await fetch("/api/tasks", {
@@ -129,6 +129,20 @@ export default function RemoteWorkerCarousel({ user }: { user: TUser }) {
     setLoading(false);
   }
 
+  if (user && VIPTASKS[user?.level - 1].tasks == user.completedTasks) {
+    return (
+      <p className="px-2">
+        You have completed all tasks for this level. <br /> Contact Admin -{" "}
+        <a
+          href="mailto:admin@curatedhub.org"
+          className="font-semibold text-lg hover:underline text-primary"
+        >
+          admin@curatedhub.org
+        </a>{" "}
+        to upgrade your level
+      </p>
+    );
+  }
   if (loadingListings) {
     return (
       <div className="relative h-[430px]">

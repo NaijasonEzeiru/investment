@@ -139,7 +139,8 @@ const Pay = ({
         <div className="flex justify-between">
           <p>Amount</p>
           <p className="">
-            {(amount / +address.value).toFixed(8)}BTC (${amount})
+            {(amount / +address.value).toFixed(8)}
+            {address.coin} (${amount})
           </p>
         </div>
         <Separator />
