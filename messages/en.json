@@ -3,44 +3,151 @@
     "description": "<p>We've unfortunately encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>",
     "title": "Something went wrong!"
   },
+  "Navigation": {
+    "work": "Work",
+    "about": "About us",
+    "dashboard": "Dashboard",
+    "admin": "Admin dashboard",
+    "logout": "Log out",
+    "login": "Login",
+    "signup": "Sign up"
+  },
   "IndexPage": {
-    "description": "This is a basic example that demonstrates the usage of <code>next-intl</code> with the Next.js App Router. Try changing the locale in the top right corner and see how the content changes.",
-    "title": "next-intl example"
+    "heroTitle": "Revolutionizing Ratings, Bridging Industries, Empowering Workers",
+    "heroDescription": "Join the future of decentralized ratings for hotels and digital art, powered by blockchain technology",
+    "heroStarted": "Get Started",
+    "heroCompleted": "Tasks Completed",
+    "heroRated": "Hotels Rated",
+    "heroUsers": "Active Users",
+    "heroListed": "NFTs Listed",
+    "innovation": "Powered by Innovation",
+    "experience": "Experience the future of ratings and reviews",
+    "trusted": "Trusted by Industry Leaders",
+    "see": "See what our users have to say about their experience",
+    "featured": "Featured Listings",
+    "emmaWilliams": {
+      "content": "I love how easy it is to find rating opportunities and earn rewards. The platform is intuitive and payments are always on time.",
+      "name": "Emma Williams",
+      "position": "Remote Worker",
+      "imgSrc": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80"
+    },
+    "sarahJohnson": {
+      "content": "CuratedHub has transformed how we receive and manage guest feedback. The blockchain verification adds a layer of trust that sets us apart",
+      "name": "Sarah Johnson",
+      "position": "Hotel Owner",
+      "imgSrc": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
+    },
+    "michaelChen": {
+      "content": "The NFT rating system has helped me reach new collectors and build credibility in the digital art space.",
+      "name": "Michael Chen",
+      "position": "Digital Artist",
+      "imgSrc": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80"
+    },
+    "rating": {
+      "content": "Real-time, transparent rating system powered by verified users",
+      "heading": "Dynamic Star Rating"
+    },
+    "blockchain": {
+      "content": "Immutable records and secure transactions for all ratings",
+      "heading": "Blockchain Security"
+    },
+    "earnings": {
+      "content": "Earn rewards by contributing quality ratings and reviews",
+      "heading": "Task-Based Earnings"
+    },
+    "integration": {
+      "content": "Seamlessly connect hotels and digital art marketplaces",
+      "heading": "Industry Integration"
+    }
+  },
+  "Footer": {
+    "revolution": "Revolutionizing ratings across industries",
+    "platform": "Platform",
+    "hotels": "Hotels",
+    "NFTs": "NFTs",
+    "remote": "Remote Work",
+    "company": "Company",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "rights": "All rights reserved"
+  },
+  "sign-up": {
+    "welcome": "Welcome",
+    "your-details": "Enter your details to sign up",
+    "your-detail": "Enter your details to log in to your account",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "username": "Username",
+    "email": "Email",
+    "phone-number": "Phone number",
+    "transfer-pin": "Transfer pin",
+    "Referral": "Referral code (optional)",
+    "password": "password",
+    "confirm-password": "Confirm password",
+    "forgot": "Forgot your password?",
+    "register": "Register",
+    "already": "Already have an account?",
+    "do-not": "Don't have an account?",
+    "sign-up": "Sign up",
+    "login": "log in",
+    "agree": "By registering, you agree to our",
+    "terms": "Terms of Service"
+  },
+  "Work": {
+    "join": "Join Our Remote Workforce",
+    "flexible-opportunities": "Flexible opportunities to earn while contributing to our rating ecosystem",
+    "inspector": "Hotel Quality Inspector",
+    "hour": "hour",
+    "evaluate": "Evaluate hotel properties and provide detailed quality assessments.",
+    "requirements": "Requirements",
+    "experience": "years hospitality experience",
+    "oriented": "Detail-oriented",
+    "available": "Available weekends",
+    "curator": "NFT Art Curator",
+    "flexible": "Flexible",
+    "review-NFTs": "Review and rate digital artworks, provide market insights.",
+    "art-background": "Art background",
+    "crypto-knowledge": "Crypto knowledge",
+    "analytical-skills": "Strong analytical skills",
+    "moderator": "Rating System Moderator",
+    "part-time": "Part-time",
+    "quality": "Ensure rating quality and maintain platform standards.",
+    "prev-experience": "Previous moderation experience",
+    "available-weekdays": "Available weekdays",
+    "flexible-hours": "Flexible Hours",
+    "best": "Work when it suits you best",
+    "competitive-pay": "Competitive Pay",
+    "earn": "Earn based on your contributions",
+    "growth": "Growth Opportunities",
+    "advance": "Advance your career with us"
+  },
+  "GetStartedIndex": {
+    "started": "Get started with",
+    "started-desc": "Choose how you will like to participate in our platform",
+    "remote": "Remote worker",
+    "rate": "Rate hotels and NFTs, earn rewards for quality contributions",
+    "hotel": "Hotel business",
+    "list": "List your property and get verified ratings",
+    "NFT-creator": "NFT creator",
+    "showcase": "Showcase your digital art and build credibilty"
   },
   "LocaleLayout": {
-    "title": "next-intl example"
+    "title": "Curated hub",
+    "description": "Curated hub"
   },
   "LocaleSwitcher": {
     "label": "Change language",
-    "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
+    "locale": "{locale, select, fr {FR} en {EN} other {Unknown}}"
   },
   "Manifest": {
-    "name": "next-intl example"
-  },
-  "Navigation": {
-    "home": "Home",
-    "pathnames": "Pathnames"
+    "name": "Curated hub"
   },
   "NotFoundPage": {
     "description": "Please double-check the browser address bar or use the navigation to go to a known page.",
     "title": "Page not found"
-  },
-  "PageLayout": {
-    "links": {
-      "docs": {
-        "description": "Learn more about next-intl in the official docs.",
-        "href": "https://next-intl.dev",
-        "title": "Docs"
-      },
-      "source": {
-        "description": "Browse the source code of this example on GitHub.",
-        "href": "https://github.com/amannn/next-intl/tree/main/examples/example-app-router",
-        "title": "Source code"
-      }
-    }
-  },
-  "PathnamesPage": {
-    "description": "<p>The pathnames are internationalized too.</p><p>If you're using the default language English, you'll see <code>/en/pathnames</code> in the browser address bar on this page.</p><p>If you change the locale to German, the URL is localized accordingly (<code>/de/pfadnamen</code>).</p>",
-    "title": "Pathnames"
   }
 }
