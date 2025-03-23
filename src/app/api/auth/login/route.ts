@@ -4,7 +4,6 @@ import { eq } from "drizzle-orm";
 import { users } from "@/db/schema/schema";
 import { db } from "@/db/db";
 import { signJwt, verifyJWT } from "@/lib/checkToken";
-import { uuidToBase64 } from "@/lib/utils";
 
 export const GET = async (request: NextRequest) => {
   const token = request.cookies.get("access_token")?.value;
@@ -32,7 +31,7 @@ export const GET = async (request: NextRequest) => {
           { status: 401 }
         );
       }
-      const referralCode = uuidToBase64(user.id);
+      const referralCode = user.serial + 1070050000;
       const { passwordHash, ...rest } = user;
       rest.upline = referralCode;
       // TODO: remove later

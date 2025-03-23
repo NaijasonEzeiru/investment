@@ -9,6 +9,7 @@ import {
   check,
   numeric,
   AnyPgColumn,
+  serial,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable(
@@ -18,7 +19,8 @@ export const users = pgTable(
       .primaryKey()
       .notNull()
       .default(sql`gen_random_uuid()`),
-    upline: text().references((): AnyPgColumn => users.id),
+    serial: serial("serial").unique(),
+    upline: smallint().references((): AnyPgColumn => users.serial),
     firstName: varchar("first_name", { length: 120 }).notNull(),
     lastName: varchar("last_name", { length: 120 }).notNull(),
     username: varchar("username", { length: 120 }).notNull().unique(),
@@ -56,7 +58,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   downlines: many(users, { relationName: "downlines" }),
   userId: one(users, {
     fields: [users.upline],
-    references: [users.id],
+    references: [users.serial],
     relationName: "downlines",
   }),
 }));

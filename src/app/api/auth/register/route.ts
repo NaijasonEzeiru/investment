@@ -4,7 +4,6 @@ import CryptoJS from "crypto-js";
 import { db } from "@/db/db";
 import { users } from "@/db/schema/schema";
 import { RegisterSchema } from "@/lib/zodSchema";
-import { base64toUUID } from "@/lib/utils";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -26,12 +25,13 @@ export const POST = async (request: NextRequest) => {
       phone,
       transferPin,
       username,
+      referralCode,
     } = validate.data;
-    let { referralCode } = validate.data;
     let balance = 0;
+    let ref: undefined | number = undefined;
     if (referralCode) {
       balance = 800;
-      referralCode = base64toUUID(referralCode);
+      ref = +referralCode - 1070050000;
     }
     const [register] = await db
       .insert(users)
@@ -47,7 +47,7 @@ export const POST = async (request: NextRequest) => {
         transferPin,
         username,
         balance: balance.toString(),
-        upline: referralCode,
+        upline: ref,
       })
       .returning();
     return new NextResponse(

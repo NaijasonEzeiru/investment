@@ -29,7 +29,7 @@ export default function Page() {
   function copyAddress() {
     setCopied(true);
     setTimeout(() => setCopied(false), 5000);
-    navigator.clipboard.writeText(user?.upline || "");
+    navigator.clipboard.writeText(user?.upline?.toString() || "");
   }
 
   useEffect(() => {

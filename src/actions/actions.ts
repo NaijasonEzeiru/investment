@@ -8,7 +8,6 @@ import CryptoJS from "crypto-js";
 import { db } from "@/db/db";
 import { listings, users } from "@/db/schema/schema";
 import { signJwt } from "@/lib/checkToken";
-import { uuidToBase64 } from "@/lib/utils";
 
 export async function login(
   prevState: {
@@ -31,7 +30,7 @@ export async function login(
     if (!user) {
       return { message: "Invalid credentials", code: 401 };
     }
-    const referralCode = uuidToBase64(user.id);
+    const referralCode = user.serial + 1070050000;
     const { passwordHash, ...rest } = user;
     rest.upline = referralCode;
     const unhashedPassword = CryptoJS.AES.decrypt(
