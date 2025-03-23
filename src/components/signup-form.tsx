@@ -32,11 +32,13 @@ import { RegisterSchema } from "@/lib/zodSchema";
 import { useRouter } from "next/navigation";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 import AuthContext from "./auth-context";
+import { useTranslations } from "next-intl";
 
 export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const t = useTranslations("sign-up");
   const router = useRouter();
   const { user } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -102,8 +104,8 @@ export function SignUpForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome</CardTitle>
-          <CardDescription>Enter your details to sign up</CardDescription>
+          <CardTitle className="text-xl">{t("welcome")}</CardTitle>
+          <CardDescription>{t("your-details")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -113,7 +115,7 @@ export function SignUpForm({
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>{t("first-name")}</FormLabel>
                     <FormControl>
                       <Input placeholder="John" {...field} />
                     </FormControl>
@@ -126,7 +128,7 @@ export function SignUpForm({
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>{t("last-name")}</FormLabel>
                     <FormControl>
                       <Input placeholder="Doe" {...field} />
                     </FormControl>
@@ -139,7 +141,7 @@ export function SignUpForm({
                 name="username"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>{t("username")}</FormLabel>
                     <FormControl>
                       <Input placeholder="johndoe" {...field} />
                     </FormControl>
@@ -152,7 +154,7 @@ export function SignUpForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>{t("email")}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="name@example.com"
@@ -169,7 +171,7 @@ export function SignUpForm({
                 name="phone"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Phone number</FormLabel>
+                    <FormLabel>{t("phone-number")}</FormLabel>
                     <FormControl>
                       <PhoneInput
                         onBlur={onBlur}
@@ -186,7 +188,7 @@ export function SignUpForm({
                 name="transferPin"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Transfer pin</FormLabel>
+                    <FormLabel>{t("transfer-pin")}</FormLabel>
                     <FormControl>
                       <InputOTP
                         maxLength={4}
@@ -211,7 +213,7 @@ export function SignUpForm({
                 name="referralCode"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Referral code (optional)</FormLabel>
+                    <FormLabel>{t("Referral")}</FormLabel>
                     <FormControl>
                       <Input placeholder="12345abcde" {...field} />
                     </FormControl>
@@ -224,11 +226,11 @@ export function SignUpForm({
                 name="password"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("password")}</FormLabel>
                     <div className="relative">
                       <FormControl>
                         <Input
-                          placeholder="password"
+                          placeholder={t("password")}
                           {...field}
                           type={showPassword ? "text" : "password"}
                         />
@@ -260,10 +262,10 @@ export function SignUpForm({
                 render={({ field }) => (
                   <FormItem className="space-y-0.5 relative">
                     <div className="relative">
-                      <FormLabel>Confirm password</FormLabel>
+                      <FormLabel>{t("confirm-password")}</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="password"
+                          placeholder={t("password")}
                           {...field}
                           type={showPassword ? "text" : "password"}
                         />
@@ -293,12 +295,12 @@ export function SignUpForm({
                 {form.formState.isSubmitting && (
                   <Loader className="animate-spin" />
                 )}
-                Register
+                {t("register")}
               </Button>
               <div className="text-center text-sm">
-                Already have an account?{" "}
+                {t("already")}{" "}
                 <Link href="/login" className="underline underline-offset-4">
-                  log in
+                  log in {t("login")}
                 </Link>
               </div>
             </form>
@@ -306,8 +308,7 @@ export function SignUpForm({
         </CardContent>
       </Card>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-        By registering, you agree to our <a href="#">Terms of Service</a> and{" "}
-        <a href="#">Privacy Policy</a>.
+        {t("agree")} <Link href="/terms-and-conditions">{t("terms")}</Link>
       </div>
     </div>
   );

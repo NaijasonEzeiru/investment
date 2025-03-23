@@ -19,11 +19,13 @@ import { Input } from "@/components/ui/input";
 import { login } from "@/actions/actions";
 import { toast } from "sonner";
 import AuthContext from "./auth-context";
+import { useTranslations } from "next-intl";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const t = useTranslations("sign-up");
   const [res, action, isPending] = useActionState(login, null);
   const { user, setUser } = useContext(AuthContext);
   const router = useRouter();
@@ -64,39 +66,43 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome</CardTitle>
-          <CardDescription>
-            Enter your details to log in to your account
-          </CardDescription>
+          <CardTitle className="text-xl">{t("welcome")}</CardTitle>
+          <CardDescription>{t("your-detail")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form className="grid gap-6" action={action}>
             <div className="grid gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email/username</Label>
-                <Input placeholder="email/username" required name="email" />
+                <Label htmlFor="email">
+                  {t("email")}/{t("username")}
+                </Label>
+                <Input
+                  placeholder={`${t("email")}/${t("username")}`}
+                  required
+                  name="email"
+                />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t("password")}</Label>
                   <a
                     href="#"
                     className="ml-auto text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {t("forgot")}
                   </a>
                 </div>
                 <Input type="password" required name="password" />
               </div>
               <Button disabled={isPending} className="w-full">
                 {isPending && <Loader className="animate-spin" />}
-                Login
+                {t("login")}
               </Button>
             </div>
             <div className="text-center text-sm">
-              Don&apos;t have an account?{" "}
+              {t("do-not")}{" "}
               <Link href="/signup" className="underline underline-offset-4">
-                Sign up
+                {t("sign-up")}
               </Link>
             </div>
           </form>

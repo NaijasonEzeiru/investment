@@ -1,4 +1,5 @@
 import { Home, Paintbrush, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
 import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
@@ -8,14 +9,14 @@ export default function GetStartedIndex({
 }: {
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
+  const t = useTranslations("GetStartedIndex");
+
   return (
     <>
       <DialogHeader>
-        <DialogTitle className="text-left">
-          Get started with CuratedHub
-        </DialogTitle>
+        <DialogTitle className="text-left">{t("started")}</DialogTitle>
         <DialogDescription className="text-left">
-          Choose how you will like to participate in our platform
+          {t("started-desc")}
         </DialogDescription>
       </DialogHeader>
       <div className="grid gap-4">
@@ -26,9 +27,9 @@ export default function GetStartedIndex({
         >
           <Users className="text-primary" />
           <span className="flex flex-col items-start">
-            <p>Remote worker</p>
+            <p>{t("remote")}</p>
             <p className="text-sm font-extralight whitespace-break-spaces text-left">
-              Rate hotels and NFTs, earn rewards for quality contributions
+              {t("rate")}
             </p>
           </span>
         </Button>
@@ -39,9 +40,9 @@ export default function GetStartedIndex({
         >
           <Home className="text-lime-700" />
           <span className="flex flex-col items-start">
-            <p>Hotel business</p>
+            <p>{t("hotel")}</p>
             <p className="text-sm font-extralight whitespace-break-spaces text-left">
-              List your property and get verified ratings
+              {t("list")}
             </p>
           </span>
         </Button>
@@ -52,9 +53,9 @@ export default function GetStartedIndex({
         >
           <Paintbrush className="text-rose-700" />
           <span className="flex flex-col items-start">
-            <p>NFT creator</p>
+            <p>{t("NFT-creator")}</p>
             <p className="text-sm font-extralight whitespace-break-spaces text-left">
-              Showcase your digital art and build credibilty
+              {t("showcase")}
             </p>
           </span>
         </Button>

@@ -1,54 +1,52 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Briefcase, Clock, DollarSign, Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 // import Image from "next/image";
 
 export default function Home() {
+  const t = useTranslations("Work");
   return (
     <>
       <Header />
       <main className="py-40 bg-gray-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">
-          Join Our Remote Workforce
+          {t("join")}
         </h2>
         <p className="text-xl text-gray-600 text-center mb-16">
-          Flexible opportunities to earn while contributing to our rating
-          ecosystem
+          {t("flexible-opportunities")}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900">
-                Hotel Quality Inspector
+                {t("inspector")}
               </h3>
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                Remote
+                {t("remote")}
               </span>
             </div>
             <div className="flex items-center text-gray-600 mb-4">
               <DollarSign className="w-5 h-5 mr-2" />
-              <span>$30-50/hour</span>
+              <span>$30-50/{t("hour")}</span>
             </div>
-            <p className="text-gray-600 mb-4">
-              Evaluate hotel properties and provide detailed quality
-              assessments.
-            </p>
+            <p className="text-gray-600 mb-4">{t("evaluate")}</p>
             <div className="mb-4">
               <h4 className="font-semibold text-gray-900 mb-2">
-                Requirements:
+                {t("requirements")}:
               </h4>
               <ul className="space-y-2">
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  3+ years hospitality experience
+                  3+ {t("experience")}
                 </li>
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  Detail-oriented
+                  {t("oriented")}
                 </li>
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  Available weekends
+                  {t("available")}
                 </li>
               </ul>
             </div>
@@ -56,35 +54,33 @@ export default function Home() {
           <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900">
-                NFT Art Curator
+                {t("curator")}
               </h3>
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                Flexible
+                {t("flexible")}
               </span>
             </div>
             <div className="flex items-center text-gray-600 mb-4">
               <DollarSign className="w-5 h-5 mr-2" />
-              <span>$25-40/hour</span>
+              <span>$25-40/{t("hour")}</span>
             </div>
-            <p className="text-gray-600 mb-4">
-              Review and rate digital artworks, provide market insights.
-            </p>
+            <p className="text-gray-600 mb-4">{t("review-NFTs")}</p>
             <div className="mb-4">
               <h4 className="font-semibold text-gray-900 mb-2">
-                Requirements:
+                {t("Requirements")}:
               </h4>
               <ul className="space-y-2">
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  Art background
+                  {t("art-background")}
                 </li>
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  Crypto knowledge
+                  {t("crypto-knowledge")}
                 </li>
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  Strong analytical skills
+                  {t("analytical-skills")}
                 </li>
               </ul>
             </div>
@@ -92,31 +88,29 @@ export default function Home() {
           <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900">
-                Rating System Moderator
+                {t("moderator")}
               </h3>
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                Part-time
+                {t("part-time")}
               </span>
             </div>
             <div className="flex items-center text-gray-600 mb-4">
               <DollarSign className="w-5 h-5 mr-2" />
-              <span>$20-35/hour</span>
+              <span>$20-35/{t("hour")}</span>
             </div>
-            <p className="text-gray-600 mb-4">
-              Ensure rating quality and maintain platform standards.
-            </p>
+            <p className="text-gray-600 mb-4">{t("quality")}</p>
             <div className="mb-4">
               <h4 className="font-semibold text-gray-900 mb-2">
-                Requirements:
+                {t("requirements")}:
               </h4>
               <ul className="space-y-2">
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  Previous moderation experience
+                  {t("prev-experience")}
                 </li>
                 <li className="flex items-center text-gray-600">
                   <Star className="w-4 h-4 mr-2" />
-                  Available weekdays
+                  {t("available-weekdays")}
                 </li>
               </ul>
             </div>
@@ -126,20 +120,22 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <Clock className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Flexible Hours</h3>
-              <p>Work when it suits you best</p>
+              <h3 className="text-xl font-semibold mb-2">
+                {t("flexible-hours")}
+              </h3>
+              <p>{t("best")}</p>
             </div>
             <div className="text-center">
               <DollarSign className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Competitive Pay</h3>
-              <p>Earn based on your contributions</p>
+              <h3 className="text-xl font-semibold mb-2">
+                {t("competitive-pay")}
+              </h3>
+              <p>{t("earn")}</p>
             </div>
             <div className="text-center">
               <Briefcase className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">
-                Growth Opportunities
-              </h3>
-              <p>Advance your career with us</p>
+              <h3 className="text-xl font-semibold mb-2">{t("growth")}</h3>
+              <p>{t("advance")}</p>
             </div>
           </div>
         </div>

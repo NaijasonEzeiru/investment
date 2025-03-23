@@ -1,0 +1,92 @@
+{
+  "Error": {
+    "description": "<p>Nous avons malheureusement rencontré une erreur.</p><p>Vous pouvez essayer de <retry>recharger la page</retry> que vous visitiez.</p>",
+    "title": "Une erreur est survenue !"
+  },
+  "Navigation": {
+    "work": "Travail",
+    "about": "À propos de nous",
+    "dashboard": "Tableau de bord",
+    "admin": "Tableau de bord administrateur",
+    "logout": "Se déconnecter",
+    "login": "Se connecter",
+    "signup": "S'inscrire"
+  },
+  "IndexPage": {
+    "heroTitle": "Révolutionner les évaluations, relier les industries, autonomiser les travailleurs",
+    "heroDescription": "Rejoignez le futur des évaluations décentralisées pour les hôtels et l'art numérique, propulsé par la technologie blockchain",
+    "heroStarted": "Commencer",
+    "heroCompleted": "Tâches terminées",
+    "heroRated": "Hôtels évalués",
+    "heroUsers": "Utilisateurs actifs",
+    "heroListed": "NFTs répertoriés",
+    "innovation": "Propulsé par l'innovation",
+    "experience": "Découvrez le futur des évaluations et avis",
+    "trusted": "Fiable par les leaders de l'industrie",
+    "see": "Découvrez ce que nos utilisateurs disent de leur expérience",
+    "emmaWilliams": {
+      "content": "J'adore la facilité avec laquelle je peux trouver des opportunités d'évaluation et gagner des récompenses. La plateforme est intuitive et les paiements sont toujours effectués à temps.",
+      "name": "Emma Williams",
+      "position": "Travailleuse à distance",
+      "imgSrc": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80"
+    },
+    "sarahJohnson": {
+      "content": "CuratedHub a transformé notre manière de recevoir et gérer les avis des clients. La vérification blockchain ajoute une couche de confiance qui nous distingue.",
+      "name": "Sarah Johnson",
+      "position": "Propriétaire d'hôtel",
+      "imgSrc": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80"
+    },
+    "michaelChen": {
+      "content": "Le système d'évaluation NFT m'a aidé à atteindre de nouveaux collectionneurs et à renforcer ma crédibilité dans l'espace de l'art numérique.",
+      "name": "Michael Chen",
+      "position": "Artiste numérique",
+      "imgSrc": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80"
+    },
+    "rating": {
+      "content": "Système d'évaluation transparent en temps réel propulsé par des utilisateurs vérifiés",
+      "heading": "Évaluation dynamique par étoiles"
+    },
+    "blockchain": {
+      "content": "Enregistrements immuables et transactions sécurisées pour toutes les évaluations",
+      "heading": "Sécurité Blockchain"
+    },
+    "earnings": {
+      "content": "Gagnez des récompenses en contribuant avec des évaluations et avis de qualité",
+      "heading": "Gains basés sur les tâches"
+    },
+    "integration": {
+      "content": "Connectez parfaitement les hôtels et les marchés d'art numérique",
+      "heading": "Intégration industrielle"
+    }
+  },
+  "Footer": {
+    "revolution": "Révolutionner les évaluations à travers les industries",
+    "platform": "Plateforme",
+    "hotels": "Hôtels",
+    "NFTs": "NFTs",
+    "remote": "Travail à distance",
+    "company": "Entreprise",
+    "about": "À propos",
+    "blog": "Blog",
+    "contact": "Contact",
+    "legal": "Légal",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "rights": "Tous droits réservés"
+  },
+  "LocaleLayout": {
+    "title": "Curated hub",
+    "description": "Curated hub"
+  },
+  "LocaleSwitcher": {
+    "label": "Changer de langue",
+    "locale": "{locale, select, fr {FR} en {EN} other {Inconnu}}"
+  },
+  "Manifest": {
+    "name": "Curated hub"
+  },
+  "NotFoundPage": {
+    "description": "Veuillez vérifier l'adresse du navigateur ou utiliser la navigation pour accéder à une page connue.",
+    "title": "Page non trouvée"
+  }
+}

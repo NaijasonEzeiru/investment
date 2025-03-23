@@ -1,14 +1,17 @@
 "use client";
 
 import { Loader } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 import AuthContext from "./auth-context";
+import LocaleSwitcher from "./LocaleSwitcher";
 import { Button } from "./ui/button";
 
 export default function Header() {
+  const t = useTranslations("Navigation");
   const [openNav, setOpenNav] = useState(false);
   const pathName = usePathname();
 
@@ -65,15 +68,16 @@ export default function Header() {
               NFTs
             </Link> */}
             <Link href="/work" className="px-3 opacity-70 hover:opacity-100">
-              Work
+              {t("work")}
             </Link>
             <Link
               href="/about-us"
               className="px-3 opacity-70 hover:opacity-100"
             >
-              About us
+              {t("about")}
             </Link>
             <AuthButton />
+            <LocaleSwitcher />
           </div>
         </div>
       </nav>
@@ -82,6 +86,7 @@ export default function Header() {
 }
 
 function AuthButton() {
+  const t = useTranslations("Navigation");
   const { user, signingOut, authChecking, signout } = useContext(AuthContext);
 
   if (authChecking) {
@@ -97,14 +102,14 @@ function AuthButton() {
     return (
       <>
         <Link href="/dashboard" className="px-3 opacity-70 hover:opacity-100">
-          Dashboard
+          {t("dashboard")}
         </Link>
         {user?.role == "admin" && (
           <Link
             href="/admin/users"
             className="px-3 opacity-70 hover:opacity-100"
           >
-            Admin dashboard
+            {t("admin")}
           </Link>
         )}
         <Button
@@ -112,7 +117,7 @@ function AuthButton() {
           disabled={signingOut}
           className="text-white px-4 py-2 rounded-lg transition-colors lg:w-fit w-full text-center"
         >
-          {signingOut ? <Loader className="animate-spin" /> : "Log out"}
+          {signingOut ? <Loader className="animate-spin" /> : t("logout")}
         </Button>
       </>
     );
@@ -123,13 +128,13 @@ function AuthButton() {
           href="/login"
           className="whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
         >
-          Login
+          {t("login")}
         </Link>
         <Link
           href="/signup"
           className="whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
         >
-          Sign up
+          {t("signup")}
         </Link>
       </>
     );

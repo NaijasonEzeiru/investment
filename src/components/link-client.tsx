@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 import AuthContext from "./auth-context";
 
-export default function LinkClient() {
+export default function LinkClient({ started }: { started: string }) {
   const { user } = useContext(AuthContext);
   return (
     <Link
@@ -29,7 +29,7 @@ export default function LinkClient() {
         <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
       </svg>
-      Get Started
+      {started}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
