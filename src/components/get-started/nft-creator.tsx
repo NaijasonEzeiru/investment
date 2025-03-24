@@ -36,12 +36,14 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { PayBTC } from "../pay-btc";
 import { PayCashApp } from "../pay-cashApp";
+import { useTranslations } from "next-intl";
 
 export default function NFTCreator({
   setIndex,
 }: {
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
+  const t = useTranslations("hotel-business");
   const [addressImg, setAddressImg] = useState("");
   const [showPaymentPage, setShowPaymentPage] = useState(false);
   const [paymentMethod, setPaymentmethod] = useState("");
@@ -54,7 +56,7 @@ export default function NFTCreator({
     if (img) {
       const validate = z
         .any()
-        .refine((files) => files.size <= 5000000, "Max image size is 5MB.")
+        .refine((files) => files.size <= 5000000, t("max"))
         .safeParse(img);
       if (validate?.error) {
         form.setError("imgUrl", {
@@ -84,28 +86,28 @@ export default function NFTCreator({
               >
                 <ArrowLeft />
               </Button>
-              <DialogTitle className="text-left">Payment method</DialogTitle>
+              <DialogTitle className="text-left">{t("method")}</DialogTitle>
               <DialogDescription className="text-left">
-                <p>You will be charged $1,864.99 to have your hotel listed.</p>
-                <p>
-                  CashApp, Wave and crypto are the payment methods available.
-                </p>
+                <p>{t("charge-NFT")}</p>
+                <p>{t("methods-available")}</p>
               </DialogDescription>
             </DialogHeader>
             <Select onValueChange={setPaymentmethod}>
               <SelectTrigger className="w-56">
-                <SelectValue placeholder="Select a payment method" />
+                <SelectValue placeholder={t("select")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Payment methods</SelectLabel>
-                  <SelectItem value="cashapp/wave">Cash App/Wave</SelectItem>
-                  <SelectItem value="crypto">Crypto</SelectItem>
+                  <SelectLabel>{t("method")}</SelectLabel>
+                  <SelectItem value="cashapp/wave">
+                    {t("cash-app")}/{t("wave")}
+                  </SelectItem>
+                  <SelectItem value="crypto">{t("crypto")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
             <DialogFooter>
-              <Button onClick={() => setPayment(true)}>Next</Button>
+              <Button onClick={() => setPayment(true)}>{t("next")}</Button>
             </DialogFooter>
           </>
         )}
@@ -127,11 +129,9 @@ export default function NFTCreator({
           >
             <ArrowLeft />
           </Button>
-          <DialogTitle className="text-left">
-            Showcase your digital art and build credibilty
-          </DialogTitle>
+          <DialogTitle className="text-left">{t("showcase")}</DialogTitle>
           <DialogDescription className="text-left">
-            Your NFT will be listed if successfully verified by our moderators
+            {t("listed-NFT")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -141,10 +141,10 @@ export default function NFTCreator({
               name="title"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel> {t("title")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="eg: Grand Plaza Hotel &amp; Spa"
+                      // placeholder="eg: Grand Plaza Hotel &amp; Spa"
                       {...field}
                     />
                   </FormControl>
@@ -157,10 +157,10 @@ export default function NFTCreator({
               name="description"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("description")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="eg: Unique digital artwork from a renowned artist, part of an exclusive NFT collection..."
+                      // placeholder="eg: Unique digital artwork from a renowned artist, part of an exclusive NFT collection..."
                       {...field}
                     />
                   </FormControl>
@@ -169,7 +169,7 @@ export default function NFTCreator({
               )}
             />
             <div className="relative">
-              <p className="text-sm font-medium mb-1.5">Image</p>
+              <p className="text-sm font-medium mb-1.5">{t("image")}</p>
               <label
                 className="grid relative items-center w-full h-56 sm:h-[335px] grow rounded-3xl border border-border"
                 tabIndex={0}
@@ -199,7 +199,7 @@ export default function NFTCreator({
                     field: { onChange, onBlur, value, name, ref, disabled },
                   }) => (
                     <FormItem className="space-y-0.5 hidden">
-                      <FormLabel>Image</FormLabel>
+                      <FormLabel>{t("image")}</FormLabel>
                       <FormControl>
                         <input
                           accept="image/*"
@@ -230,7 +230,7 @@ export default function NFTCreator({
               name="category"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel>{t("category")}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -243,7 +243,7 @@ export default function NFTCreator({
               name="collection"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Collection</FormLabel>
+                  <FormLabel>{t("collection")}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -255,7 +255,7 @@ export default function NFTCreator({
               {form.formState.isSubmitting && (
                 <Loader className="animate-spin" />
               )}
-              Add NFT listing
+              {t("add-NFT")}
             </Button>
           </form>
         </Form>

@@ -9,6 +9,7 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction, useContext } from "react";
 
 import AuthContext from "../auth-context";
@@ -24,6 +25,7 @@ export default function RemoteWorker({
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
   const { user } = useContext(AuthContext);
+  const t = useTranslations("RemoteWorker");
 
   console.log({ user });
 
@@ -38,29 +40,26 @@ export default function RemoteWorker({
         >
           <ArrowLeft />
         </Button>
-        <DialogTitle className="text-left">
-          Remote work opportunities
-        </DialogTitle>
+        <DialogTitle className="text-left">{t("title")}</DialogTitle>
         {/* <DialogDescription className="text-left">
           Choose how you will like to participate in our platform
         </DialogDescription> */}
       </DialogHeader>
       <div className="grid gap-4 mt-3 max-w-[90vw]">
         <span>
-          <h5 className="text-lg font-semibold">Available tasks</h5>
-          <p className="text-sm">
-            Review and rate properties and artworks to earn rewards
-          </p>
+          <h5 className="text-lg font-semibold">{t("available-tasks")}</h5>
+          <p className="text-sm">{t("review")}</p>
         </span>
         <Card className="bg-gradient-to-br from-violet-700 via-violet-600 to-violet-700 text-white">
           <CardHeader className="text-centerr">
             <CardTitle className="flex justify-between items-center">
               <span className="flex items-center gap-1">
-                <Star className="text-yellow-400" size={18} fill="yellow" /> VIP
-                {user?.level} Progress
+                <Star className="text-yellow-400" size={18} fill="yellow" />
+                {t("VIP")}
+                {user?.level} {t("progress")}
               </span>
               <p className="text-xs px-3 py-1 rounded-full bg-violet-300/35 font-extralight">
-                Level: VIP {user?.level}
+                {t("level")}: {t("VIP")} {user?.level}
               </p>
             </CardTitle>
           </CardHeader>
@@ -68,18 +67,20 @@ export default function RemoteWorker({
             <div className="flex gap-3 flex-col md:flex-row">
               <span className="p-4 flex justify-between items-center rounded-lg w-full bg-violet-300/35">
                 <span>
-                  <p className="text-xs font-light">Completed</p>
-                  <p>{user?.completedTasks} Tasks</p>
+                  <p className="text-xs font-light">{t("completed")}</p>
+                  <p>
+                    {user?.completedTasks} {t("tasks")}
+                  </p>
                 </span>
                 <Check className="p-1 border rounded-full border-white" />
               </span>
               <span className="p-4 flex justify-between items-center rounded-lg w-full bg-violet-300/35">
                 <span>
-                  <p className="text-xs font-light">Remaining</p>
+                  <p className="text-xs font-light">{t("remaining")}</p>
                   {user ? (
                     <p>
                       {VIPTASKS[user.level - 1].tasks - user?.completedTasks}{" "}
-                      Tasks
+                      {t("tasks")}
                     </p>
                   ) : (
                     <p></p>
@@ -89,7 +90,7 @@ export default function RemoteWorker({
               </span>
             </div>
             <div className="">
-              <p className="text-xs font-light">Progress</p>
+              <p className="text-xs font-light">{t("progress")}</p>
               <Progress
                 value={
                   user
@@ -106,7 +107,7 @@ export default function RemoteWorker({
         <Card className="bg-gradient-to-br from-purple-700 via-purple-600 to-purple-700 text-white">
           <CardHeader className="text-centerr">
             <CardTitle className="flex justify-between items-center">
-              Return Profits
+              {t("return-profits")}
               <TrendingUp />
             </CardTitle>
           </CardHeader>
@@ -115,17 +116,17 @@ export default function RemoteWorker({
               <span className="p-4 grid gap-1.5 rounded-lg w-full bg-purple-300/35">
                 <span className="flex items-center gap-1">
                   <DollarSign size={12} />
-                  <p className="text-xs font-light">Amount Available</p>
+                  <p className="text-xs font-light">{t("amount-available")}</p>
                 </span>
                 <p>${user && (+user?.balance).toLocaleString()}</p>
                 <i className="text-xs font-light whitespace-nowrap">
-                  Based on completed tasks
+                  {t("based")}
                 </i>
               </span>
               <span className="p-4 grid gap-1.5 rounded-lg w-full bg-purple-300/35">
                 <span className="flex items-center gap-1">
                   <TrendingUp size={12} />
-                  <p className="text-xs font-light">Profit Potential</p>
+                  <p className="text-xs font-light">{t("profit-potential")}</p>
                 </span>
                 <p>
                   $
@@ -136,7 +137,7 @@ export default function RemoteWorker({
                     ).toLocaleString()}
                 </p>
                 <i className="text-xs font-light whitespace-nowrap">
-                  Today&apos;s Commision
+                  {t("today")}
                 </i>
               </span>
             </div>

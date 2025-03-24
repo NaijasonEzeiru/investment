@@ -36,12 +36,14 @@ import { Textarea } from "../ui/textarea";
 import Image from "next/image";
 import { PayBTC } from "../pay-btc";
 import { PayCashApp } from "../pay-cashApp";
+import { useTranslations } from "next-intl";
 
 export default function HotelBusiness({
   setIndex,
 }: {
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
+  const t = useTranslations("hotel-business");
   const [addressImg, setAddressImg] = useState("");
   // const [file, setFile] = useState<File | null>(null);
   const [showPaymentPage, setShowPaymentPage] = useState(false);
@@ -57,7 +59,7 @@ export default function HotelBusiness({
     if (img) {
       const validate = z
         .any()
-        .refine((files) => files.size <= 5000000, "Max image size is 5MB.")
+        .refine((files) => files.size <= 5000000, t("max"))
         .safeParse(img);
       if (validate?.error) {
         form.setError("imgUrl", {
@@ -88,28 +90,28 @@ export default function HotelBusiness({
               >
                 <ArrowLeft />
               </Button>
-              <DialogTitle className="text-left">Payment method</DialogTitle>
+              <DialogTitle className="text-left">{t("method")}</DialogTitle>
               <DialogDescription className="text-left">
-                <p>You will be charged $1,000.99 to have your hotel listed.</p>
-                <p>
-                  CashApp, Wave and crypto are the payment methods available.
-                </p>
+                <p>{t("charge")}</p>
+                <p>{t("methods-available")}</p>
               </DialogDescription>
             </DialogHeader>
             <Select onValueChange={setPaymentmethod}>
               <SelectTrigger className="w-56">
-                <SelectValue placeholder="Select a payment method" />
+                <SelectValue placeholder={t("select")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Payment methods</SelectLabel>
-                  <SelectItem value="cashapp/wave">Cash App/Wave</SelectItem>
-                  <SelectItem value="crypto">Crypto</SelectItem>
+                  <SelectLabel>{t("method")}</SelectLabel>
+                  <SelectItem value="cashapp/wave">
+                    {t("cash-app")}/{t("wave")}
+                  </SelectItem>
+                  <SelectItem value="crypto">{t("crypto")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
             <DialogFooter>
-              <Button onClick={() => setPayment(true)}>Next</Button>
+              <Button onClick={() => setPayment(true)}>{t("next")}</Button>
             </DialogFooter>{" "}
           </>
         )}
@@ -131,12 +133,9 @@ export default function HotelBusiness({
           >
             <ArrowLeft />
           </Button>
-          <DialogTitle className="text-left">
-            List your property and get verified ratings
-          </DialogTitle>
+          <DialogTitle className="text-left">{t("get-ratings")}</DialogTitle>
           <DialogDescription className="text-left">
-            Your property will be listed if successfully verified by our
-            moderators
+            {t("listed")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -146,12 +145,9 @@ export default function HotelBusiness({
               name="title"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>{t("title")}</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="eg: Grand Plaza Hotel &amp; Spa"
-                      {...field}
-                    />
+                    <Input placeholder={t("grand-plaza")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -162,19 +158,16 @@ export default function HotelBusiness({
               name="description"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t("description")}</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="eg: Experience luxury and comfort in our premium accommodations with world..."
-                      {...field}
-                    />
+                    <Textarea placeholder={t("luxury")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <div className="relative">
-              <p className="text-sm font-medium mb-1.5">Image</p>
+              <p className="text-sm font-medium mb-1.5">{t("image")}</p>
               <label
                 className="grid relative items-center w-full h-56 sm:h-[335px] grow rounded-3xl border border-border"
                 tabIndex={0}
@@ -204,7 +197,7 @@ export default function HotelBusiness({
                     field: { onChange, onBlur, value, name, ref, disabled },
                   }) => (
                     <FormItem className="space-y-0.5 hidden">
-                      <FormLabel>Image</FormLabel>
+                      <FormLabel>{t("image")}</FormLabel>
                       <FormControl>
                         <input
                           accept="image/*"
@@ -235,7 +228,7 @@ export default function HotelBusiness({
               name="country"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Country</FormLabel>
+                  <FormLabel>{t("country")}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -248,7 +241,9 @@ export default function HotelBusiness({
               name="state"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>State/City</FormLabel>
+                  <FormLabel>
+                    {t("state")}/{t("city")}
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -258,7 +253,7 @@ export default function HotelBusiness({
             />
             <Button disabled={formState.isSubmitting} className="w-full">
               {formState.isSubmitting && <Loader className="animate-spin" />}
-              Add hotel listing
+              {t("add")}
             </Button>
           </form>
         </Form>

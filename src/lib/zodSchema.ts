@@ -32,7 +32,7 @@ export const RegisterSchema = z
     email: z
       .string()
       .email({ message: "Please input a valid email address" })
-      .max(30, { message: "Must contain at most 30 characters" }),
+      .max(40, { message: "Must contain at most 40 characters" }),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -66,7 +66,7 @@ export const EditUserSchema = z.object({
   email: z
     .string()
     .email({ message: "Please input a valid email address" })
-    .max(30, { message: "Must contain at most 30 characters" }),
+    .max(40, { message: "Must contain at most 40 characters" }),
   role: z.enum(ROLES),
   level: z.coerce.number(),
   completedTasks: z.coerce.number(),
@@ -93,7 +93,7 @@ export const EditProfileSchema = z.object({
   email: z
     .string()
     .email({ message: "Please input a valid email address" })
-    .max(30, { message: "Must contain at most 30 characters" }),
+    .max(40, { message: "Must contain at most 40 characters" }),
 });
 
 export const PaymentSchema = z.object({
@@ -107,7 +107,7 @@ export const LoginSchema = z.object({
   email: z
     .string()
     .email({ message: "Please input a valid email address" })
-    .max(50, { message: "Must contain at most 50 characters" }),
+    .max(40, { message: "Must contain at most 40 characters" }),
   password: z
     .string()
     .min(4, { message: "Must contain at least 4 characters" })
