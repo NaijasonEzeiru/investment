@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { AppPayment } from "@/db/schema/schema";
 import { Clipboard, ClipboardCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -20,6 +21,7 @@ import { Separator } from "./ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export function PayCashApp({ amount }: { amount: number }) {
+  const t = useTranslations("Deposit");
   const [copied, setCopied] = useState(false);
   const [loadingAddresses, setLoadingAddresses] = useState(false);
   const [wallets, setWallets] = useState<AppPayment[]>([]);
@@ -105,21 +107,21 @@ export function PayCashApp({ amount }: { amount: number }) {
               <TabsContent value={val.app} key={val.app}>
                 <CardHeader>
                   <CardTitle>
-                    Pay with <span className="uppercase">{val.app}</span>
+                    {t("pay-with")} <span className="uppercase">{val.app}</span>
                   </CardTitle>
                   <CardDescription>
-                    To complete this payment, send exactly this amount to the{" "}
-                    <span className="uppercase">{val.app}</span> details below
+                    {t("send")} <span className="uppercase">{val.app}</span>{" "}
+                    {t("below")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="">
-                    <p className="text-lg font-medium">APP</p>
+                    <p className="text-lg font-medium">{t("APP")}</p>
                     <p>Cash App</p>
                   </div>
                   <div className="">
                     <p className="text-lg font-medium">
-                      {val.app == "wave" ? "NUMBER" : "TAG"}
+                      {val.app == "wave" ? t("NUMBER") : t("TAG")}
                     </p>
                     <span className="flex justify-between items-center">
                       <p>{val.tag}</p>{" "}
@@ -141,14 +143,14 @@ export function PayCashApp({ amount }: { amount: number }) {
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent className="bg-slate-100 text-black">
-                            <p>Copy number</p>
+                            <p>{t("copy")}</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </span>
                   </div>
                   <div className="">
-                    <p className="text-lg font-medium">AMOUNT</p>
+                    <p className="text-lg font-medium">{t("AMOUNT")}</p>
                     <p>${amount}</p>
                   </div>
                 </CardContent>

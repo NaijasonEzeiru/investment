@@ -7,7 +7,7 @@ import { ArrowLeft, Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { NFTCreatorSchema } from "@/lib/zodSchema";
+import { NFTCreatorSchema as N } from "@/lib/zodSchema";
 import {
   DialogDescription,
   DialogFooter,
@@ -44,10 +44,12 @@ export default function NFTCreator({
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
   const t = useTranslations("hotel-business");
+  const ze = useTranslations("ZodError");
   const [addressImg, setAddressImg] = useState("");
   const [showPaymentPage, setShowPaymentPage] = useState(false);
   const [paymentMethod, setPaymentmethod] = useState("");
   const [payment, setPayment] = useState(false);
+  const NFTCreatorSchema = N(ze);
   const form = useForm<z.infer<typeof NFTCreatorSchema>>({
     resolver: zodResolver(NFTCreatorSchema),
   });

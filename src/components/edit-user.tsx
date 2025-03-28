@@ -25,7 +25,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { EditUserSchema } from "@/lib/zodSchema";
+import { EditUserSchema as E } from "@/lib/zodSchema";
 import {
   InputOTP,
   InputOTPGroup,
@@ -39,8 +39,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useTranslations } from "next-intl";
 
 export default function EditUser({ user }: { user: TUser }) {
+  const t = useTranslations("ZodError");
+  const EditUserSchema = E(t);
   const form = useForm<z.infer<typeof EditUserSchema>>({
     resolver: zodResolver(EditUserSchema),
     defaultValues: { ...user },

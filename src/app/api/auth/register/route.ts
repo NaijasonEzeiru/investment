@@ -3,12 +3,12 @@ import CryptoJS from "crypto-js";
 
 import { db } from "@/db/db";
 import { users } from "@/db/schema/schema";
-import { RegisterSchema } from "@/lib/zodSchema";
+import { RegisterSchemaRoute } from "@/lib/zodSchema";
 
 export const POST = async (request: NextRequest) => {
   try {
     const body = await request.json();
-    const validate = RegisterSchema.safeParse(body);
+    const validate = RegisterSchemaRoute.safeParse(body);
     if (validate?.error) {
       return new NextResponse(
         JSON.stringify({

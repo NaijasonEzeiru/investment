@@ -32,14 +32,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { PaymentSchema } from "@/lib/zodSchema";
+import { PaymentSchema as P } from "@/lib/zodSchema";
 import WithdrawCrypto from "./withdraw-crypto";
 import WithdrawCashApp from "./withdraw-cash-app";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
+  const t = useTranslations("Withdraw");
+  const ze = useTranslations("ZodError");
   const [amount, setAmount] = useState(0);
   const [method, setMethod] = useState<"crypto" | "" | "cashapp/wave">("");
+  const PaymentSchema = P(ze);
 
   const form = useForm<z.infer<typeof PaymentSchema>>({
     resolver: zodResolver(PaymentSchema),
@@ -51,7 +55,7 @@ export default function Page() {
   async function onSubmit(body: z.infer<typeof PaymentSchema>) {
     if (user && +user?.interest < body.amount) {
       form.setError("amount", {
-        message: "Insufficient balance",
+        message: t("insufficient"),
       });
       return;
     }
@@ -63,7 +67,7 @@ export default function Page() {
     return (
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <h1 className="text-xl font-semibold text-center mb-10">
-          Withdraw Funds
+          {t("withdraw")}
         </h1>
         {!(method == "crypto") ? (
           <WithdrawCashApp
@@ -84,12 +88,14 @@ export default function Page() {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0 h-full">
-      <h1 className="text-xl font-semibold text-center mb-8">Withdraw Funds</h1>
+      <h1 className="text-xl font-semibold text-center mb-8">
+        {t("withdraw")}
+      </h1>
       <Card className="w-[350px] mx-auto justify-self-center items-center">
         <CardHeader>
           <CardTitle>
             <div className="flex justify-between">
-              <p>Withdraw Funds</p>
+              <p>{t("withdraw")}</p>
               <ArrowDownRight />
             </div>
           </CardTitle>
@@ -97,7 +103,7 @@ export default function Page() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="p-4 rounded-lg bg-slate-200">
-            <p className="text-sm">Available amount</p>
+            <p className="text-sm">{t("available")}</p>
             <p className="text-lg">
               ${user && (+user?.interest).toLocaleString()}
             </p>
@@ -109,7 +115,7 @@ export default function Page() {
                 name="amount"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Amount to withdraw</FormLabel>
+                    <FormLabel>{t("amount")}</FormLabel>
                     <FormControl>
                       <span className="flex items-center gap-2">
                         $<Input {...field} />
@@ -124,7 +130,7 @@ export default function Page() {
                 name="method"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Select withdrawal method</FormLabel>
+                    <FormLabel>{t("select")}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -138,7 +144,7 @@ export default function Page() {
                         <SelectItem value="cashapp/wave">
                           Cashapp/Wave
                         </SelectItem>
-                        <SelectItem value="crypto">Crypto</SelectItem>
+                        <SelectItem value="crypto">{t("crypto")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -149,13 +155,13 @@ export default function Page() {
                 className="mx-auto block"
                 disabled={!!(user && user?.level < 3)}
               >
-                Proceed to withdraw
+                {t("proceed")}
               </Button>
             </form>
           </Form>
         </CardContent>
         {user && user?.level < 3 && (
-          <CardFooter>You can only withdraw when you get to level 3</CardFooter>
+          <CardFooter>{t("no-withdrawal")}</CardFooter>
         )}
       </Card>
     </div>

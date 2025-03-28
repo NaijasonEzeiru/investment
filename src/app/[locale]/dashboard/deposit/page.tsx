@@ -33,14 +33,19 @@ import {
 } from "@/components/ui/form";
 import { PayBTC } from "@/components/pay-btc";
 import { PayCashApp } from "@/components/pay-cashApp";
-import { PaymentSchema } from "@/lib/zodSchema";
+import { PaymentSchema as P } from "@/lib/zodSchema";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
+  const t = useTranslations("Deposit");
+  const ze = useTranslations("ZodError");
   const [amount, setAmount] = useState(0);
   const [method, setMethod] = useState<"crypto" | "cashapp/wave">(
     "cashapp/wave"
   );
+
+  const PaymentSchema = P(ze);
 
   const form = useForm<z.infer<typeof PaymentSchema>>({
     resolver: zodResolver(PaymentSchema),
@@ -63,7 +68,7 @@ export default function Page() {
     return (
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <h1 className="text-xl font-semibold text-center mb-10">
-          Deposit Funds
+          {t("deposit")}
         </h1>
         {method == "crypto" ? (
           <PayBTC amount={amount} />
@@ -76,12 +81,14 @@ export default function Page() {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <h1 className="text-xl font-semibold text-center mb-10">Deposit Funds</h1>
+      <h1 className="text-xl font-semibold text-center mb-10">
+        {t("deposit")}
+      </h1>
       <Card className="max-w-lg w-full mx-auto">
         <CardHeader>
           <CardTitle>
             <div className="flex justify-between">
-              <p>Deposit Funds</p>
+              <p>{t("deposit")}</p>
               <ArrowUpRight />
             </div>
           </CardTitle>
@@ -89,7 +96,7 @@ export default function Page() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="p-4 rounded-lg bg-slate-200">
-            <p className="text-sm">Available balance</p>
+            <p className="text-sm">{t("available-bal")}</p>
             <p className="text-lg">
               ${user && (+user?.balance).toLocaleString()}
             </p>
@@ -101,7 +108,7 @@ export default function Page() {
                 name="amount"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Amount to deposit</FormLabel>
+                    <FormLabel>{t("to-deposit")}</FormLabel>
                     <FormControl>
                       <span className="flex items-center gap-2">
                         $<Input {...field} />
@@ -116,7 +123,7 @@ export default function Page() {
                 name="method"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Select payment method</FormLabel>
+                    <FormLabel>{t("Select")}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -130,14 +137,14 @@ export default function Page() {
                         <SelectItem value="cashapp/wave">
                           Cash App/Wave
                         </SelectItem>
-                        <SelectItem value="crypto">Crypto</SelectItem>
+                        <SelectItem value="crypto">{t("crypto")}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button className="mx-auto block">Proceed to deposit</Button>
+              <Button className="mx-auto block">{t("proceed")}</Button>
             </form>
           </Form>
         </CardContent>

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/tooltip";
 import { CryptoPayment } from "@/db/schema/schema";
 import { Clipboard, ClipboardCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -23,6 +24,7 @@ import { Skeleton } from "./ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export function PayBTC({ amount }: { amount: number }) {
+  const t = useTranslations("Deposit");
   const [loadingAddresses, setLoadingAddresses] = useState(false);
   const [wallets, setWallets] = useState<CryptoPayment[]>([]);
 
@@ -98,8 +100,7 @@ export function PayBTC({ amount }: { amount: number }) {
         )}
         <CardFooter>
           <div className="hidden grid-cols-3"></div>
-          This feature requires network confirmations before crediting your
-          payment. Your merchant will update you on transaction progress.
+          {t("footer")}
         </CardFooter>
       </Card>
     </Tabs>
@@ -113,6 +114,7 @@ const Pay = ({
   amount: number;
   address: CryptoPayment;
 }) => {
+  const t = useTranslations("Deposit");
   const [copied, setCopied] = useState(false);
 
   function copyAddress(val: string) {
@@ -124,11 +126,10 @@ const Pay = ({
   return (
     <>
       <CardHeader>
-        <CardTitle>Pay with {address.coin}</CardTitle>
-        <CardDescription>
-          To complete this payment, send exactly this amount to the address
-          provided
-        </CardDescription>
+        <CardTitle>
+          {t("pay-with")} {address.coin}
+        </CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="p-4 rounded-lg bg-slate-200 flex justify-between">
@@ -137,7 +138,7 @@ const Pay = ({
         </div>
         <Separator />
         <div className="flex justify-between">
-          <p>Amount</p>
+          <p>{t("amount")}</p>
           <p className="">
             {(amount / +address.value).toFixed(8)}
             {address.coin} (${amount})
@@ -173,7 +174,7 @@ const Pay = ({
                 </Button>
               </TooltipTrigger>
               <TooltipContent className="bg-slate-100 text-black">
-                <p>Copy address</p>
+                <p>{t("copy-address")}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { HotelSchema } from "@/lib/zodSchema";
+import { HotelSchema as h } from "@/lib/zodSchema";
 import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import {
@@ -27,8 +27,11 @@ import {
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export default function AddHotel() {
+  const t = useTranslations("ZodError");
+  const HotelSchema = h(t);
   const form = useForm<z.infer<typeof HotelSchema>>({
     resolver: zodResolver(HotelSchema),
     defaultValues: {

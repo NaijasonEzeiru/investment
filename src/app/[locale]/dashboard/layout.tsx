@@ -20,49 +20,51 @@ import { useState } from "react";
 import Link from "next/link";
 import Header from "./header";
 import { usePathname } from "next/navigation";
-
-const menu = [
-  {
-    id: 1,
-    name: "Dashboard",
-    href: `/dashboard`,
-    icon: <Home className="h-4 w-4" />,
-    iconMobile: <Home className="h-5 w-5" />,
-  },
-  {
-    id: 2,
-    name: "Profile",
-    href: `/dashboard/profile`,
-    icon: <User className="h-4 w-4" />,
-    iconMobile: <User className="h-5 w-5" />,
-  },
-  {
-    id: 3,
-    name: "Deposit",
-    href: `/dashboard/deposit`,
-    icon: <ArrowUp className="h-4 w-4" />,
-    iconMobile: <ArrowUp className="h-5 w-5" />,
-  },
-  {
-    id: 4,
-    name: "Withdraw",
-    href: `/dashboard/withdraw`,
-    icon: <ArrowDown className="h-4 w-4" />,
-    iconMobile: <ArrowDown className="h-5 w-5" />,
-  },
-  {
-    id: 5,
-    name: "Settings",
-    href: `/dashboard/settings`,
-    icon: <Settings className="h-4 w-4" />,
-    iconMobile: <Settings className="h-5 w-5" />,
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [openNav, setOpenNav] = useState(false);
+  const t = useTranslations("Dashboard");
   const pathName = usePathname();
   console.log({ pathName });
+
+  const menu = [
+    {
+      id: 1,
+      name: t("dashboard"),
+      href: `/dashboard`,
+      icon: <Home className="h-4 w-4" />,
+      iconMobile: <Home className="h-5 w-5" />,
+    },
+    {
+      id: 2,
+      name: t("profile"),
+      href: `/dashboard/profile`,
+      icon: <User className="h-4 w-4" />,
+      iconMobile: <User className="h-5 w-5" />,
+    },
+    {
+      id: 3,
+      name: t("deposit"),
+      href: `/dashboard/deposit`,
+      icon: <ArrowUp className="h-4 w-4" />,
+      iconMobile: <ArrowUp className="h-5 w-5" />,
+    },
+    {
+      id: 4,
+      name: t("withdraw"),
+      href: `/dashboard/withdraw`,
+      icon: <ArrowDown className="h-4 w-4" />,
+      iconMobile: <ArrowDown className="h-5 w-5" />,
+    },
+    {
+      id: 5,
+      name: t("settings"),
+      href: `/dashboard/settings`,
+      icon: <Settings className="h-4 w-4" />,
+      iconMobile: <Settings className="h-5 w-5" />,
+    },
+  ];
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -92,7 +94,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <span className="gap-1 mt-auto text-[10px] py-7 px-5 lg:px-7 font-light flex flex-col">
             <p className="font-bold">CuratedHub</p>
-            <p>All Rights Reserved ©2024</p>
+            <p>{t("rights")} ©2024</p>
           </span>
         </div>
       </div>
@@ -140,7 +142,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </nav>
               <span className="gap-1 mt-auto text-xs pt-7 px-3 items-center font-light flex flex-col w-fit">
                 <p className="font-bold">CuratedHub</p>
-                <p>All Rights Reserved ©2024</p>
+                <p>{t("rights")} ©2024</p>
               </span>
             </SheetContent>
           </Sheet>

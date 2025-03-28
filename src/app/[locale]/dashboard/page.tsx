@@ -19,9 +19,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
+  const t = useTranslations("Dashboard");
   const [loadingListings, setLoadingListings] = useState(false);
   const [listings, setListings] = useState<Listing[]>([]);
   const [copied, setCopied] = useState(false);
@@ -63,13 +65,14 @@ export default function Page() {
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <p className="text-2xl">
-        <span className="text-primary font-medium">Welcome,</span>{" "}
+        <span className="text-primary font-medium">{t("welcome")},</span>{" "}
         {user?.firstName} {user?.lastName}
       </p>
       <div className="grid auto-rows-min gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="aspect-video rounded-xl bg-muted/50 p-6 flex flex-col justify-between">
           <div className="flex justify-between items-center text-lg">
-            <p>Available balance:</p> <CircleDollarSign strokeWidth={1} />
+            <p>{t("available-balance")}:</p>{" "}
+            <CircleDollarSign strokeWidth={1} />
           </div>
           <p className="text-2xl font-medium">
             {user && (+user?.balance).toLocaleString()}
@@ -77,7 +80,7 @@ export default function Page() {
         </div>
         <div className="aspect-video rounded-xl bg-muted/50 p-6 flex flex-col justify-between">
           <div className="flex justify-between items-center text-lg">
-            <p>Interest:</p> <TrendingUp strokeWidth={1} />
+            <p>{t("interest")}:</p> <TrendingUp strokeWidth={1} />
           </div>
           <p className="text-2xl font-medium">
             {user && (+user?.interest).toLocaleString()}
@@ -85,14 +88,14 @@ export default function Page() {
         </div>
         <div className="aspect-video rounded-xl bg-muted/50 p-6 flex flex-col justify-between">
           <div className="flex justify-between items-center text-lg">
-            <p>Level:</p>
+            <p>{t("level")}:</p>
             <LockOpen strokeWidth={1} />
           </div>
           <p className="text-2xl font-medium">VIP{user?.level}</p>
         </div>
         <div className="aspect-video rounded-xl bg-muted/50 p-6 flex flex-col justify-between">
           <div className="flex justify-between items-center text-lg">
-            <p>Referal code:</p> <UserPlus strokeWidth={1} />
+            <p>{t("referral-code")}:</p> <UserPlus strokeWidth={1} />
           </div>
           <span className="flex justify-between items-center gap-3">
             <p className="truncate">{user?.upline}</p>
@@ -113,7 +116,7 @@ export default function Page() {
                   </button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-slate-100 text-black">
-                  <p>Copy referal code</p>
+                  <p>{t("copy")}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -121,7 +124,7 @@ export default function Page() {
         </div>
       </div>
       <div className="flex-1 rounded-xl bg-muted/50 md:min-h-min p-3">
-        <h3 className="mb-5 text-lg font-medium">Listings reviewed by you</h3>
+        <h3 className="mb-5 text-lg font-medium">{t("reviewed")}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {loadingListings && <ProductCardSkeleton />}
           {!loadingListings &&
@@ -129,9 +132,7 @@ export default function Page() {
               <ProductCard list={listing} key={listing.id} />
             ))}
         </div>
-        {!loadingListings && listings.length < 1 && (
-          <p>You have not reviewed any of our listings yet</p>
-        )}
+        {!loadingListings && listings.length < 1 && <p>{t("not-reviewed")}</p>}
       </div>
     </div>
   );

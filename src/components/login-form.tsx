@@ -46,7 +46,7 @@ export function LoginForm({
       if (res?.code < 300) {
         console.log({ res });
       } else if (res?.message) {
-        toast.error("Login failed", {
+        toast.error(t("login-failed"), {
           description: res?.message,
         });
       }
@@ -56,7 +56,7 @@ export function LoginForm({
 
   useEffect(() => {
     if (user && !res?.data) {
-      toast("You are already logged in");
+      toast(t("logged-in"));
       router.replace("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

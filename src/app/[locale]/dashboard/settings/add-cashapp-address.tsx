@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -34,6 +35,7 @@ const AppSchema = z.object({
 });
 
 export default function CashAppAddress() {
+  const t = useTranslations("Settings");
   const { user, checkUserLoggedIn } = useContext(AuthContext);
   const form = useForm<z.infer<typeof AppSchema>>({
     resolver: zodResolver(AppSchema),
@@ -60,13 +62,13 @@ export default function CashAppAddress() {
         // @ts-expect-error: Should not be undefined
         checkUserLoggedIn();
       } else {
-        toast.error("Address not added", {
-          description: "Something went wrong",
+        toast.error(t("not-added"), {
+          description: t("wrong"),
         });
       }
     } catch (error) {
-      toast.error("Address not added", {
-        description: "Something went wrong",
+      toast.error(t("not-added"), {
+        description: t("wrong"),
       });
       console.log("error", error);
     }
@@ -76,7 +78,7 @@ export default function CashAppAddress() {
     <>
       <CardHeader>
         <CardTitle>
-          {user?.tag ? "Change" : "Add"} CashApp/Wave address
+          {user?.tag ? t("change") : t("add")} CashApp/Wave {t("address")}
         </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
@@ -112,7 +114,7 @@ export default function CashAppAddress() {
               name="tag"
               render={({ field }) => (
                 <FormItem className="space-y-0.5 relative">
-                  <FormLabel>Cash app tag/Wave number</FormLabel>
+                  <FormLabel>{t("tag/number")}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -121,7 +123,7 @@ export default function CashAppAddress() {
               )}
             />
             <Button className="w-full">
-              {user?.tag ? "Change" : "Add"} address
+              {user?.tag ? t("change") : t("add")} {t("address")}
             </Button>
           </form>
         </Form>

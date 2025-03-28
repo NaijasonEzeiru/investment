@@ -1,7 +1,7 @@
 import { users } from "@/db/schema/schema";
 import { db } from "@/db/db";
 import { NextRequest, NextResponse } from "next/server";
-import { EditUserSchema } from "@/lib/zodSchema";
+import { EditUserSchemaRoute } from "@/lib/zodSchema";
 import { eq } from "drizzle-orm";
 
 export const GET = async () => {
@@ -25,7 +25,7 @@ export const POST = async (request: NextRequest) => {
   try {
     const body = await request.json();
     console.log({ edit: body });
-    const validate = EditUserSchema.safeParse(body);
+    const validate = EditUserSchemaRoute.safeParse(body);
     if (validate?.error) {
       return new NextResponse(
         JSON.stringify({

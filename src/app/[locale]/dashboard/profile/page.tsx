@@ -21,10 +21,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { EditProfileSchema } from "@/lib/zodSchema";
+import { EditProfileSchema as E } from "@/lib/zodSchema";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
   const { user } = useContext(AuthContext);
+  const t = useTranslations("Settings");
+  const ze = useTranslations("ZodError");
+  const EditProfileSchema = E(ze);
   const form = useForm<z.infer<typeof EditProfileSchema>>({
     resolver: zodResolver(EditProfileSchema),
     defaultValues: { ...user },
@@ -44,7 +48,7 @@ export default function Page() {
 
       if (res.ok) {
         console.log(data);
-        toast("Update successful");
+        toast(t("updated"));
       } else {
         if (data.errors) {
           console.log(data.errors);
@@ -58,13 +62,13 @@ export default function Page() {
           );
           return;
         }
-        toast.error("Update failed", {
-          description: "Something went wrong",
+        toast.error(t("failed"), {
+          description: t("wrong"),
         });
       }
     } catch (error) {
-      toast.error("Update failed", {
-        description: "Something went wrong",
+      toast.error(t("failed"), {
+        description: t("wrong"),
       });
       console.log("error", error);
     }
@@ -86,17 +90,17 @@ export default function Page() {
         </span>
       </div>
       <div className="">
-        <p className="text-lg font-medium">Bio</p>
+        <p className="text-lg font-medium"> t{"bio"} </p>
       </div>
       <p className="text-sm font-light">
-        {/* @ts-expect-error: I dunno */}
-        Registered {user?.updatedAt?.split("T")[0]}
+        {/* @ts-expect-error: I dunno */}t{"registered"}{" "}
+        {user?.updatedAt?.split("T")[0]}
       </p>
       <div className="bg-slate-100 p-3 rounded-lg space-y-3">
-        <div className="flex items-center justify-between">
-          <h4 className="text-lg font-medium">Personal data</h4>
+        <div className="flex items-center justify-betweens">
+          <h4 className="text-lg font-medium">t{"data"}</h4>
           <Button variant="outline">
-            <PencilLine /> Edit Profile
+            <PencilLine /> t{"edit-profile"}
           </Button>
         </div>
         <Form {...form}>
@@ -107,7 +111,7 @@ export default function Page() {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>t{"first-name"}</FormLabel>
                     <FormControl>
                       <Input className="bg-white" {...field} />
                     </FormControl>
@@ -120,7 +124,7 @@ export default function Page() {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>t{"last-name"}</FormLabel>
                     <FormControl>
                       <Input className="bg-white" {...field} />
                     </FormControl>
@@ -133,7 +137,7 @@ export default function Page() {
                 name="username"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>t{"username"}</FormLabel>
                     <FormControl>
                       <Input className="bg-white" {...field} />
                     </FormControl>
@@ -146,7 +150,7 @@ export default function Page() {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="space-y-0.5">
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>t{"email"}</FormLabel>
                     <FormControl>
                       <Input className="bg-white" {...field} type="email" />
                     </FormControl>
@@ -159,7 +163,7 @@ export default function Page() {
                 name="phone"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <FormItem className="space-y-0.5 relative">
-                    <FormLabel>Phone number</FormLabel>
+                    <FormLabel>t{"number"}</FormLabel>
                     <FormControl>
                       <PhoneInput
                         onBlur={onBlur}
@@ -180,7 +184,7 @@ export default function Page() {
               {form.formState.isSubmitting && (
                 <Loader className="animate-spin" />
               )}
-              Edit profile
+              t{"edit-profile"}
             </Button>
           </form>
         </Form>

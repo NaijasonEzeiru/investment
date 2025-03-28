@@ -28,7 +28,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { RegisterSchema } from "@/lib/zodSchema";
+import { RegisterSchema as R } from "@/lib/zodSchema";
 import { useRouter } from "next/navigation";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 import AuthContext from "./auth-context";
@@ -39,9 +39,11 @@ export function SignUpForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const t = useTranslations("sign-up");
+  const ze = useTranslations("ZodError");
   const router = useRouter();
   const { user } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const RegisterSchema = R(ze);
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -73,7 +75,9 @@ export function SignUpForm({
 
       if (res.ok) {
         console.log(data);
-        toast("Registration successful", { description: "Please log in" });
+        toast(t("registration-successful"), {
+          description: t("please-log-in"),
+        });
         router.push("/login");
       } else {
         if (data.errors) {
@@ -88,13 +92,13 @@ export function SignUpForm({
           );
           return;
         }
-        toast.error("Registration failed", {
-          description: "Something went wrong",
+        toast.error(t("registration-failed"), {
+          description: t("wrong"),
         });
       }
     } catch (error) {
-      toast.error("Registration failed", {
-        description: "Something went wrong",
+      toast.error(t("registration-failed"), {
+        description: t("wrong"),
       });
       console.log("error", error);
     }
@@ -300,7 +304,7 @@ export function SignUpForm({
               <div className="text-center text-sm">
                 {t("already")}{" "}
                 <Link href="/login" className="underline underline-offset-4">
-                  log in {t("login")}
+                  {t("login")}
                 </Link>
               </div>
             </form>

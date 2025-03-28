@@ -30,10 +30,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
-
-const pinSchema = z.object({
-  transferPin: z.string().length(4, { message: "Must be 4 digits long" }),
-});
+import { useTranslations } from "next-intl";
+import { pinSchema as p } from "@/lib/zodSchema";
 
 export default function WithdrawCashApp({
   amount,
@@ -44,7 +42,10 @@ export default function WithdrawCashApp({
   address?: string | null;
   pin?: string | null;
 }) {
+  const t = useTranslations("Withdraw");
+  const ze = useTranslations("ZodError");
   const [openAlert, setOpenAlert] = useState(false);
+  const pinSchema = p(ze);
 
   const form = useForm<z.infer<typeof pinSchema>>({
     resolver: zodResolver(pinSchema),
@@ -54,7 +55,7 @@ export default function WithdrawCashApp({
     await setTimeout(() => {}, 3000);
     if (data.transferPin != pin) {
       form.setError("transferPin", {
-        message: "Incorrect pin",
+        message: t("incorrect"),
       });
     } else {
       setOpenAlert(true);
@@ -75,18 +76,17 @@ export default function WithdrawCashApp({
         {!address ? (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Ooops!</AlertTitle>
+            <AlertTitle>{t("ooops!")}</AlertTitle>
             <AlertDescription className="text-black">
-              <p>You have not added your CashApp/Wave withdrawal details.</p>
+              <p>{t("not-added")}</p>
               <p>
                 <Link
                   href="/dashboard/settings"
                   className="text-blue-700 underline"
                 >
-                  Click here
+                  {t("click-here")}
                 </Link>{" "}
-                to go to settings page and add your CashApp/Wave withdrawal
-                details.
+                {t("go-to-settings")}
               </p>
             </AlertDescription>
           </Alert>
@@ -95,16 +95,16 @@ export default function WithdrawCashApp({
             <AlertDialog open={openAlert} onOpenChange={setOpenAlert}>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Please confirm!</AlertDialogTitle>
+                  <AlertDialogTitle>{t("confirm")}</AlertDialogTitle>
                   <AlertDialogDescription>
-                    You are about to send{" "}
-                    <span className="font-bold">${amount}</span> to this
-                    account: {address}
+                    {t("about-to-send")}{" "}
+                    <span className="font-bold">${amount}</span>
+                    {t("account")} {address}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Continue</AlertDialogAction>
+                  <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+                  <AlertDialogAction>{t("continue")}</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
@@ -118,7 +118,7 @@ export default function WithdrawCashApp({
                   name="transferPin"
                   render={({ field }) => (
                     <FormItem className="space-y-0.5">
-                      <FormLabel>Transfer pin</FormLabel>
+                      <FormLabel>{t("pin")}</FormLabel>
                       <FormControl>
                         <InputOTP
                           maxLength={4}
@@ -138,7 +138,7 @@ export default function WithdrawCashApp({
                     </FormItem>
                   )}
                 />
-                <Button className="w-full">Withdraw</Button>
+                <Button className="w-full">{t("Withdraw")}</Button>
               </form>
             </Form>
           </>

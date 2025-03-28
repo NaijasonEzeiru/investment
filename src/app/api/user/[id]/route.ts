@@ -1,7 +1,7 @@
 import { users } from "@/db/schema/schema";
 import { db } from "@/db/db";
 import { NextRequest, NextResponse } from "next/server";
-import { EditProfileSchema } from "@/lib/zodSchema";
+import { EditProfileSchemaRoute } from "@/lib/zodSchema";
 import { eq } from "drizzle-orm";
 
 export const POST = async (
@@ -11,7 +11,7 @@ export const POST = async (
   const id = (await params).id;
   try {
     const body = await request.json();
-    const validate = EditProfileSchema.safeParse(body);
+    const validate = EditProfileSchemaRoute.safeParse(body);
     if (validate?.error) {
       return new NextResponse(
         JSON.stringify({

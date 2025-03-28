@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -35,6 +36,7 @@ const AddressesSchema = z.object({
 
 export default function CryptoAddress() {
   const { user, checkUserLoggedIn } = useContext(AuthContext);
+  const t = useTranslations("Settings");
   const form = useForm<z.infer<typeof AddressesSchema>>({
     resolver: zodResolver(AddressesSchema),
     defaultValues: {
@@ -60,13 +62,13 @@ export default function CryptoAddress() {
         // @ts-expect-error: Should not be undefined
         checkUserLoggedIn();
       } else {
-        toast.error("Address not added", {
-          description: "Something went wrong",
+        toast.error(t("not-added"), {
+          description: t("wrong"),
         });
       }
     } catch (error) {
-      toast.error("Address not added", {
-        description: "Something went wrong",
+      toast.error(t("not-added"), {
+        description: t("wrong"),
       });
       console.log("error", error);
     }
@@ -75,7 +77,9 @@ export default function CryptoAddress() {
   return (
     <>
       <CardHeader>
-        <CardTitle>{user?.address ? "Change" : "Add"} crypto address</CardTitle>
+        <CardTitle>
+          {user?.address ? t("change") : t("add")} {t("crypto-address")}
+        </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
@@ -86,7 +90,7 @@ export default function CryptoAddress() {
               name="coin"
               render={({ field }) => (
                 <FormItem className="space-y-0.5">
-                  <FormLabel>Platform</FormLabel>
+                  <FormLabel>Platform{t("platform")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -111,7 +115,7 @@ export default function CryptoAddress() {
               name="address"
               render={({ field }) => (
                 <FormItem className="space-y-0.5 relative">
-                  <FormLabel>Wallet address</FormLabel>
+                  <FormLabel>Wallet address{t("wallet-address")}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -120,7 +124,8 @@ export default function CryptoAddress() {
               )}
             />
             <Button className="w-full">
-              {user?.address ? "Change" : "Add"} address
+              {user?.address ? t("change") : t("add")}
+              {t("address")}
             </Button>
           </form>
         </Form>

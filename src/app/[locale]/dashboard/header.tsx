@@ -12,9 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useTranslations } from "next-intl";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 const Header = () => {
   const { user, signout, signingOut } = useContext(AuthContext);
+  const t = useTranslations("Navigation");
   return (
     <>
       {/* <span className="relative">
@@ -57,10 +60,11 @@ const Header = () => {
           {/* <DropdownMenuItem>Settings</DropdownMenuItem> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={signout} disabled={signingOut}>
-            {signingOut ? <Loader className="animate-spin" /> : "Log out"}
+            {signingOut ? <Loader className="animate-spin" /> : t("logout")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <LocaleSwitcher />
     </>
   );
 };

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { NFTSchema } from "@/lib/zodSchema";
+import { NFTSchema as n } from "@/lib/zodSchema";
 import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import {
@@ -26,8 +26,13 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { useTranslations } from "next-intl";
 
 export default function AddNFT() {
+  const t = useTranslations("ZodError");
+
+  const NFTSchema = n(t);
+
   const form = useForm<z.infer<typeof NFTSchema>>({
     resolver: zodResolver(NFTSchema),
     defaultValues: {

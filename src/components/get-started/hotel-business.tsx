@@ -6,7 +6,7 @@ import { ArrowLeft, Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { HotelBusinessSchema } from "@/lib/zodSchema";
+import { HotelBusinessSchema as H } from "@/lib/zodSchema";
 import {
   DialogDescription,
   DialogFooter,
@@ -44,11 +44,14 @@ export default function HotelBusiness({
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
   const t = useTranslations("hotel-business");
+  const ze = useTranslations("ZodError");
   const [addressImg, setAddressImg] = useState("");
   // const [file, setFile] = useState<File | null>(null);
   const [showPaymentPage, setShowPaymentPage] = useState(false);
   const [paymentMethod, setPaymentmethod] = useState("");
   const [payment, setPayment] = useState(false);
+  const HotelBusinessSchema = H(ze);
+
   const form = useForm<z.infer<typeof HotelBusinessSchema>>({
     resolver: zodResolver(HotelBusinessSchema),
   });
