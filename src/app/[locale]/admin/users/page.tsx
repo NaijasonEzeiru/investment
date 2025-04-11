@@ -1,23 +1,55 @@
-import { getUsers } from "@/actions/actions";
-import { Card } from "@/components/ui/card";
-import { User, UserPen } from "lucide-react";
-import Link from "next/link";
+"use client";
 
-export default async function page() {
-  const users = await getUsers();
-  console.log({ users });
+// import { getUsers } from "@/actions/actions";
+import { Card } from "@/components/ui/card";
+import type { User } from "@/db/schema/schema";
+import { User as LucideUser, UserPen } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+export default function Page() {
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    try {
+      const res = await fetch("/api/user", {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await res.json();
+      console.log({ data });
+      if (res.ok) {
+        setUsers(data);
+      } else {
+        toast.error("Unable to get users", {
+          description: data?.message || "Something went wrong",
+        });
+      }
+    } catch (error) {
+      toast.error("Unable to get users", {
+        description: "Something went wrong",
+      });
+      console.log({ error });
+    }
+  };
 
   return (
     <>
       <h1 className="text-xl font-semibold text-center mb-8">All users</h1>
       <div className="flex gap-6 flex-wrap">
         {Array.isArray(users) &&
+          users &&
           users?.map((user) => (
             <Card className="px-4 py-4 grow" key={user.id}>
               <div className="space-y-4 w-full">
                 <div className="flex sm:gap-7 items-center justify-between flex-col sm:flex-row">
                   <div className="flex gap-2 items-center self-start">
-                    <User
+                    <LucideUser
                       size={30}
                       className="border-4 bg-border border-border rounded-full size-11"
                     />

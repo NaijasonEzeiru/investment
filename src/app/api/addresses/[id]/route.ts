@@ -23,8 +23,7 @@ export const PUT = async (
     await db
       .update(cryptoPayments)
       .set({ ...validate.data })
-      .where(eq(cryptoPayments.id, id))
-      .returning();
+      .where(eq(cryptoPayments.id, id));
     return new NextResponse(
       JSON.stringify({
         message: "Payment address modified successfully",

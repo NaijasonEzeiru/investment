@@ -4,6 +4,7 @@ import CryptoJS from "crypto-js";
 import { db } from "@/db/db";
 import { users } from "@/db/schema/schema";
 import { RegisterSchemaRoute } from "@/lib/zodSchema";
+import { revalidatePath } from "next/cache";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -50,6 +51,9 @@ export const POST = async (request: NextRequest) => {
         upline: ref,
       })
       .returning();
+    revalidatePath("/admin/users");
+    revalidatePath("en/admin/users");
+    revalidatePath("fr/admin/users");
     return new NextResponse(
       JSON.stringify({
         message: `${register.firstName} ${register.lastName} registered successfully`,

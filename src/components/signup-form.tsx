@@ -33,7 +33,6 @@ import { useRouter } from "next/navigation";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 import AuthContext from "./auth-context";
 import { useTranslations } from "next-intl";
-import { revalidatePath } from "next/cache";
 
 export function SignUpForm({
   className,
@@ -76,9 +75,9 @@ export function SignUpForm({
 
       if (res.ok) {
         console.log(data);
-        revalidatePath("/admin/users");
-        revalidatePath("en/admin/users");
-        revalidatePath("fr/admin/users");
+        // revalidatePath("/admin/users");
+        // revalidatePath("en/admin/users");
+        // revalidatePath("fr/admin/users");
         toast(t("registration-successful"), {
           description: t("please-log-in"),
         });
